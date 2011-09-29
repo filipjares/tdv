@@ -1,6 +1,6 @@
 function indices = fits_into_image(A)
 
-    Eps = eps*10^3
+    Eps = eps*10^3;
     X_LO = 1 - Eps;
     X_HI = 800 + Eps;
     Y_LO = 1 - Eps;

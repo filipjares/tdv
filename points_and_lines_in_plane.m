@@ -111,7 +111,7 @@ line(green_endpoints(1,:), green_endpoints(2,:), 'Color', 'g','LineWidth',2);
 
 % Blue and green line intersection
 if all(fits_into_image(m_e))
-    m_e = p2e(H*e2p(m_e))
+    m_e = p2e(H*e2p(m_e));
     plot(m_e(1,1), m_e(2,1), 'ro', 'LineWidth', 4, 'MarkerSize', MARKER_SIZE);
 end
 

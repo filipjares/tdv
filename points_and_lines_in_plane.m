@@ -63,8 +63,7 @@ all_green_x_e = p2e(cross(borders, green_line*ones(1,4)));
 
 % Column indices of columns containing intersections which are inside the image area
 blue_indices = fits_into_image(all_blue_x_e);
-green_indices = all_green_x_e(1,:) >= X_LO & all_green_x_e(1,:) <= X_HI ...
-    & all_green_x_e(2,:) >= Y_LO & all_green_x_e(2,:) <= Y_HI;
+green_indices = fits_into_image(all_green_x_e);
 
 % Draw the blue line
 blue_endpoints = all_blue_x_e(:, find(blue_indices));

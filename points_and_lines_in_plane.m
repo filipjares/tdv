@@ -53,7 +53,7 @@ x = e2p(x_e); % to homogenous representation
 plot(x_e(1,1:2), x_e(2,1:2), 'bo', 'LineWidth', 4, 'MarkerSize', MARKER_SIZE);
 plot(x_e(1,3:4), x_e(2,3:4), 'go', 'LineWidth', 4, 'MarkerSize', MARKER_SIZE);
 
-% Blue line connects first pair of points, green one connets second pair
+% Blue line connects first pair of points, green one connects second pair
 blue_line  = cross(x(:,1), x(:,2));
 green_line = cross(x(:,3), x(:,4));
 

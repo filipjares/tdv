@@ -21,8 +21,6 @@
 %                          border_bottom
 %
 
-MARKER_SIZE = 10;
-
 X_LO = 1;
 X_HI = 800;
 Y_LO = 1;
@@ -51,14 +49,14 @@ axis equal;
 hold on;
 
 A = zeros(5,6);
+point_count = 5;
 
-% Obtain user input (five points)
-x = zeros(3,5);
-x(3,:) = ones(1,5);
-for i = 1:5
-    [u, v] = ginput(1);
-    x(1:2,i) = [u v]';
-    plot(u, v, 'bx', 'LineWidth', 1, 'MarkerSize', MARKER_SIZE);
+x = let_the_user_define_points_in_picture(point_count, true);
+
+x_e = p2e(x);
+for i = 1:point_count
+    u = x_e(1,i);
+    v = x_e(2,i);
     A(i,:) = [u^2 u*v v^2 u v 1];
 end
 

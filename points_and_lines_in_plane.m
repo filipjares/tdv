@@ -46,9 +46,8 @@ line(C(1,[1 2 3 4 1]), C(2,[1 2 3 4 1]), 'Color', 'k','LineWidth',4);
 hold on;
 
 % Obtain user input (four points)
-[u, v] = ginput(4);
-x_e = [u v]';
-x = e2p(x_e); % to homogenous representation
+x = let_the_user_define_points_in_picture(4, false);
+x_e = p2e(x); % to inhomogenous representation
 
 plot(x_e(1,1:2), x_e(2,1:2), 'bo', 'LineWidth', 4, 'MarkerSize', MARKER_SIZE);
 plot(x_e(1,3:4), x_e(2,3:4), 'go', 'LineWidth', 4, 'MarkerSize', MARKER_SIZE);

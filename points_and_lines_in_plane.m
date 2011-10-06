@@ -25,7 +25,6 @@ X_HI = 800;
 Y_LO = 1;
 Y_HI = 600;
 
-
 % Corners:
 C = [ X_LO X_HI X_HI   X_LO; ...
 	  Y_LO   Y_LO Y_HI Y_HI; ...
@@ -56,29 +55,22 @@ plot(x_e(1,3:4), x_e(2,3:4), 'go', 'LineWidth', 4, 'MarkerSize', MARKER_SIZE);
 blue_line  = cross(x(:,1), x(:,2));
 green_line = cross(x(:,3), x(:,4));
 
-% All intersections of blue and green line with border lines
-all_blue_x_e  = p2e(cross(borders, blue_line*ones(1,4)));
-all_green_x_e = p2e(cross(borders, green_line*ones(1,4)));
-
-% Column indices of columns containing intersections which are inside the image area
-blue_indices = fits_into_image(all_blue_x_e);
-green_indices = fits_into_image(all_green_x_e);
-
 % Draw the blue line
-blue_endpoints = all_blue_x_e(:, find(blue_indices));
+blue_endpoints = get_line_intersection_with_axes_boundaries(blue_line);
 line(blue_endpoints(1,:), blue_endpoints(2,:), 'Color', 'b','LineWidth',2);
 
 % Draw the green line
-green_endpoints = all_green_x_e(:, find(green_indices));
+green_endpoints = get_line_intersection_with_axes_boundaries(green_line);
 line(green_endpoints(1,:), green_endpoints(2,:), 'Color', 'g','LineWidth',2);
 
 % Intersection of blue and green line
 m_e = p2e(cross(blue_line, green_line));
-if all(fits_into_image(m_e))
+if fits_into_image(m_e)
     plot(m_e(1,1), m_e(2,1), 'ro', 'LineWidth', 4, 'MarkerSize', MARKER_SIZE);
 end
 
 hold off;
+fig1axes = gca;
 
 %% Image of the scene with homography applied
 
@@ -108,7 +100,7 @@ green_endpoints = p2e(H*e2p(green_endpoints));
 line(green_endpoints(1,:), green_endpoints(2,:), 'Color', 'g','LineWidth',2);
 
 % Blue and green line intersection
-if all(fits_into_image(m_e))
+if fits_into_image(m_e, fig1axes)
     m_e = p2e(H*e2p(m_e));
     plot(m_e(1,1), m_e(2,1), 'ro', 'LineWidth', 4, 'MarkerSize', MARKER_SIZE);
 end

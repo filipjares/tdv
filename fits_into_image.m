@@ -1,9 +1,17 @@
-function indices = fits_into_image(A)
+function indices = fits_into_image(A, obj)
+
+    if (nargin < 2)
+        Xs = xlim;
+        Ys = ylim;
+    else
+        if (~ishandle(obj) || ~strcmp(get(obj, 'type'), 'axes'))
+            error('The obj parameter has to be axes handle.');
+        end
+        Xs = get(obj, 'XLim');
+        Ys = get(obj, 'YLim');
+    end
 
     Eps = eps*10^3;
-    
-    Xs = xlim;
-    Ys = ylim;
     
     X_LO = Xs(1) - Eps;
     X_HI = Xs(2) + Eps;

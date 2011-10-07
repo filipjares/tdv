@@ -1,0 +1,8 @@
+Files in the data directory:
+============================
+
+data/rd_calib.mat	- result (acquired by the web interface) of the radial
+					  distortion calibration tool; needed to remove the
+					  radial distortion with the rd_undistort/rddirundistort.m
+					  function (images used for the calibration are placed
+					  in a separate folder in TDV/fotky/radial_calibration/)

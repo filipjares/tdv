@@ -9,6 +9,16 @@
 % 4. Choose a triple of images and select and visualize correspondences
 %    that links all the images and are consistent, as in figure3 . 
 
+%% Add wbs to path if neccessary
+
+% addpath wbs/
+
+%% Remove the radial distortion
+
+% load('data/Kcalib.mat', 'rd');
+% addpath rd_undistort
+% rddirundistort(rd, 'pictures/sb', 'linear_pictures/sb');
+
 %% Read the images and get the descriptors (1)
 
 if( ~exist( 'wbs_default_cfg', 'file' ) )
@@ -17,9 +27,9 @@ end
 
 % read images (TODO: add al the images, use my own images instead of these:)
 fprintf( 'Reading images ...\n' )
-im1=imread('linear_pictures/wbs_demo/1.jpg');
-im2=imread('linear_pictures/wbs_demo/2.jpg');
-im3=imread('linear_pictures/wbs_demo/3.jpg');
+im1=imread('linear_pictures/sb/IMG_5953.JPG');
+im2=imread('linear_pictures/sb/IMG_5956.JPG');
+im3=imread('linear_pictures/sb/IMG_5957.JPG');
 
 % compute image descriptors
 fprintf( 'Computing descriptors ...\n' )

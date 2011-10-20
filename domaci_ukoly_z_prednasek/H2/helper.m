@@ -7,7 +7,7 @@ addpath ../../
 
 figure(1);
 clf;
-im = imread('buildings.jpeg');
+im = imread('scene_scheme.png');
 image(im);
 axis equal;
 hold on;

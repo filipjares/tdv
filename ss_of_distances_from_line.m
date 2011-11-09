@@ -1,4 +1,4 @@
-function sse = ss_of_distancesll_from_line(l, X)
+function sse = ss_of_distances_from_line(l, X)
 
     n = l(1:2,1);
     norm_n = norm(n);

@@ -89,24 +89,35 @@ draw_line_into_axes(estimate);
 
 %% Robust Estimation
 
+quit = false;
+while (~quit)
+
 % Randomly select two points (a and b) from X and create line l connecting them
 rand_ix = sort(ceil(1+(size(X,2)-1)*rand(2,1)));    % select to indices of two points randomly
 a = X(:,rand_ix(1));
 b = X(:,rand_ix(2));
 l = cross(e2p(a),e2p(b));
-
+ 
 % Visualise:
 a_h = plot(a(1), a(2), 'ro', 'MarkerSize', 10, 'LineWidth', 4);
 b_h = plot(b(1), b(2), 'ro', 'MarkerSize', 10, 'LineWidth', 4);
 l_h = draw_line_into_axes(l, 'r', 3);
-% sum of squares of errors of all points (including a and b error of which is zero)
-err = ss_of_distances_from_line(l, X);
 
-%% Remove points
+dists = distances_of_points_from_line(l,X); % distances of all points from the proposal line
+err = sum(dists.^2);                        % sum of squares of distances
+
+THRESHOLD = 100;
+support = sum(dists < THRESHOLD)
+
+pause;
+
+% Remove points
 
 delete(a_h);
 delete(b_h);
 delete(l_h);
+
+end
 
 %%
 

@@ -89,8 +89,8 @@ draw_line_into_axes(estimate);
 
 %% Robust Estimation
 
-quit = false;
-while (~quit)
+finished = false;
+while (~finished)
 
 % Randomly select two points (a and b) from X and create line l connecting them
 rand_ix = sort(ceil(1+(size(X,2)-1)*rand(2,1)));    % select to indices of two points randomly

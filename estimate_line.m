@@ -82,7 +82,7 @@ plot(R(1,:), R(2,:), 'or', 'MarkerSize', 5, 'Linewidth', 1);        % outliers
 %% Non-robust Estimation
 
 estimate = fminsearch(@(line) ss_of_distances_from_line(line, X), [1 0 0]', optimset('MaxFunEvals', 1000000));
-estimate(1:2,1) = estimate(1:2,1)/norm(estimate(1:2,1));
+estimate = estimate/norm(estimate(1:2,1));
 
 % Plot the result:
 draw_line_into_axes(estimate);
@@ -93,6 +93,7 @@ dataset_size = size(X,2);
 
 max_support = -1;
 best_model = [0 0 0]';
+best_model_inliers_ix = [];
 
 inlier_probability = N/(N+No);
 minN = ceil(log(1 - 0.99)/log(1-inlier_probability^2));
@@ -113,15 +114,16 @@ l_h = draw_line_into_axes(l, 'r', 3);
 dists = distances_of_points_from_line(l,X); % distances of all points from the proposal line
 err = sum(dists.^2);                        % sum of squares of distances
 
-THRESHOLD = 3;
-support = sum(dists < THRESHOLD)
+THRESHOLD = 10;
+support = sum(dists < THRESHOLD);
 
 if (support > max_support)
     max_support = support;
     best_model = l;
+    best_model_inliers_ix = dists < THRESHOLD;
 end
 
-pause(1);
+pause(0.1);
 
 % Remove points
 
@@ -131,13 +133,16 @@ delete(l_h);
 
 end
 
-best_model/(norm(best_model(1:2,1)));
+best_model = best_model/(norm(best_model(1:2,1)));
 
 % for the best model obtained by RANSAC, call fminsearch or perform some better optimization
-best_line_model = fminsearch(@(line) ss_of_distances_from_line(line, X(:,[dists < THRESHOLD])), best_model', optimset('MaxFunEvals', 1000000));
-best_line_model(1:2,1) = best_line_model(1:2,1)/norm(best_line_model(1:2,1));
+best_line_model = fminsearch(@(line) ss_of_distances_from_line(line, X(:,best_model_inliers_ix)), best_model, optimset('MaxFunEvals', 1000000));
+best_line_model = best_line_model/norm(best_line_model(1:2,1));
 
-draw_line_into_axes(estimate);
+%%
+
+best_line_model_h = draw_line_into_axes(best_line_model, 'y', 5);
+best_model_h = draw_line_into_axes(best_model, 'm', 2);
 
 %%
 

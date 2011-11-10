@@ -89,8 +89,15 @@ draw_line_into_axes(estimate);
 
 %% Robust Estimation
 
-finished = false;
-while (~finished)
+dataset_size = size(X,2);
+
+max_support = -1;
+best_model = [0 0 0]';
+
+inlier_probability = N/(N+No);
+minN = ceil(log(1 - 0.99)/log(1-inlier_probability^2));
+
+for i=1:minN
 
 % Randomly select two points (a and b) from X and create line l connecting them
 rand_ix = sort(ceil(1+(size(X,2)-1)*rand(2,1)));    % select to indices of two points randomly
@@ -106,10 +113,15 @@ l_h = draw_line_into_axes(l, 'r', 3);
 dists = distances_of_points_from_line(l,X); % distances of all points from the proposal line
 err = sum(dists.^2);                        % sum of squares of distances
 
-THRESHOLD = 100;
+THRESHOLD = 3;
 support = sum(dists < THRESHOLD)
 
-pause;
+if (support > max_support)
+    max_support = support;
+    best_model = l;
+end
+
+pause(1);
 
 % Remove points
 
@@ -118,6 +130,14 @@ delete(b_h);
 delete(l_h);
 
 end
+
+best_model/(norm(best_model(1:2,1)));
+
+% for the best model obtained by RANSAC, call fminsearch or perform some better optimization
+best_line_model = fminsearch(@(line) ss_of_distances_from_line(line, X(:,[dists < THRESHOLD])), best_model', optimset('MaxFunEvals', 1000000));
+best_line_model(1:2,1) = best_line_model(1:2,1)/norm(best_line_model(1:2,1));
+
+draw_line_into_axes(estimate);
 
 %%
 

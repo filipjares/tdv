@@ -20,14 +20,15 @@ X_HI = 800;
 Y_LO = 1;
 Y_HI = 600;
 
+% Inliers/outliers proportion
 N = 800;            % number of inliners (points along the line)
 No = 200;           % number of outliers
 
 % Line definition
 X = [300 400]';     % point on a line
-u = [2 3]';        % vector tangent to the line
+u = [2 3]';         % vector tangent to the line
 
-sigma = 3;          % [px]
+sigma = 3;          % [px], inliers noise standard deviation
 
 %% Prepare the plot
 
@@ -44,7 +45,6 @@ hold on;
 u = u/norm(u);      % normalize the u vector
 n = [-u(2) u(1)]';  % vector normal to the line
 d = -X'*n;          % distance of the line from the origin
-% TODO: sign of d
 
 l_orig = [n; d];    % homogeneous representation of the line
 
@@ -91,9 +91,9 @@ draw_line_into_axes(estimate);
 
 dataset_size = size(X,2);
 
-max_support = -1;
-best_model = [0 0 0]';
-best_model_inliers_ix = [];
+ransac_best_l = [0 0 0]';		% best line obtained by RANSAC
+ransac_best_l_inliers_ix = [];	% indices of points within its neighbourhood
+max_support = -1;				% number of points within its neighbourhood
 
 inlier_probability = N/(N+No);
 minN = ceil(log(1 - 0.99)/log(1-inlier_probability^2));
@@ -114,13 +114,14 @@ l_h = draw_line_into_axes(l, 'r', 3);
 dists = distances_of_points_from_line(l,X); % distances of all points from the proposal line
 err = sum(dists.^2);                        % sum of squares of distances
 
+% TODO: instead of plain RANSAC use robust error function
 THRESHOLD = 10;
 support = sum(dists < THRESHOLD);
 
 if (support > max_support)
     max_support = support;
-    best_model = l;
-    best_model_inliers_ix = dists < THRESHOLD;
+    ransac_best_l = l;
+    ransac_best_l_inliers_ix = dists < THRESHOLD;
 end
 
 pause(0.1);
@@ -133,16 +134,15 @@ delete(l_h);
 
 end
 
-best_model = best_model/(norm(best_model(1:2,1)));
+ransac_best_l = ransac_best_l/(norm(ransac_best_l(1:2,1)));
 
 % for the best model obtained by RANSAC, call fminsearch or perform some better optimization
-best_line_model = fminsearch(@(line) ss_of_distances_from_line(line, X(:,best_model_inliers_ix)), best_model, optimset('MaxFunEvals', 1000000));
+best_line_model = fminsearch(@(line) ss_of_distances_from_line(line, X(:,ransac_best_l_inliers_ix)), ransac_best_l, optimset('MaxFunEvals', 1000000));
 best_line_model = best_line_model/norm(best_line_model(1:2,1));
 
-%%
-
+% Plot the obtained model
 best_line_model_h = draw_line_into_axes(best_line_model, 'y', 2);
-% best_model_h = draw_line_into_axes(best_model, 'm', 2);
+% best_model_h = draw_line_into_axes(ransac_best_l, 'm', 2); Plot model obtained by RANSAC
 
 %% Plot the legend 
 

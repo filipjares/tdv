@@ -141,9 +141,10 @@ best_line_model = best_line_model/norm(best_line_model(1:2,1));
 
 %%
 
-best_line_model_h = draw_line_into_axes(best_line_model, 'y', 5);
-best_model_h = draw_line_into_axes(best_model, 'm', 2);
+best_line_model_h = draw_line_into_axes(best_line_model, 'y', 2);
+% best_model_h = draw_line_into_axes(best_model, 'm', 2);
 
-%%
+%% Plot the legend 
 
+legend('original line', '"inliners"', '"outliers"', 'non robust estimate', 'ML estimate');
 hold off;

@@ -1,0 +1,61 @@
+\RequirePackage{ifpdf}
+\ifpdf
+	\documentclass[11pt,oneside,a4paper,pdftex]{article}   %two-page printing
+\else
+	\documentclass[11pt,twoside,a4paper,dvips]{article}   %two-page printing
+\fi
+
+\input{init_setup.tex}
+
+%FIXME: odlišit font, aby části kódu byly odlišitelné od okolního textu
+\lstset{ %
+language=Matlab,           % choose the language of the code
+basicstyle=\ttfamily,   % the size of the fonts that are used for the code
+numbers=none,             % where to put the line-numbers (none, left, ..)
+numberstyle=\scriptsize,  % size of the fonts used for the line-numbers
+stepnumber=1,             % step between two line-nums. If "1" each line nmbrd
+numbersep=10pt,            % how far the line-numbers are from the code
+%backgroundcolor=\color{white},
+	% choose the background color. You must add \usepackage{color}
+showspaces=false,         % show spaces adding particular underscores
+showstringspaces=false,   % underline spaces within strings
+showtabs=false,           % show tabs within strings
+frame=none,	          % adds a frame around the code (single, none, ...)
+tabsize=2,	          % sets default tabsize to 2 spaces
+captionpos=b,             % sets the caption-position to bottom
+breaklines=false,          % sets automatic line breaking
+breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
+%escapeinside={\%*}{*)}   % if you want to add a comment within your code
+}
+
+\title{1. Zpráva pro předmět 3D Počítačové vidění -- A4M33TDV}
+\date{17. 11. 2011}
+\author{Filip Jareš, jaresfil@fel.cvut.cz}
+
+\begin{document}
+
+\maketitle
+
+\section{Úvod}
+
+\section{Popis metody}
+
+Pokusne citace:
+\cite{Hartley2004}
+\cite{SaraLectures}
+
+\section{Zhodnocení}
+
+
+% Reference
+
+	% FIXME:
+	%	- zkontrolovat format oproti webu, zvolit vhodny .bst soubor
+	%	- doplnit (?), aktualizovat odkazy a data
+
+%\bibliographystyle{plain_cz}
+\bibliographystyle{czechiso}
+\bibliography{bibliography}
+
+\end{document}
+

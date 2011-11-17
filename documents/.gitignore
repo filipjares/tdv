@@ -1,0 +1,8 @@
+
+# TeX temporary files
+
+*.aux
+*.bbl
+*.blg
+*.log
+*.out

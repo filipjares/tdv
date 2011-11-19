@@ -15,7 +15,7 @@
 
 %% Remove the radial distortion
 
-% load('data/Kcalib.mat', 'rd');
+% load('../data/Kcalib.mat', 'rd');
 % addpath rd_undistort
 % rddirundistort(rd, 'pictures/sb', 'linear_pictures/sb');
 

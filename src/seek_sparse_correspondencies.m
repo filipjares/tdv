@@ -27,9 +27,9 @@ end
 
 % read images (TODO: add al the images, use my own images instead of these:)
 fprintf( 'Reading images ...\n' )
-im1=imread('linear_pictures/sb/IMG_5953.JPG');
-im2=imread('linear_pictures/sb/IMG_5956.JPG');
-im3=imread('linear_pictures/sb/IMG_5957.JPG');
+im1=imread('linear_pictures/sb/IMG_5954.JPG');
+im2=imread('linear_pictures/sb/IMG_5961.JPG');
+im3=imread('linear_pictures/sb/IMG_5955.JPG');
 
 % compute image descriptors
 fprintf( 'Computing descriptors ...\n' )

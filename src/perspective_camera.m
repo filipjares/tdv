@@ -56,6 +56,8 @@ N = 6; Ps = zeros(3, 4, N);
     R = Rx*Ry;
     Ps(:,:,6) = K*R*[eye(3) -1*C];
 
+% define indices of points to be emphasized
+ix = [1 2 3 4 13];
 
 % For each camera display its image    
 for i = 1:N
@@ -73,5 +75,13 @@ for i = 1:N
     plot([x1(1,:); x2(1,:)], [x1(2,:); x2(2,:)], 'k-', 'linewidth', 2); % Lines connecting front and back side
     set(gca, 'ydir', 'reverse');
     axis equal;
+    
+    % plot emphasized points
+    x = [x1 x2];
+    points{i} = x(:,ix);
+    for j = ix
+        h = plot(x(1,j), x(2,j), 'markerfacecolor', color_hash(j), 'markersize', 7, 'marker', 'o');
+    end
+    
     hold off;
 end

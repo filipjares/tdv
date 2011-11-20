@@ -2,7 +2,8 @@ function [d, pA0, pB0] = lines_distance(pA, a, pB, b)
     % [d, pA0, pB0] = find_lines_distance(pA, a, pB, b)
     %
     % Returns distance between two lines and returns points on each line
-    % that is the closest one to the other line
+    % that is the closest one to the other line. All the parameters and
+    % results are in euclidean coordinates
     %
     % Input:    pA  - point on line A
     %           a   - tangent vector of the line A

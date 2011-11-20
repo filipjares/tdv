@@ -10,6 +10,9 @@ function X = lines_intersection(C1, d1, C2, d2)
     %
     % Expected use: C1 and C2 corresponding to two (distinct) camera
     % centers, d1 and d2 corresponding to rays that intersect in point X
+    
+    % TODO: add support for d1 and d2 being matrices (representing multiple
+    % vectors)
 
     m = cross(d1, d2);
     

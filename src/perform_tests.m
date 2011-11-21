@@ -2,14 +2,31 @@
 %% Depth in camera function:
 
 clear all;
-P = [eye(3), zeros(3,1)];
+P = [eye(3), zeros(3,1)];   % camera
+Xs = zeros(4,3);            % multiple points ("list" of vectors)
+ds = zeros(1,3);            % and their depths to test the depth_in_camera
+                            %     for multiple points
 
 X = [0 0 1 1]';
-assert(depth_in_camera(X,P) == 1);
+Xs(:,1) = X;
+d = depth_in_camera(X,P);
+ds(1,1) = d;
+assert(d == 1);
+
 X = [10 10 10 10]';
-assert(depth_in_camera(X,P) == 1);
+Xs(:,2) = X;
+d = depth_in_camera(X,P);
+ds(1,2) = d;
+assert(d == 1);
+
 X = [10 10 10 -10]';
-assert(depth_in_camera(X,P) == -1);
+Xs(:,3) = X;
+d = depth_in_camera(X,P);
+ds(1,3) = d;
+assert(d == -1);
+
+% test for multiple points argument
+assert(all(depth_in_camera(Xs, P) == ds));
 
 P(3,3) = 0;
 err = false;

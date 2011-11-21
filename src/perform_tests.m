@@ -61,41 +61,43 @@ clear all;
 K = 100;
 EPS = eps*10^4;
 
-for i = 1:100
+for i = 1:5
     
     % generate random data
-    rdata = -K + 2*K*rand(3,3);
+    rdata = -K + 2*K*rand(3,102);
     C1 = rdata(:,1);
     C2 = rdata(:,2);
-    Xo = rdata(:,3);
+    Xo = rdata(:,3:end);
     
     % unnormalized ray vectors:
-    d1 = Xo - C1;
-    d2 = Xo - C2;
+    d1 = Xo - C1*ones(1,size(Xo,2));
+    d2 = Xo - C2*ones(1,size(Xo,2));
     
     Xo = e2p(Xo);     % Xo to homogeneous coordinates
     
-    X = lines_intersection(C1, d1, C2, d2);
-    diff = norm(X-Xo);
-    if diff > EPS
-        error('[%e %e %e %e] differs from original [%e %e %e %e] by %e', ...
-            X(1), X(2), X(3), X(4), ...
-            Xo(1), Xo(2), Xo(3), Xo(4), ...
-            diff);
+    X = rays_intersection(C1, d1, C2, d2);
+    diff = vlen(X-Xo);
+    if max(diff) > EPS
+        error('Error in rays_intersection.m: difference too high');
+        % error('[%e %e %e %e] differs from original [%e %e %e %e] by %e', ...
+        %     X(1), X(2), X(3), X(4), ...
+        %     Xo(1), Xo(2), Xo(3), Xo(4), ...
+        %     diff);
     end
     
     % normalized ray vectors
-    d1 = d1/norm(d1);
-    d2 = d2/norm(d2);
+    d1 = d1./ (ones(3,1)*vlen(d1));
+    d2 = d2./ (ones(3,1)*vlen(d2));
     
-    X = lines_intersection(C1, d1, C2, d2);
-    diff = norm(X-Xo);
-    if diff > EPS
-        s = sprintf('[%e %e %e %e] differs from original [%e %e %e %e] by %e', ...
-            X(1), X(2), X(3), X(4), ...
-            Xo(1), Xo(2), Xo(3), Xo(4), ...
-            diff);
-        disp(s);
+    X = rays_intersection(C1, d1, C2, d2);
+    diff = vlen(X-Xo);
+    if max(diff) > EPS
+        error('Error in rays_intersection.m: difference too high');
+        % s = sprintf('[%e %e %e %e] differs from original [%e %e %e %e] by %e', ...
+        %     X(1), X(2), X(3), X(4), ...
+        %     Xo(1), Xo(2), Xo(3), Xo(4), ...
+        %     diff);
+        % disp(s);
     end
     
 end

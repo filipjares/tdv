@@ -58,9 +58,12 @@ N = 6; Ps = zeros(3, 4, N);
 
 % define indices of points to be emphasized
 ix = [1 2 3 4 13];
+if ~exist('cameras', 'var')
+    cameras = [1:6];
+end
 
 % For each camera display its image    
-for i = 1:N
+for i = cameras %1:N
     P = Ps(:,:,i); % Current camera
 
     % Compute projections of the object vertices

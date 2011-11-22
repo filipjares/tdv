@@ -34,10 +34,13 @@ x1 = p2e(P*X1);
 x2 = p2e(P*X2);
 
 figure(7);
+set(gca, 'ydir', 'reverse');
+axis equal;
+hold on;
 
 % house
 plot(x1(1,:), x1(2,:), 'r-', 'linewidth', 2); % Front side of the house in red
-hold on;
+
 plot(x2(1,:), x2(2,:), 'b-', 'linewidth', 2); % Back side of the house in blue
 plot([x1(1,:); x2(1,:)], [x1(2,:); x2(2,:)], 'k-', 'linewidth', 2); % Lines connecting front and back side
 
@@ -54,35 +57,34 @@ plot_coordinate_frame(p2e(C2), K\P2(:,1:3), P, 'C2');
 o = p2e(P(:,4));
 plot(o(1,:), o(2,:), 'markerfacecolor', 'b', 'markersize', 7, 'marker', 'o');
 
-% to resize the plot slightly to make the C1, C2 fit into the picture
-plot(c(1,1), c(2,1) -100, 'LineStyle', 'none');
-
+% compute ray direction vectors and normalize them
 d1 = P1(:,1:3)\u1;
 d2 = P2(:,1:3)\u2;
-
-% normalize
 d1 = d1 ./ (ones(3,1)*vlen(d1));
 d2 = d2 ./ (ones(3,1)*vlen(d2));
 
+% endpoints of rays coming out of camera centers
 D1 = e2p(p2e(C1)*ones(1,size(d1,2)) + d1);
 D2 = e2p(p2e(C2)*ones(1,size(d2,2)) + d2);
 
+% images of these endpoints
 i1 = p2e(P*D1);
 i2 = p2e(P*D2);
 
+% images of camera centers
 CC1 = p2e(P*C1);
 CC2 = p2e(P*C2);
 
+% plot the rays
 plot([CC1(1)*ones(1,size(i1,2)); i1(1,:)], [CC1(2)*ones(1,size(i1,2)); i1(2,:)], '-b');
 plot([CC2(1)*ones(1,size(i2,2)); i2(1,:)], [CC2(2)*ones(1,size(i2,2)); i2(2,:)], '-b');
 
+% plot images of intersections of rays of both cameras
 X = rays_intersection(p2e(C1), d1, p2e(C2), d2);
 xs = p2e(P*X);
 for j = 1:size(xs,2);
     plot(xs(1,j), xs(2,j), 'markerfacecolor', color_hash(j), 'markersize', 7, 'marker', 'o');
 end
 
-set(gca, 'ydir', 'reverse');
-axis equal;
 hold off;
 

@@ -24,7 +24,7 @@ function X = Pu2X(P1, P2, u1, u2)
     
     % TODO: replace this loop with matrix operation
     for i = 1:n
-        X(:,i) = lines_intersection(C1, d1(:,i), C2, d2(:,i));
+        X(:,i) = rays_intersection(C1, d1(:,i), C2, d2(:,i));
     end
 
 end

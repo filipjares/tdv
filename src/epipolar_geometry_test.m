@@ -16,8 +16,8 @@ C2 = null(P2);
 
 %% Overall scene view
 
-C = [1.5;-3;-4];
-alpha = 0.05; c = cos(alpha); s = sin(alpha);
+C = [1.5;-5;-4];
+alpha = 0.08; c = cos(alpha); s = sin(alpha);
 Ry = [ ...
     c  0  s; ...
     0  1  0; ...
@@ -63,8 +63,6 @@ d2 = P2(:,1:3)\u2;
 % normalize
 d1 = d1 ./ (ones(3,1)*vlen(d1));
 d2 = d2 ./ (ones(3,1)*vlen(d2));
-
-%%
 
 D1 = e2p(p2e(C1)*ones(1,size(d1,2)) + d1);
 D2 = e2p(p2e(C2)*ones(1,size(d2,2)) + d2);

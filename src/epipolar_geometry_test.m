@@ -1,15 +1,15 @@
 %% Use perspective_camera script
 
-cameras = [4 6];
+cameras = [6 4];
 perspective_camera;
 
-%% Selected points in two pictures and relevant cameras
+%% Plot selected points in two pictures and relevant cameras
 
-u1 = e2p(points{6});
-u2 = e2p(points{4});
+u1 = e2p(points{cameras(1)});
+u2 = e2p(points{cameras(2)});
 
-P1 = Ps(:,:,6);
-P2 = Ps(:,:,4);
+P1 = Ps(:,:,cameras(1));
+P2 = Ps(:,:,cameras(2));
 
 C1 = null(P1);
 C2 = null(P2);
@@ -79,8 +79,10 @@ CC2 = p2e(P*C2);
 plot([CC1(1)*ones(1,size(i1,2)); i1(1,:)], [CC1(2)*ones(1,size(i1,2)); i1(2,:)], '-b');
 plot([CC2(1)*ones(1,size(i2,2)); i2(1,:)], [CC2(2)*ones(1,size(i2,2)); i2(2,:)], '-b');
 
-% plot images of intersections of rays of both cameras
-X = rays_intersection(p2e(C1), d1, p2e(C2), d2);
+%% plot images of intersections of rays of both cameras
+
+% X = rays_intersection(p2e(C1), d1, p2e(C2), d2);
+X = Pu2X(P1, P2, u1, u2);
 xs = p2e(P*X);
 for j = 1:size(xs,2);
     plot(xs(1,j), xs(2,j), 'markerfacecolor', color_hash(j), 'markersize', 7, 'marker', 'o');
@@ -88,3 +90,15 @@ end
 
 hold off;
 
+%% Epipolar geometry
+
+% (un)calibrated points (un - ?)
+v1 = K\u1;
+v2 = K\u2;
+
+% "candidate solutions"
+Evec = calibrated_fivepoint(v1, v2);
+clear R;, clear b;
+for i=1:size(Evec,2)
+    [R{i}, b{i}] = EutoRb(reshape(Evec(:,i), 3, 3)', v1, v2);
+end

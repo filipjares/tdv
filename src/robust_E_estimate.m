@@ -17,7 +17,7 @@
 
 % load('seek_sparse_correspondencies-output', 'im1', im2', 'im3', ...
 %         'm12', 'm23', 'm31', 'pc12', 'pc23', 'pc31' ...
-%         ... %, 'pts1', 'pts2', 'pts3'  ...
+%         , 'pts1', 'pts2', 'pts3'  ...
 %         );
 
 % addpath calibrated_p5/
@@ -34,8 +34,15 @@ N = ransac_min_sample_size(0.95, inlier_probability, 5);
 %%
 I = eye(3);
 
-all_u1 = K\e2p(pc12(1:2,:));
-all_u2 = K\e2p(pc12(3:4,:));
+% Use all (mis)matching points
+% all_u1 = K\e2p(pc12(1:2,:));
+% all_u2 = K\e2p(pc12(3:4,:));
+
+% Use only those points that are consistent in all three pictures
+all_u1 = [[pts1.x] ; [pts1.y]];
+all_u2 = [[pts2.x] ; [pts2.y]];
+all_u1 = K\e2p(all_u1(:,results(1,:)));
+all_u2 = K\e2p(all_u2(:,results(2,:)));
 
 minError = Inf;
 best_ix = [];

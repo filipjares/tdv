@@ -106,7 +106,7 @@ inliers_ix = err < mean(err); % FIXME: compute the threshold instead of fixed on
 v1 = K*all_u1;
 v2 = K*all_u2;
 
-figure(1); image(im1); hold on;
+figure(1); image(im1); axis equal; hold on;
 % inliers in this picture
 plot(v1(1,inliers_ix), v1(2,inliers_ix), 'or', 'markerfacecolor', 'r');
 % outliers in this picture
@@ -118,7 +118,7 @@ plot([v1(1,inliers_ix); v2(1,inliers_ix)], ...
     [v1(2,inliers_ix); v2(2,inliers_ix)], '-r', 'LineWidth', 2);
 hold off;
 
-figure(2); image(im2); hold on;
+figure(2); image(im2); axis equal; hold on;
 % inliers in this picture
 plot(v2(1,inliers_ix), v2(2,inliers_ix), 'or', 'markerfacecolor', 'r');
 % outliers in this picture
@@ -130,7 +130,38 @@ plot([v1(1,inliers_ix); v2(1,inliers_ix)], ...
     [v1(2,inliers_ix); v2(2,inliers_ix)], '-r', 'LineWidth', 2);
 hold off;
 
-show_cameras;
+%%
+
+F = K'\E/K;
+
+epipolar_ix = inliers_ix(1,1:10);
+v1 = v1(:,epipolar_ix);
+v2 = v2(:,epipolar_ix);
+
+V1 = p2e(v1);
+V2 = p2e(v2);
+
+%%
+
+figure(1); hold on;
+lines = F'*v2;
+for i = 1:size(lines,2)
+    l = lines(:,i);
+    plot(V1(1,i), V1(2,i), 'o', 'color', color_hash(i), 'MarkerSize', 5, 'markerfacecolor', color_hash(i));
+    draw_line_into_axes(l, color_hash(i), 2);
+end
+hold off;
+
+figure(2); hold on;
+lines = F*v1;
+for i = 1:size(lines,2)
+    l = lines(:,i);
+    plot(V2(1,i), V2(2,i), 'o', 'color', color_hash(i), 'MarkerSize', 5, 'markerfacecolor', color_hash(i));
+    draw_line_into_axes(l, color_hash(i), 2);
+end
+hold off;
+
+% show_cameras;
 
 
 

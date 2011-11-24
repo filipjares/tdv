@@ -38,6 +38,7 @@ all_u1 = K\e2p(pc12(1:2,:));
 all_u2 = K\e2p(pc12(3:4,:));
 
 minError = Inf;
+best_ix = [];
 bestE = [];
 
 i = 0;
@@ -70,6 +71,7 @@ while true
             if (err < minError)
                 minError = err;
                 bestE = E;
+                best_ix = ix;
             end
         end
     end
@@ -80,6 +82,8 @@ end
 %%
 
 E = bestE;
+u1 = all_u1(:,ix);
+u2 = all_u2(:,ix);
 [R, b, P1, P2] = EutoRb(E, u1, u2);
 
 % reprojection error

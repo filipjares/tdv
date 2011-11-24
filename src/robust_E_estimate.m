@@ -35,18 +35,22 @@ N = ransac_min_sample_size(0.95, inlier_probability, 5);
 I = eye(3);
 
 % Use all (mis)matching points
-% all_u1 = K\e2p(pc12(1:2,:));
-% all_u2 = K\e2p(pc12(3:4,:));
+all_u1 = K\e2p(pc12(1:2,:));
+all_u2 = K\e2p(pc12(3:4,:));
 
 % Use only those points that are consistent in all three pictures
-all_u1 = [[pts1.x] ; [pts1.y]];
-all_u2 = [[pts2.x] ; [pts2.y]];
-all_u1 = K\e2p(all_u1(:,results(1,:)));
-all_u2 = K\e2p(all_u2(:,results(2,:)));
+% all_u1 = [[pts1.x] ; [pts1.y]];
+% all_u2 = [[pts2.x] ; [pts2.y]];
+% all_u1 = K\e2p(all_u1(:,results(1,:)));
+% all_u2 = K\e2p(all_u2(:,results(2,:)));
 
-minError = Inf;
+best_support = -1;
+best_inl_ix = [];
 best_ix = [];
 bestE = [];
+
+THR = 2; % [px]
+THR = 2*THR^2;
 
 i = 0;
 while true
@@ -70,14 +74,18 @@ while true
         if ~isempty(P1)
             % we reproject all points forth and back
             X = Pu2X(P1, P2, all_u1, all_u2);
-            v1 = e2p(p2e(P1*X));
-            v2 = e2p(p2e(P2*X));
+            % TODO: points visibility
+            v1 = e2p(p2e(K*P1*X));
+            v2 = e2p(p2e(K*P2*X));
             % and compute sum of reprojection errors
-            err = sum(vlen(v1 - all_u1) + vlen(v2 - all_u2)); % TODO use different error function?
+            err = sum((v1 - e2p(pc12(1:2,:))).^2) + sum((v2 - e2p(pc12(3:4,:))).^2); % TODO use different error function?
+            inl_ix = err < THR;
+            support = sum(inl_ix);
             
-            if (err < minError)
-                minError = err;
+            if (support > best_support)
+                best_support = support;
                 bestE = E;
+                best_inl_ix = inl_ix;
                 best_ix = ix;
             end
         end
@@ -89,8 +97,8 @@ end
 %%
 
 E = bestE;
-u1 = all_u1(:,ix);
-u2 = all_u2(:,ix);
+u1 = all_u1(:,best_ix);
+u2 = all_u2(:,best_ix);
 [R, b, P1, P2] = EutoRb(E, u1, u2);
 
 % reprojection error

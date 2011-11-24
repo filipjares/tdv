@@ -98,21 +98,31 @@ inliers_ix = err < 0.06;    % FIXME: compute the threshold instead of fixed one
 
 %%
 
-u1 = K*all_u1;
-u2 = K*all_u2;
+v1 = K*all_u1;
+v2 = K*all_u2;
 
 figure(1); image(im1); hold on;
 % inliers in this picture
-plot(u1(1,inliers_ix), u1(2,inliers_ix), 'o', 'markerfacecolor', 'r');
+plot(v1(1,inliers_ix), v1(2,inliers_ix), 'or', 'markerfacecolor', 'r');
 % outliers in this picture
-plot(u1(1,~inliers_ix), u1(2,~inliers_ix), 'ok');
+plot(v1(1,~inliers_ix), v1(2,~inliers_ix), 'ok', 'markerfacecolor', 'k');
+% plot lines connecting points in this picture with points in the other one
+plot([v1(1,~inliers_ix); v2(1,~inliers_ix)], ...
+    [v1(2,~inliers_ix); v2(2,~inliers_ix)], '-k', 'LineWidth', 2);
+plot([v1(1,inliers_ix); v2(1,inliers_ix)], ...
+    [v1(2,inliers_ix); v2(2,inliers_ix)], '-r', 'LineWidth', 2);
 hold off;
 
 figure(2); image(im2); hold on;
 % inliers in this picture
-plot(u2(1,inliers_ix), u2(2,inliers_ix), 'o', 'markerfacecolor', 'r');
+plot(v2(1,inliers_ix), v2(2,inliers_ix), 'or', 'markerfacecolor', 'r');
 % outliers in this picture
-plot(u2(1,~inliers_ix), u2(2,~inliers_ix), 'ok');
+plot(v2(1,~inliers_ix), v2(2,~inliers_ix), 'ok', 'markerfacecolor', 'k');
+% plot lines connecting points in this picture with points in the other one
+plot([v1(1,~inliers_ix); v2(1,~inliers_ix)], ...
+    [v1(2,~inliers_ix); v2(2,~inliers_ix)], '-k', 'LineWidth', 2);
+plot([v1(1,inliers_ix); v2(1,inliers_ix)], ...
+    [v1(2,inliers_ix); v2(2,inliers_ix)], '-r', 'LineWidth', 2);
 hold off;
 
 show_cameras;

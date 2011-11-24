@@ -99,9 +99,7 @@ v1 = e2p(p2e(P1*X));
 v2 = e2p(p2e(P2*X));
 err = vlen(v1 - all_u1) + vlen(v2 - all_u2);
 
-inliers_ix = err < 0.06;    % FIXME: compute the threshold instead of fixed one
-
-
+inliers_ix = err < mean(err); % FIXME: compute the threshold instead of fixed one
 
 %%
 

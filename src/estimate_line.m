@@ -96,7 +96,7 @@ ransac_best_l_inliers_ix = [];	% indices of points within its neighbourhood
 max_support = -1;				% number of points within its neighbourhood
 
 inlier_probability = N/(N+No);
-minN = ceil(log(1 - 0.99)/log(1-inlier_probability^2));
+minN = ransac_min_sample_size(0.99, inlier_probability, 2);
 
 for i=1:minN
 

@@ -1,5 +1,5 @@
-function [R b] = EutoRb(E, u1, u2)
-    % [R, b] = EutoRb( E, u1, u2 )
+function [R b P1 P2] = EutoRb(E, u1, u2)
+    % [R b P1 P2] = EutoRb(E, u1, u2)
     %
     % Essential matrix decomposition with chirality
     %
@@ -8,6 +8,7 @@ function [R b] = EutoRb(E, u1, u2)
     %                    coordinates (3×n), used for chirality test
     % Outputs:  R - relative rotation (3×3) or [] if chirality test fails
     %           b - relative translation, euclidean (3×1), unit length
+    %           P1, P2 - 
     %
     % The sessential matrix E is decomposed such that k*E = R * sqc( b )
     % for some k != 0
@@ -59,4 +60,6 @@ function [R b] = EutoRb(E, u1, u2)
     
     R = [];     % no solution
     b = [];
+    P1 = [];
+    P2 = [];
 end

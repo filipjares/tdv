@@ -116,33 +116,33 @@ v2 = K*all_u2;
 
 figure(1); image(im1); axis equal; hold on;
 % inliers in this picture
-plot(v1(1,inliers_ix), v1(2,inliers_ix), 'or', 'markerfacecolor', 'r');
+plot(v1(1,best_inl_ix), v1(2,best_inl_ix), 'or', 'markerfacecolor', 'r');
 % outliers in this picture
-plot(v1(1,~inliers_ix), v1(2,~inliers_ix), 'ok', 'markerfacecolor', 'k');
+plot(v1(1,~best_inl_ix), v1(2,~best_inl_ix), 'ok', 'markerfacecolor', 'k');
 % plot lines connecting points in this picture with points in the other one
-plot([v1(1,~inliers_ix); v2(1,~inliers_ix)], ...
-    [v1(2,~inliers_ix); v2(2,~inliers_ix)], '-k', 'LineWidth', 2);
-plot([v1(1,inliers_ix); v2(1,inliers_ix)], ...
-    [v1(2,inliers_ix); v2(2,inliers_ix)], '-r', 'LineWidth', 2);
+plot([v1(1,~best_inl_ix); v2(1,~best_inl_ix)], ...
+    [v1(2,~best_inl_ix); v2(2,~best_inl_ix)], '-k', 'LineWidth', 2);
+plot([v1(1,best_inl_ix); v2(1,best_inl_ix)], ...
+    [v1(2,best_inl_ix); v2(2,best_inl_ix)], '-r', 'LineWidth', 2);
 hold off;
 
 figure(2); image(im2); axis equal; hold on;
 % inliers in this picture
-plot(v2(1,inliers_ix), v2(2,inliers_ix), 'or', 'markerfacecolor', 'r');
+plot(v2(1,best_inl_ix), v2(2,best_inl_ix), 'or', 'markerfacecolor', 'r');
 % outliers in this picture
-plot(v2(1,~inliers_ix), v2(2,~inliers_ix), 'ok', 'markerfacecolor', 'k');
+plot(v2(1,~best_inl_ix), v2(2,~best_inl_ix), 'ok', 'markerfacecolor', 'k');
 % plot lines connecting points in this picture with points in the other one
-plot([v1(1,~inliers_ix); v2(1,~inliers_ix)], ...
-    [v1(2,~inliers_ix); v2(2,~inliers_ix)], '-k', 'LineWidth', 2);
-plot([v1(1,inliers_ix); v2(1,inliers_ix)], ...
-    [v1(2,inliers_ix); v2(2,inliers_ix)], '-r', 'LineWidth', 2);
+plot([v1(1,~best_inl_ix); v2(1,~best_inl_ix)], ...
+    [v1(2,~best_inl_ix); v2(2,~best_inl_ix)], '-k', 'LineWidth', 2);
+plot([v1(1,best_inl_ix); v2(1,best_inl_ix)], ...
+    [v1(2,best_inl_ix); v2(2,best_inl_ix)], '-r', 'LineWidth', 2);
 hold off;
 
 %%
 
 F = K'\E/K;
 
-epipolar_ix = inliers_ix(1,1:10);
+epipolar_ix = best_inl_ix(1,1:10);
 v1 = v1(:,epipolar_ix);
 v2 = v2(:,epipolar_ix);
 

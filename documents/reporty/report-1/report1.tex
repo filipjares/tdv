@@ -38,13 +38,37 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 
 \section{Úvod}
 
+Tato zpráva popisuje semestrální práci pro předmět 3D počítačové vidění. Cílem této semestrální
+práce je na základě dvanácti fotografií vybraného objektu (portálu/dveří) zrekonstruovat nasnímanou
+scénu a vytvořit trojrozměrný digitální model této scény.
+
+
+% Notes:
+%
+% terminology:
+%	correspondence = truth,
+%	match = algorithm’s result; hypothesised corresp.
+
+
 \section{Popis metody}
 
 Pokusne citace:
 \cite{Hartley2004}
 \cite{SaraLectures}
 
+% Použitý fotoaparát: Canon DIGITAL IXUS 80 IS
+
 Nasnímané obrázky
+
+	\begin{figure}[htb]
+		\centering
+		\includegraphics[width=16cm]{pictures/linear/cube.jpg}
+		\caption{Snímek pravoúhlého objektu použitého pro kalibraci kamery. Červeně, zeleně
+		a modře jsou vyznačeny rovnoběžky ve třech navzájem kolmých směrech, které byly
+		použity pro nalezení úběžníků.}
+		\label{fig:cube}
+	\end{figure}
+
 
 	\begin{figure}[htb]
 		% dummy content, to make the rendering faster while under construction
@@ -68,9 +92,11 @@ Nasnímané obrázky
 			}
 			\subfigure[] {
 				\fbox{\begin{minipage}{3cm}\hfill\vspace{4cm}\end{minipage}}
+				\label{fig:i0}
 			}
 			\subfigure[] {
 				\fbox{\begin{minipage}{3cm}\hfill\vspace{4cm}\end{minipage}}
+				\label{fig:i1}
 			}
 			\subfigure[] {
 				\fbox{\begin{minipage}{3cm}\hfill\vspace{4cm}\end{minipage}}
@@ -109,9 +135,11 @@ Nasnímané obrázky
 			% }
 			% \subfigure[] {
 			% 	\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5954.JPG}}
+			%	\label{fig:i0}
 			% }
 			% \subfigure[] {
 			% 	\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5961.JPG}}
+			%	\label{fig:i1}
 			% }
 			% \subfigure[] {
 			% 	\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5964.JPG}}
@@ -140,8 +168,23 @@ Nasnímané obrázky
 		\label{fig:linearizedPictureExample}
 	\end{figure}
 
+	\begin{figure}[htb]
+			\centering
+			\subfigure[] {
+				\fbox{\includegraphics[width=8cm,angle=-90,clip=true,trim=165px 105px 110px 80px]{pictures/matches-left-with_epipolar_lines.jpg}}
+			}
+			\subfigure[] {
+				\fbox{\includegraphics[width=8cm,angle=-90,clip=true,trim=165px 105px 110px 80px]{pictures/matches-right-with_epipolar_lines.jpg}}
+			}
+		\caption{Pár fotografií (\ref{fig:i0} a \ref{fig:i1}) se zobrazenými korespondencemi: červeně korespondence odpovídající
+			epipolární geometrii, černě chybné. Pro vybrané body (označené křížky) jsou stejnými barvami znázorněny vzájemně si
+			odpovídající epipoláry}
+		\label{fig:pairWithEpipolars}
+	\end{figure}
+
 \section{Zhodnocení}
 
+% FIXME: jak zahrnout bibliography.bib do repozitare? .. zkopirovat?
 
 % Reference
 

@@ -38,39 +38,28 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 
 \section{Úvod}
 
-Tato zpráva popisuje semestrální práci pro předmět 3D počítačové vidění. Cílem této semestrální
-práce je na základě dvanácti fotografií vybraného objektu (portálu/dveří) zrekonstruovat nasnímanou
-scénu a vytvořit trojrozměrný digitální model této scény.
+Tato zpráva popisuje semestrální práci pro předmět 3D počítačové vidění, jejímž cílem je na základě
+dvanácti fotografií vybraného objektu (portálu/dveří) zrekonstruovat nasnímanou scénu a vytvořit
+trojrozměrný digitální model této scény. Práce ještě není dokončená, proto v této verzi zpráva
+popisuje pouze hotovou část řešení.
 
+\section{Řešení}
 
-% Notes:
-%
-% terminology:
-%	correspondence = truth,
-%	match = algorithm’s result; hypothesised corresp.
-
-
-\section{Popis metody}
-
-Pokusne citace:
-\cite{Hartley2004}
-\cite{SaraLectures}
-
-% Použitý fotoaparát: Canon DIGITAL IXUS 80 IS
-
-Nasnímané obrázky
-
-	\begin{figure}[htb]
+\paragraph{Výběr scény}
+Jako objekt pro rekonstrukci byly vybrány domovní dveře domu v pražské Jeseniově ulici. Byly
+vyfotografovány z dvanácti míst tak, jak je to přibližně znázorněno na \figref{fig:usporadaniKamer}.
+Kolmá vzdálenost od dveří byla u všech kamer přibližně stejná (zhruba 4\,m) a dveře byly ze čtyř
+míst vyfotografovány vždy ze tří rúzných výškových úrovní (zhruba z výšky 30\,cm, 130\,cm a
+200\,cm).
+	\begin{figure}[h]
 		\centering
-		\includegraphics[width=16cm]{pictures/linear/cube.jpg}
-		\caption{Snímek pravoúhlého objektu použitého pro kalibraci kamery. Červeně, zeleně
-		a modře jsou vyznačeny rovnoběžky ve třech navzájem kolmých směrech, které byly
-		použity pro nalezení úběžníků.}
-		\label{fig:cube}
+		\includegraphics[width=8cm]{pictures/usporadani_kamer.pdf}
+		\caption{Schéma uspořádání kamer při snímání scény}
+		\label{fig:usporadaniKamer}
 	\end{figure}
-
-
-	\begin{figure}[htb]
+Fotografie s rozlišením $3264\times2448$ pixelů byly pořízeny fotoaparátem Canon Ixus 80
+IS na nejkratší ohniskovou vzdálenost. Zachyceny jsou na \figref{fig:fotografie}.
+	\begin{figure}[htbp]
 		% dummy content, to make the rendering faster while under construction
 			\centering
 			\subfigure[] {
@@ -157,9 +146,57 @@ Nasnímané obrázky
 			% \subfigure[] {
 			% 	\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5963.JPG}}
 			% }
-		\caption{Nasnímané snímky, které byly použity pro rekonstrukci}
-		\label{fig:inputPictures}
+		\caption{Snímky scény, které byly použity pro rekonstrukci, označení obrázků
+			odpovídá označení kamer na obrázku \ref{fig:usporadaniKamer}}
+		\label{fig:fotografie}
 	\end{figure}
+
+\paragraph{Odstranění radiálního zkreslení a kalibrace kamery} Protože použité algoritmy pracují
+s~lineárním modelem kamery, bylo nutné před dalším použitím nafocených snímků nejprve odstranit
+radiální zkreslení. K tomuto účelu byl použit nástroj \emph{rd\_undistort}, který byl k dispozici od
+vyučujících \cite{code_repo}.\footnote{Jak citovat tyto nástroje?} Jako podklad pro kalibraci tohoto
+nástroje posloužily tři snímky vzoru zachyceného na obrázku~\ref{fig:radialCalibration}.
+
+
+% \url{http://cmp.felk.cvut.cz/cmp/courses/TDV/code/rd\_undistort\_20110112.zip}
+
+	\begin{figure}[htb]
+		\centering
+		\subfigure[] {
+			\fbox{\includegraphics[width=7cm]{pictures/radial_calibration_pattern.jpg}}
+			\label{fig:radialCalibration}
+		}
+		\subfigure[] {
+			\fbox{\includegraphics[width=7cm]{pictures/linear/cube.jpg}}
+			\label{fig:kalibraceKamery}
+		}
+		\caption{Snímky použité pro kalibraci: \subref{fig:radialCalibration} vzor použitý
+			pro kalibraci nástroje pro odstranění radiálního zkreslení
+			\subref{fig:kalibraceKamery} Snímek pravoúhlého objektu použitého pro
+			kalibraci kamery. Červeně, zeleně a modře jsou vyznačeny rovnoběžky ve třech
+			navzájem kolmých směrech, které byly použity pro nalezení úběžníků.}
+	\end{figure}
+
+\section{Poznamky}
+
+- kalibrace kamery
+- nalezení korespondencí -- opět byl použit nástroj dodaný učiteli - WBS matcher
+- 5 bodový algoritmus \cite{stewenius-engels-nister-isprsj-2006}
+
+% Notes:
+%
+% terminology:
+%	correspondence = truth,
+%	match = algorithm’s result; hypothesised corresp.
+
+
+\section{Popis metody}
+
+Pokusne citace:
+\cite{Hartley2004}
+\cite{SaraLectures}
+
+
 
 	\begin{figure}[htb]
 		\centering

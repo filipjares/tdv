@@ -67,7 +67,7 @@ podrobněji.
 
 \subsection{Popis řešení}
 
-\paragraph{Výběr scény}
+\subsubsection{Výběr scény}
 Jako objekt pro rekonstrukci byly vybrány domovní dveře domu v pražské Jeseniově ulici. Byly
 vyfotografovány z dvanácti míst tak, jak je to přibližně znázorněno na \figref{fig:usporadaniKamer}.
 Kolmá vzdálenost od dveří byla u všech kamer přibližně stejná (zhruba 4\,m) a dveře byly ze čtyř
@@ -173,7 +173,7 @@ IS na nejkratší ohniskovou vzdálenost. Zachyceny jsou na \figref{fig:fotograf
 		\label{fig:fotografie}
 	\end{figure}
 
-\paragraph{Odstranění radiálního zkreslení a kalibrace kamery} Protože použité algoritmy pra\-cují
+\subsubsection{Odstranění radiálního zkreslení a kalibrace kamery} Protože použité algoritmy pra\-cují
 s~lineárním modelem kamery, bylo nutné před dalším použitím nafocených snímků nej\-prve odstranit
 radiální zkreslení. K tomuto účelu byl použit nástroj \emph{rd\_undistort}, který byl k dispozici od
 vyučujících \cite{code_repo}.\footnote{Jak citovat tyto nástroje?} Jako podklad pro kalibraci tohoto
@@ -194,7 +194,7 @@ absolutní kuželosečky $\IAC$:
 Kalibrační matici jsme určili z obrazu absolutní kuželosečky na základě vztahu
 	\begin{equation} \IAC = (\matrix K \matrix K\T)^{-1} \end{equation}
 pomocí Choleskyho faktorizace. Výsledná kalibrační matice byla:
-	\begin{equation}
+	\begin{equation} \label{eq:matrixK}
 		\matrix K = \begin{pmatrix}
 				3442,3	& 0		& 1614,3 \\
 				0	& 3442,3	& 1185,7 \\
@@ -218,20 +218,34 @@ pomocí Choleskyho faktorizace. Výsledná kalibrační matice byla:
 			navzájem kolmých směrech protínající se v jednotlivých úběžnících.}
 	\end{figure}
 
-\paragraph{Nalezení předběžných korespondencí} Pro nalezení řídkých korespondencí mezi body ve
+\subsubsection{Nalezení předběžných korespondencí} Pro nalezení řídkých korespondencí mezi body ve
 dvojicích obrazů byl opět použit dodaný kód -- \emph{WBS Matcher} \cite{code_repo},
 \cite{WBS_Matcher}.  Nejprve byly (pro každý obrázek nezávisle) k automaticky vybraným
 \uv{význačným} bodům vypočteny a přiřazeny deskriptory. Na základě porovnání těchto deskriptorů byly
 potom vytvořeny korespondence mezi obrazy.
 
 Pro každý snímek vytvořil WBS Matcher přibližně 30\,000 deskriptorů. Počet nalezených předběžných
-korespondencí pro pár obrazů se pohyboval mezi 400 až 7\,000.
+korespondencí pro pár obrazů se pohyboval mezi 400 až 7\,000. Tyto korespondence byly poté v
+následujícím kroku použity pro odhad epipolární geometrie pří\-slu\-šných kamer.
 
 
-\paragraph{Odhad epipolární geometrie páru kamer}
+\subsubsection{Odhad epipolární geometrie} Odhad esenciální matice $\matrix E$ daného páru
+ka\-mer je založen na použití předběžných korespondencí získaných v~předchozím
+kroku. Protože jsou nalezené korespondence kontaminovány chybami, byl jakožto metoda robustního
+odhadu použit algoritmus RANSAC \cite{RansacOverview}. Ten je tvořen smyčkou, ve které jsou
+opakovaně vytvářeny hypotézy (matice $\matrix E$), pro které je ověřována jejich konzistence
+s daty. RANSAC vybere z prověřených hypotéz tu, která je v největší míře kon\-zis\-ten\-tní s daty.
 
-- RANSAC \cite{RansacOverview}
-- 5 bodový algoritmus \cite{stewenius-engels-nister-isprsj-2006}
+\paragraph{Hypotézy}
+Esenciální matice, představující hyptotézy pro daný pár kamer, byly generovány s pou\-ži\-tím
+implementace pětibodového algoritmu od autorů \cite{stewenius-engels-nister-isprsj-2006} na základě
+vzorků pěti náhodně vybraných korespondencí mezi body z obrazů těchto kamer.  Na body byla před
+použitím pětibodového algoritmu aplikována transformace $\matrix K^{-1}$ (odpovídající inverzi
+matice ze vztahu \eqref{eq:matrixK}). Pro danou pětici korespondencí je obecně výsledkem
+pětibodového algoritmu více esenciálních matic. Jako hypotézy byly ovšem v RANSACu použity pouze ty,
+pro které platí, že všech pět bodů leží před oběma kamerami.
+
+\paragraph{Hodnocení hypotéz}
 
 % Notes:
 %
@@ -258,6 +272,10 @@ korespondencí pro pár obrazů se pohyboval mezi 400 až 7\,000.
 	\end{figure}
 
 \section{Zhodnocení}
+
+- v RANSACu ohodnocovat E matice pouze s použitím bodů viditelných v obou kamerách
+- využít možnost dále optimalizovat matici $\matrix E$ nalezenou RANSACem
+
 
 % FIXME: jak zahrnout bibliography.bib do repozitare? .. zkopirovat?
 

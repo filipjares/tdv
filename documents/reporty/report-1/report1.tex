@@ -73,7 +73,7 @@ vyfotografovány z dvanácti míst tak, jak je to přibližně znázorněno na \
 Kolmá vzdálenost od dveří byla u všech kamer přibližně stejná (zhruba 4\,m) a dveře byly ze čtyř
 míst vyfotografovány vždy ze tří rúzných výškových úrovní (zhruba z výšky 30\,cm, 130\,cm a
 200\,cm).
-	\begin{figure}[h]
+	\begin{figure}[htb]
 		\centering
 		\includegraphics[width=8cm]{pictures/usporadani_kamer.pdf}
 		\caption{Schéma uspořádání kamer při snímání scény}
@@ -174,21 +174,20 @@ IS na nejkratší ohniskovou vzdálenost. Zachyceny jsou na \figref{fig:fotograf
 	\end{figure}
 
 \paragraph{Odstranění radiálního zkreslení a kalibrace kamery} Protože použité algoritmy pra\-cují
-s~lineárním modelem kamery, bylo nutné před dalším použitím nafocených snímků nejprve odstranit
+s~lineárním modelem kamery, bylo nutné před dalším použitím nafocených snímků nej\-prve odstranit
 radiální zkreslení. K tomuto účelu byl použit nástroj \emph{rd\_undistort}, který byl k dispozici od
 vyučujících \cite{code_repo}.\footnote{Jak citovat tyto nástroje?} Jako podklad pro kalibraci tohoto
-nástroje posloužily tři snímky vzoru zachyceného na obrázku~\ref{fig:radialCalibration}.
+nástroje posloužily tři snímky kalibračního obrazce. Jeden z nich je na obrázku~\ref{fig:radialCalibration}.
 % \url{http://cmp.felk.cvut.cz/cmp/courses/TDV/code/rd\_undistort\_20110112.zip}
 
 \def\IAC{\boldsymbol \omega}
 
-K rekonstrukci scény je rovněž potřebná znalost vnitřní kalibrace použité kamery, tj. znalost
-kalibrační matice $\matrix K$, která má obecně pět stupňů volnosti \cite[Determining Camera
-Kalibration $\matrix K$ from a single view, str. 223]{Hartley2004}. U fotoaparátu jsme předpokládali
-čtvercové pixely (bez zkosení), zbylé tři stupně volnosti kalibrační matice jsme určili na základě
-úběžníků třech kolmých směrů v jediném obraze (viz. \figref{fig:kalibraceKamery}). Z každého páru
-takových úběžníků $\vector u_i$, $\vector u_j$ vyplývá jedna podmínka na obraz absolutní
-kuželosečky $\IAC$:
+K rekonstrukci scény je rovněž potřebná znalost kalibrační matice $\matrix K$ použité kamery
+\cite[sekce 8.8]{Hartley2004}.  $\matrix K$ má obecně pět stupňů volnosti.  U fotoaparátu jsme
+předpokládali čtver\-co\-vé pixely (bez zkosení), zbylé tři stupně volnosti kalibrační matice jsme
+určili na základě úběžníků třech kolmých směrů v jediném obraze (viz. \figref{fig:kalibraceKamery}).
+Z každého páru ta\-ko\-vých ú\-běž\-ní\-ků $\vector u_i$, $\vector u_j$ vyplývá jedna podmínka na obraz
+absolutní kuželosečky $\IAC$:
 	\begin{equation}
 		\vector u_i\T \IAC \vector u_j = 0, \qquad i, j \in \{1, 2, 3\},\quad i \ne j.
 	\end{equation}

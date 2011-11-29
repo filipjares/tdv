@@ -29,7 +29,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 }
 
 \title{1. Zpráva pro předmět 3D Počítačové vidění -- A4M33TDV}
-\date{17. 11. 2011}
+\date{29. 11. 2011}
 \author{Filip Jareš, jaresfil@fel.cvut.cz}
 
 \begin{document}
@@ -43,10 +43,29 @@ dvanácti fotografií vybraného objektu (portálu/dveří) zrekonstruovat nasn�
 trojrozměrný digitální model této scény.
 
 Práce ještě není dokončená, proto v této verzi zpráva popisuje pouze dosud hotovou část řešení:
-výběr scény, konfiguraci kamer, odstranění radiálního zkreslení, kalibraci kamery, hledání řídkých
-korespondencí mezi obrazy a odhad epipolární geometrie mezi dvojicemi snímků.
+výběr scény, zvolenou konfiguraci kamer, nástroj použitý pro odstranění radiálního zkreslení
+a~metodu kalibrace kamery. Nakonec potom hledání řídkých korespondencí mezi obrazy a~odhad
+epipolární geometrie mezi dvojicemi snímků.
 
 \section{Řešení}
+
+\subsection{Struktura řešení}
+
+Použité řešení úlohy rekonstrukce 3D scény z několika fotografií lze rozdělit na tři hlavní fáze:
+(1) zachycení scény a přípravu snímků pro pozdější zpracování; (2) rekonstrukci řídkého mraku
+prostorových bodů z~těchto snímků a (3) rekonstrukci hustého mraku bodů s použitím stereo párování,
+které poskytne husté korespondence mezi dvojicemi obrazů se známou epipolární geometrií.
+Tato první verze zprávy popisuje pouze fázi první a částečně fázi druhou.
+
+Důležitým krokem fáze (1) je odstranění radiálního zkreslení. Hlavními částmi fáze (2) je nalezení
+řídkých korespondencí mezi obrazy a použití těchto korespondencí k odhadu epipolární geometrie
+dvojic snímků a tedy odhadu relativních rotací a translací dvojic kamer. Následuje \uv{slepování}
+takových dvojic kamer, tedy jejich umístění do společného souřadného systému.
+
+V následující části jsou jednotlivé kroky prvních dvou fází (kromě \uv{slučování} kamer) popsány
+podrobněji.
+
+\subsection{Popis řešení}
 
 \paragraph{Výběr scény}
 Jako objekt pro rekonstrukci byly vybrány domovní dveře domu v pražské Jeseniově ulici. Byly

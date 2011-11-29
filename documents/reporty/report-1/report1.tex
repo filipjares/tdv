@@ -185,7 +185,7 @@ nástroje posloužily tři snímky kalibračního obrazce. Jeden z nich je na ob
 K rekonstrukci scény je rovněž potřebná znalost kalibrační matice $\matrix K$ použité kamery
 \cite[sekce 8.8]{Hartley2004}.  $\matrix K$ má obecně pět stupňů volnosti.  U fotoaparátu jsme
 předpokládali čtver\-co\-vé pixely (bez zkosení), zbylé tři stupně volnosti kalibrační matice jsme
-určili na základě úběžníků třech kolmých směrů v jediném obraze (viz. \figref{fig:kalibraceKamery}).
+určili na základě znalosti úběžníků třech kolmých směrů v jediném obraze (viz. \figref{fig:kalibraceKamery}).
 Z každého páru ta\-ko\-vých ú\-běž\-ní\-ků $\vector u_i$, $\vector u_j$ vyplývá jedna podmínka na obraz
 absolutní kuželosečky $\IAC$:
 	\begin{equation}
@@ -218,7 +218,15 @@ pomocí Choleskyho faktorizace. Výsledná kalibrační matice byla:
 			navzájem kolmých směrech protínající se v jednotlivých úběžnících.}
 	\end{figure}
 
-\paragraph{Nalezení řídkých korespondencí}
+\paragraph{Nalezení předběžných korespondencí} Pro nalezení řídkých korespondencí mezi body ve
+dvojicích obrazů byl opět použit dodaný kód -- \emph{WBS Matcher} \cite{code_repo},
+\cite{WBS_Matcher}.  Nejprve byly (pro každý obrázek nezávisle) k automaticky vybraným
+\uv{význačným} bodům vypočteny a přiřazeny deskriptory. Na základě porovnání těchto deskriptorů byly
+potom vytvořeny korespondence mezi obrazy.
+
+Pro každý snímek vytvořil WBS Matcher přibližně 30\,000 deskriptorů. Počet nalezených předběžných
+korespondencí pro pár obrazů se pohyboval mezi 400 až 7\,000.
+
 
 \paragraph{Odhad epipolární geometrie páru kamer}
 

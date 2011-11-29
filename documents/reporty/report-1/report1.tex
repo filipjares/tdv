@@ -158,15 +158,17 @@ vyučujících \cite{code_repo}.\footnote{Jak citovat tyto nástroje?} Jako podk
 nástroje posloužily tři snímky vzoru zachyceného na obrázku~\ref{fig:radialCalibration}.
 % \url{http://cmp.felk.cvut.cz/cmp/courses/TDV/code/rd\_undistort\_20110112.zip}
 
+\def\IAC{\boldsymbol \omega}
+
 K rekonstrukci scény je rovněž potřebná znalost vnitřní kalibrace použité kamery, tj. znalost
 kalibrační matice $\matrix K$, která má obecně pět stupňů volnosti. U fotoaparátu jsme předpokládali
 čtvercové pixely (bez zkosení), zbylé tři stupně volnosti kalibrační matice jsme určili na základě
 úběžníků třech kolmých směrů v jediném obraze (viz. \figref{fig:kalibraceKamery}). Z každého páru
 takových úběžníků $\vector x_i$, $\vector x_j$ vyplývá jedna podmínka na obraz absolutní kuželosečky
-$\vector \omega$:
-	\begin{equation} \vector x_i\T \vector \omega \vector x_j. \end{equation}
+$\IAC$:
+	\begin{equation} \vector x_i\T \IAC \vector x_j. \end{equation}
 Kalibrační matici jsme určili z obrazu absolutní kuželosečky na základě vztahu
-	\begin{equation} \vector \omega = (\matrix K \matrix K\T)^{-1} \end{equation}
+	\begin{equation} \IAC = (\matrix K \matrix K\T)^{-1} \end{equation}
 pomocí Choleskyho faktorizace. Výsledná kalibrační matice byla:
 	\begin{equation}
 		\matrix K = \begin{pmatrix}

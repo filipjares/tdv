@@ -154,7 +154,7 @@ IS na nejkratší ohniskovou vzdálenost. Zachyceny jsou na \figref{fig:fotograf
 		\label{fig:fotografie}
 	\end{figure}
 
-\paragraph{Odstranění radiálního zkreslení a kalibrace kamery} Protože použité algoritmy pracují
+\paragraph{Odstranění radiálního zkreslení a kalibrace kamery} Protože použité algoritmy pra\-cují
 s~lineárním modelem kamery, bylo nutné před dalším použitím nafocených snímků nejprve odstranit
 radiální zkreslení. K tomuto účelu byl použit nástroj \emph{rd\_undistort}, který byl k dispozici od
 vyučujících \cite{code_repo}.\footnote{Jak citovat tyto nástroje?} Jako podklad pro kalibraci tohoto
@@ -194,13 +194,15 @@ pomocí Choleskyho faktorizace. Výsledná kalibrační matice byla:
 			\label{fig:kalibraceKamery}
 		}
 		\caption{Snímky použité pro kalibraci: \subref{fig:radialCalibration} vzor použitý
-			pro kalibraci nástroje pro odstranění radiálního zkreslení
+			pro kalibraci nástroje pro odstranění radiálního zkreslení.
 			\subref{fig:kalibraceKamery} Snímek kvádru použitého pro
-			kalibraci kamery. Červeně, zeleně a modře jsou vyznačeny rovnoběžky ve třech
-			navzájem kolmých směrech a odpovídající úběžníky.}
+			kalibraci kamery; červeně, zeleně a modře jsou vyznačeny rovnoběžky ve třech
+			navzájem kolmých směrech protínající se v jednotlivých úběžnících.}
 	\end{figure}
 
-\section{Poznamky}
+\paragraph{Nalezení řídkých korespondencí}
+
+\paragraph{Odhad epipolární geometrie páru kamer}
 
 - nalezení korespondencí -- opět byl použit nástroj dodaný učiteli - WBS matcher
 - 5 bodový algoritmus \cite{stewenius-engels-nister-isprsj-2006}
@@ -215,17 +217,8 @@ pomocí Choleskyho faktorizace. Výsledná kalibrační matice byla:
 \section{Popis metody}
 
 Pokusne citace:
-\cite{Hartley2004}
 \cite{SaraLectures}
 
-
-
-	\begin{figure}[htb]
-		\centering
-		\fbox{\includegraphics[width=16cm,angle=-90]{pictures/linear/IMG_5959.JPG}}
-		\caption{Fotografie \ref{fig:firstInputImage} po odstranění radiálního zkreslení}
-		\label{fig:linearizedPictureExample}
-	\end{figure}
 
 	\begin{figure}[htb]
 			\centering
@@ -235,9 +228,12 @@ Pokusne citace:
 			\subfigure[] {
 				\fbox{\includegraphics[width=8cm,angle=-90,clip=true,trim=165px 105px 110px 80px]{pictures/matches-right-with_epipolar_lines.jpg}}
 			}
-		\caption{Pár fotografií (\ref{fig:i0} a \ref{fig:i1}) se zobrazenými korespondencemi: červeně korespondence odpovídající
-			epipolární geometrii, černě chybné. Pro vybrané body (označené křížky) jsou stejnými barvami znázorněny vzájemně si
-			odpovídající epipoláry}
+		\caption{Pár obrazů se zobrazenými korespondencemi: červeně korespondence odpovídající
+			epipolární geometrii, černě chybné. Pro vybrané body (označené křížky) jsou
+			stejnými barvami znázorněny vzájemně si odpovídající epipoláry. Obrazy
+			odpovídají snímkům \ref{fig:i0} a \ref{fig:i1}. V obou obrazech je možné
+			si všimnout podduškovitého obrysu okrajů, který vznikl po odstranění
+			radiálního zkreslení.}
 		\label{fig:pairWithEpipolars}
 	\end{figure}
 

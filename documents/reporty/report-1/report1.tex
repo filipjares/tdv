@@ -52,17 +52,17 @@ epipolární geometrie mezi dvojicemi snímků.
 \subsection{Struktura řešení}
 
 Použité řešení úlohy rekonstrukce 3D scény z několika fotografií lze rozdělit na tři hlavní fáze:
-(1) zachycení scény a přípravu snímků pro pozdější zpracování; (2) rekonstrukci řídkého mraku
-prostorových bodů z~těchto snímků a (3) rekonstrukci hustého mraku bodů s použitím stereo párování,
+(i) zachycení scény a přípravu snímků pro pozdější zpracování; (ii) rekonstrukci řídkého mraku
+prostorových bodů z~těchto snímků a (iii) rekonstrukci hustého mraku bodů s použitím stereo párování,
 které poskytne husté korespondence mezi dvojicemi obrazů se známou epipolární geometrií.
 Tato první verze zprávy popisuje pouze fázi první a částečně fázi druhou.
 
-Důležitým krokem fáze (1) je odstranění radiálního zkreslení. Hlavními částmi fáze (2) je nalezení
+Důležitým krokem fáze (i) je odstranění radiálního zkreslení. Hlavními částmi fáze (ii) je nalezení
 řídkých korespondencí mezi obrazy a použití těchto korespondencí k odhadu epipolární geometrie
 dvojic snímků a tedy odhadu relativních rotací a translací dvojic kamer. Následuje \uv{slepování}
 takových dvojic kamer, tedy jejich umístění do společného souřadného systému.
 
-V následující části jsou jednotlivé kroky prvních dvou fází (kromě \uv{slučování} kamer) popsány
+V následující části jsou jednotlivé kroky prvních dvou fází (kromě slepování kamer) popsány
 podrobněji.
 
 \subsection{Popis řešení}
@@ -230,7 +230,7 @@ korespondencí pro pár obrazů se pohyboval mezi 400 až 7\,000.
 
 \paragraph{Odhad epipolární geometrie páru kamer}
 
-- nalezení korespondencí -- opět byl použit nástroj dodaný učiteli - WBS matcher
+- RANSAC \cite{RansacOverview}
 - 5 bodový algoritmus \cite{stewenius-engels-nister-isprsj-2006}
 
 % Notes:
@@ -238,12 +238,6 @@ korespondencí pro pár obrazů se pohyboval mezi 400 až 7\,000.
 % terminology:
 %	correspondence = truth,
 %	match = algorithm’s result; hypothesised corresp.
-
-
-\section{Popis metody}
-
-Pokusne citace:
-\cite{SaraLectures}
 
 
 	\begin{figure}[htb]

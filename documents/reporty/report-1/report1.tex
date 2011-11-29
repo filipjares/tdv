@@ -161,12 +161,15 @@ nástroje posloužily tři snímky vzoru zachyceného na obrázku~\ref{fig:radia
 \def\IAC{\boldsymbol \omega}
 
 K rekonstrukci scény je rovněž potřebná znalost vnitřní kalibrace použité kamery, tj. znalost
-kalibrační matice $\matrix K$, která má obecně pět stupňů volnosti. U fotoaparátu jsme předpokládali
+kalibrační matice $\matrix K$, která má obecně pět stupňů volnosti \cite[Determining Camera
+Kalibration $\matrix K$ from a single view, str. 223]{Hartley2004}. U fotoaparátu jsme předpokládali
 čtvercové pixely (bez zkosení), zbylé tři stupně volnosti kalibrační matice jsme určili na základě
 úběžníků třech kolmých směrů v jediném obraze (viz. \figref{fig:kalibraceKamery}). Z každého páru
-takových úběžníků $\vector x_i$, $\vector x_j$ vyplývá jedna podmínka na obraz absolutní kuželosečky
-$\IAC$:
-	\begin{equation} \vector x_i\T \IAC \vector x_j. \end{equation}
+takových úběžníků $\vector u_i$, $\vector u_j$ vyplývá jedna podmínka na obraz absolutní
+kuželosečky $\IAC$:
+	\begin{equation}
+		\vector u_i\T \IAC \vector u_j = 0, \qquad i, j \in \{1, 2, 3\},\quad i \ne j.
+	\end{equation}
 Kalibrační matici jsme určili z obrazu absolutní kuželosečky na základě vztahu
 	\begin{equation} \IAC = (\matrix K \matrix K\T)^{-1} \end{equation}
 pomocí Choleskyho faktorizace. Výsledná kalibrační matice byla:
@@ -196,7 +199,6 @@ pomocí Choleskyho faktorizace. Výsledná kalibrační matice byla:
 
 \section{Poznamky}
 
-- kalibrace kamery
 - nalezení korespondencí -- opět byl použit nástroj dodaný učiteli - WBS matcher
 - 5 bodový algoritmus \cite{stewenius-engels-nister-isprsj-2006}
 

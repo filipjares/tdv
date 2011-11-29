@@ -156,10 +156,25 @@ s~lineárním modelem kamery, bylo nutné před dalším použitím nafocených 
 radiální zkreslení. K tomuto účelu byl použit nástroj \emph{rd\_undistort}, který byl k dispozici od
 vyučujících \cite{code_repo}.\footnote{Jak citovat tyto nástroje?} Jako podklad pro kalibraci tohoto
 nástroje posloužily tři snímky vzoru zachyceného na obrázku~\ref{fig:radialCalibration}.
-
-
 % \url{http://cmp.felk.cvut.cz/cmp/courses/TDV/code/rd\_undistort\_20110112.zip}
 
+K rekonstrukci scény je rovněž potřebná znalost vnitřní kalibrace použité kamery, tj. znalost
+kalibrační matice $\matrix K$, která má obecně pět stupňů volnosti. U fotoaparátu jsme předpokládali
+čtvercové pixely (bez zkosení), zbylé tři stupně volnosti kalibrační matice jsme určili na základě
+úběžníků třech kolmých směrů v jediném obraze (viz. \figref{fig:kalibraceKamery}). Z každého páru
+takových úběžníků $\vector x_i$, $\vector x_j$ vyplývá jedna podmínka na obraz absolutní kuželosečky
+$\vector \omega$:
+	\begin{equation} \vector x_i\T \vector \omega \vector x_j. \end{equation}
+Kalibrační matici jsme určili z obrazu absolutní kuželosečky na základě vztahu
+	\begin{equation} \vector \omega = (\matrix K \matrix K\T)^{-1} \end{equation}
+pomocí Choleskyho faktorizace. Výsledná kalibrační matice byla:
+	\begin{equation}
+		\matrix K = \begin{pmatrix}
+				3442,3	& 0		& 1614,3 \\
+				0	& 3442,3	& 1185,7 \\
+				0	& 0		& 1
+			\end{pmatrix}.
+	\end{equation}
 	\begin{figure}[htb]
 		\centering
 		\subfigure[] {
@@ -167,14 +182,14 @@ nástroje posloužily tři snímky vzoru zachyceného na obrázku~\ref{fig:radia
 			\label{fig:radialCalibration}
 		}
 		\subfigure[] {
-			\fbox{\includegraphics[width=7cm]{pictures/linear/cube.jpg}}
+			\fbox{\includegraphics[width=7cm]{pictures/ubezniky_cube.pdf}}
 			\label{fig:kalibraceKamery}
 		}
 		\caption{Snímky použité pro kalibraci: \subref{fig:radialCalibration} vzor použitý
 			pro kalibraci nástroje pro odstranění radiálního zkreslení
-			\subref{fig:kalibraceKamery} Snímek pravoúhlého objektu použitého pro
+			\subref{fig:kalibraceKamery} Snímek kvádru použitého pro
 			kalibraci kamery. Červeně, zeleně a modře jsou vyznačeny rovnoběžky ve třech
-			navzájem kolmých směrech, které byly použity pro nalezení úběžníků.}
+			navzájem kolmých směrech a odpovídající úběžníky.}
 	\end{figure}
 
 \section{Poznamky}

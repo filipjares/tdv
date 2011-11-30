@@ -240,13 +240,13 @@ s daty. RANSAC vybere z prověřených hypotéz tu, která je v největší mí�
 % bod $\vector X$ splňuje podmínku chirality právě tehdy, pokud bod $\vector X$ leží před oběma
 % kamerami.}
 
-\paragraph{Hypotézy} Esenciální matice, představující hyptotézy pro daný pár kamer, byly generovány
+\paragraph{Vytváření Hypotéz} Esenciální matice, představující hypotézy pro daný pár pohledů, byly generovány
 s pou\-ži\-tím implementace pětibodového algoritmu od autorů
 \cite{stewenius-engels-nister-isprsj-2006} na základě vzorků pěti náhodně vybraných korespondencí
-mezi body z obrazů těchto kamer.  Na body byla před použitím pětibodového algoritmu aplikována
+mezi body z obrazů těchto kamer.  Na body byla před použitím pěti\-bo\-do\-vé\-ho algoritmu aplikována
 transformace $\matrix K^{-1}$ (odpovídající inverzi kalibrační matice ze vztahu \eqref{eq:matrixK}). Pro danou
-pětici korespondencí je obecně výsledkem pěti\-bo\-do\-vé\-ho algoritmu více esenciálních matic. Z nich byly
-ovšem jako hypotézy v RANSACu použity pouze ty matice $\matrix E$, pro něž existuje rozklad na pár
+pětici korespondencí je obecně vý\-sled\-kem pěti\-bo\-do\-vé\-ho algoritmu více esenciálních matic. Z nich byly
+ovšem jako hypotézy v~RANSACu použity pouze ty matice $\matrix E$, pro něž existuje rozklad na pár
 kanonických kamer se všemi pěti body před oběma kamerami (rozklad splňující pro danou pětici bodů
 podmínku chirality).
 
@@ -263,7 +263,25 @@ kanonické kamery $\matrix P_1$, $\matrix P_2$, které splňují spolu se svými
 podmínku chirality, byla tato exenciální matice (resp. její rozklad na kamery $\matrix P_1$, $\matrix P_2$)
 použita jako hypotéza.
 
-\paragraph{Hodnocení hypotéz}
+\paragraph{Hodnocení hypotéz} Každá nalezená dvojice kanonických kamer $\matrix P_1$, $\matrix P_2$ byla
+testována oproti všem nalezeným korespondencím. Pro každou korespondenci byla spočtena reprojekční
+chyba a byla určena opora hypotézy v datech jakožto počet korespondencí s reprojekční chybou menší
+než empiricky určený práh (použili jsme práh odpovídající chybě 2 pixely v~každém obrazu).
+Výsledkem RANSACu byla epipolární geometrie charakterizovaná rotací $\matrix R$ a translací $\matrix b$
+a rozdělení korespondencí na inliery a outliery.
+
+Pro vybraný pár obrazů jsou korespondence a epipoláry několika vybraných bodů zobrazeny na
+\figref{fig:korespondenceAEpipolary}. Korespondence jsou znázorněny jako úsečky spojující
+zvýrazněný bod z jednoho obrazu s místem, kde leží bod ve druhém obraze. Inliery jsou znázorněny
+červeně, outliery černě. Počet použitých iterací v RANSACu (přesněji počet pětic korespondencí použitých
+pro vytváření hypotéz) byl 38 pro jeden pár pohledů. Ve zobrazené dvojici pohledů jsou přibližně
+70\% korespondencí inliery.
+
+
+% - zkusit vypisovat úspěšnost RANSACu
+% - vygenerovat data pro všechny páry
+% - počet iterací RANSACu: 38
+% - práh v RANSACu: 2px
 
 % Notes:
 %
@@ -286,11 +304,12 @@ použita jako hypotéza.
 			odpovídají snímkům \ref{fig:i0} a \ref{fig:i1}. V obou obrazech je možné
 			si všimnout podduškovitého obrysu okrajů, který vznikl po odstranění
 			radiálního zkreslení.}
-		\label{fig:pairWithEpipolars}
+		\label{fig:korespondenceAEpipolary}
 	\end{figure}
 
 \section{Zhodnocení}
 
+- lepší robustní funkci v ransacu chybu
 - v RANSACu ohodnocovat E matice pouze s použitím bodů viditelných v obou kamerách
 - využít možnost dále optimalizovat matici $\matrix E$ nalezenou RANSACem
 

@@ -232,7 +232,7 @@ následujícím kroku použity pro odhad epipolární geometrie pří\-slu\-šn�
 \subsubsection{Odhad epipolární geometrie} Odhad esenciální matice $\matrix E$ daného páru
 ka\-mer je založen na použití předběžných korespondencí získaných v~předchozím
 kroku. Protože jsou nalezené korespondence kontaminovány chybami, byl jakožto metoda robustního
-odhadu použit algoritmus RANSAC \cite{RansacOverview}. Ten je tvořen smyčkou, ve které jsou
+odhadu použit algoritmus RANSAC \cite{RansacOverview}. Ten je tvořen smyčkou, v níž jsou
 opakovaně vytvářeny hypotézy (matice $\matrix E$), pro které je ověřována jejich konzistence
 s daty. RANSAC vybere z prověřených hypotéz tu, která je v největší míře kon\-zis\-ten\-tní s daty.
 
@@ -244,8 +244,8 @@ s daty. RANSAC vybere z prověřených hypotéz tu, která je v největší mí�
 s pou\-ži\-tím implementace pětibodového algoritmu od autorů
 \cite{stewenius-engels-nister-isprsj-2006} na základě vzorků pěti náhodně vybraných korespondencí
 mezi body z obrazů těchto kamer.  Na body byla před použitím pětibodového algoritmu aplikována
-transformace $\matrix K^{-1}$ (odpovídající inverzi matice ze vztahu \eqref{eq:matrixK}). Pro danou
-pětici korespondencí je obecně výsledkem pětibodového algoritmu více esenciálních matic. Z nich byly
+transformace $\matrix K^{-1}$ (odpovídající inverzi kalibrační matice ze vztahu \eqref{eq:matrixK}). Pro danou
+pětici korespondencí je obecně výsledkem pěti\-bo\-do\-vé\-ho algoritmu více esenciálních matic. Z nich byly
 ovšem jako hypotézy v RANSACu použity pouze ty matice $\matrix E$, pro něž existuje rozklad na pár
 kanonických kamer se všemi pěti body před oběma kamerami (rozklad splňující pro danou pětici bodů
 podmínku chirality).
@@ -254,13 +254,13 @@ Pro ověření podmínky chirality byly pro každou matici $\matrix E$ vytvořen
 ka\-no\-ni\-ckých kamer $\matrix P_1 = \begin{bmatrix} \matrix I & \vector 0 \end{bmatrix}$,
 $\matrix P_2 = \matrix R \begin{bmatrix} \matrix I & \vector{-b} \end{bmatrix}$,
 dané čtyřmi možnými rozklady matice $\matrix E$ na vzájemnou rotaci $\matrix R$ a posunutí
-kamer $\vect b$ podle \cite[Essential Matrix Properties, p. 79]{SaraLectures}.
+kamer $\vect b$ podle \cite[Essential Matrix Properties, str. 79]{SaraLectures}.
 Pro každý takový pár kamer byly z pětice korespondujících párů obrazových bodů vypočteny triangulací
 polohy pětice prostorových bodů $\vector X$.
 
 Pokud pro danou $\matrix E$ existuje rozklad na
 kanonické kamery $\matrix P_1$, $\matrix P_2$, které splňují spolu se svými body $\vector X$
-podmínku chirality je tato exenciální matice (resp. její rozklad na kamery $\matrix P_1$, $\matrix P_2$)
+podmínku chirality, byla tato exenciální matice (resp. její rozklad na kamery $\matrix P_1$, $\matrix P_2$)
 použita jako hypotéza.
 
 \paragraph{Hodnocení hypotéz}

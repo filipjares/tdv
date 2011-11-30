@@ -128,45 +128,45 @@ IS na nejkratší ohniskovou vzdálenost. Zachyceny jsou na \figref{fig:fotograf
 		% Real pictures:
 			\centering
 			\subfigure[] {
-				\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5959.JPG}}
+				\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5959.JPG}}
 			      \label{fig:firstInputImage}
 			}
 			\subfigure[] {
-				\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5955.JPG}}
+				\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5955.JPG}}
 			}
 			\subfigure[] {
-				\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5962.JPG}}
+				\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5962.JPG}}
 			}
 			\subfigure[] {
-				\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5965.JPG}}
+				\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5965.JPG}}
 			}
 			\\
 			\subfigure[] {
-				\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5957.JPG}}
+				\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5957.JPG}}
 			}
 			\subfigure[] {
-				\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5954.JPG}}
+				\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5954.JPG}}
 			      \label{fig:i0}
 			}
 			\subfigure[] {
-				\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5961.JPG}}
+				\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5961.JPG}}
 			      \label{fig:i1}
 			}
 			\subfigure[] {
-				\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5964.JPG}}
+				\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5964.JPG}}
 			}
 			\\
 			\subfigure[] {
-				\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5956.JPG}}
+				\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5956.JPG}}
 			}
 			\subfigure[] {
-				\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5953.JPG}}
+				\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5953.JPG}}
 			}
 			\subfigure[] {
-				\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5960.JPG}}
+				\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5960.JPG}}
 			}
 			\subfigure[] {
-				\fbox{\includegraphics[width=4cm,angle=-90]{pictures/IMG_5963.JPG}}
+				\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5963.JPG}}
 			}
 		\caption{Snímky scény, které byly použity pro rekonstrukci, označení obrázků
 			odpovídá označení kamer na obrázku \ref{fig:usporadaniKamer}}
@@ -309,10 +309,13 @@ pro vytváření hypotéz) byl 38 pro jeden pár pohledů. Ve zobrazené dvojici
 
 \section{Zhodnocení}
 
-- lepší robustní funkci v ransacu chybu
-- v RANSACu ohodnocovat E matice pouze s použitím bodů viditelných v obou kamerách
-- využít možnost dále optimalizovat matici $\matrix E$ nalezenou RANSACem
+Na základě fotografií v \figref{fig:fotografie} a ze znalosti kalibrační matice kamery $\matrix K$
+jsme určili vzájemnou geometrii párů kamer (jejich vzájemné otočení a směr posunutí). Dalším krokem
+bude jejich umístění do společného souřadného systému.
 
+V RANSACu jsme použili jednoduché prahování. Bylo by dobré porovnat kvalitu výsledků dosažených
+s lepší robustní funkcí. Také by bylo vhodné dále optimalizovat esenciální matici nalezenou
+RANSACem.
 
 % FIXME: jak zahrnout bibliography.bib do repozitare? .. zkopirovat?
 

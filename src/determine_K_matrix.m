@@ -42,7 +42,7 @@
 % using cholesky decomposition (we will also need to "normalize" the K 
 % matrix; K(3,3) has to be 1)
 
-USER_INPUT = true;
+USER_INPUT = false;
 
 %% Remove the radial distortion
 
@@ -57,7 +57,7 @@ im = imread('linear_pictures/cube-three_vanishing_points.jpg');
 %im = imread('linear_pictures/sachovnice.jpg');
 %im = imread('linear_pictures/img_5884.jpg');
 image(im);
-axis equal;
+axis equal tight off;
 hold on;
 
 %% Get the lines defining the vanishing points
@@ -82,22 +82,28 @@ else
 
     l1 = cross(p1, p2);
     l2 = cross(p3, p4);
+    draw_line_into_axes(l1, 'b', 2);
+    draw_line_into_axes(l2, 'b', 2);
     vanishing_point_1 = cross(l1, l2);
 
     l1 = cross(p1, p3);
     l2 = cross(p4, p2);
+    draw_line_into_axes(l1, 'r', 2);
+    draw_line_into_axes(l2, 'r', 2);
     vanishing_point_2 = cross(l1, l2);
 
     l1 = cross(p3, p6);
     l2 = cross(p4, p7);
+    draw_line_into_axes(l1, 'g', 2);
+    draw_line_into_axes(l2, 'g', 2);
     vanishing_point_3 = cross(l1, l2);
 
     vp_e = p2e(vanishing_point_1);
-    plot(vp_e(1), vp_e(2), 'ok');
+    %plot(vp_e(1), vp_e(2), 'ok');
     vp_e = p2e(vanishing_point_2);
-    plot(vp_e(1), vp_e(2), 'ok');
+    %plot(vp_e(1), vp_e(2), 'ok');
     vp_e = p2e(vanishing_point_3);
-    plot(vp_e(1), vp_e(2), 'ok');
+    %plot(vp_e(1), vp_e(2), 'ok');
 end
 
 hold off;

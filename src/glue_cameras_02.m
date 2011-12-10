@@ -6,7 +6,10 @@
 
 %% Correspondences data setup
 
+% addpath corresp/
+
 % Initialise correspondence tools with a number of cameras
+fprintf('Initialise correspondences tool\n');
 corresp = corresp_init(ncams);
 
 % Add image-to-image correspondences
@@ -16,10 +19,10 @@ for i = 1:ncams
     end
 end
 
-assert(all(m{i1,i2} ==corresp_get_m( corresp, i1, i2 )));
+assert(all(all(m{i1,i2}' == corresp_get_m( corresp, i1, i2 ))));
 
 %% Initialize cameras cell array (cameras there are without K) i.e. cameras(i) = [Ri ti]
 
 cameras = cell(ncams, 1);
-cameras(i1) = P1;
-cameras(i2) = P2;
+cameras{i1} = P1;
+cameras{i2} = P2;

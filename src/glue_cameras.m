@@ -1,7 +1,11 @@
-%% Load data
+%% Load data obtained previously
 
-fprintf('Loading image data and image-to-image correspondences\n');
+fprintf('Loading Camera calibration matrix K.\n');
+load('../data/Kcalib.mat', 'K');
+fprintf('Loading image data and image-to-image correspondences.\n');
 load('../data/images_and_sparse_correspondences.mat', 'images', 'm', 'pc');
+
+% addpath calibrated_p5/
 
 %% Choose initial camera pair (i1,i2) with most image-to-image correspodences
 
@@ -27,3 +31,6 @@ fprintf([ ...
 	i1, i2, max_corresp_count);
 
 %% Estimate epipolar geometry for the initial camera pair (i1,i2);
+
+[EE, R2, b2, P1, P2, best_inl_ix, in_front] = estimate_E(K, pc{i1,i2});
+

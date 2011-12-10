@@ -1,0 +1,31 @@
+
+	Příklad s hledáním minima a fitováním paraboly je prý v podstatě
+	"Levenberg-Marquardt"
+
+STEREO
+
+	- je mozne, ze bude treba zmensit rozliseni obrazku
+
+	neni treba pocitat mezi vsemi, ale staci vybrat nektere sousedy
+	(mezi nejblizsimi)
+
+	dlouhy vs. kratky par:
+	  - kratky par:
+	    - hezky to vychazi, ale mame kratkou bazi
+	  - dlouhy par
+	    - veci jsou si malo podobne
+	    
+	Promyslet a vyzkouset si taktiku, ktera funguje na nasi scene
+	- tip: obarvovat si body podle toho, z jakeho paru vznikly, abychom
+	  vedeli, jak to vychazi
+	  
+	Kazdy par zrektifikovat a pustit na nej stereo. Mame par, kde temer
+	kazdy pixel je v korespondenci, pridame je do mraku bodu
+
+	Na takovy mrak bodu se pusti Poissonovska rekonstrukce
+
+	mapa disparit -> z ni spocitat korespondence
+
+VRML:
+
+	- na obarveni ply souboru lze pouzit balik ply... v kodech

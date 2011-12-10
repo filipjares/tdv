@@ -26,8 +26,8 @@ load('../data/Kcalib.mat', 'K');
 %% Estimate the epipolar geometry
 
 % choose simply first two cameras
-i1 = 1;
-i2 = 2;
+i1 = 2;
+i2 = 6;
 pc = pc{i1,i2};
 
 % The useful work is done in this function
@@ -132,5 +132,23 @@ hold off;
 
 %plot3(X(1,:), X(2,:), X(3,:), '.');
 
+%%
 
+% Obarvene body, stejne jako v predchozim bloku
+ge = ge_vrml('out.wrl');
+ge = ge_cams(ge, {P1, P2}, 'plot', 1);       % P1, P2 jsou kamery bez K ([I 0], [R t])
+ge = ge_points(ge, p2e(X(:,ok)), 'color', colors/255);   % predavame euklidovske body
+ge = ge_close(ge);
+
+% Vsechny body
+% ge = ge_vrml('../data/EpipolarGeometry-TwoCameras-AllPoints.wrl');
+% ge = ge_cams(ge, {P1, P2}, 'plot', 1);     % P1, P2 jsou kamery bez K ([I 0], [R t])
+% ge = ge_points(ge, p2e(X));                % predavame euklidovske body, vsechny
+% ge = ge_close(ge);
+
+% Jenom inliery (tj. jsou zaroven pred kamerami)
+% ge = ge_vrml('../data/EpipolarGeometry-TwoCameras-InliersInFrontOfCameras.wrl');
+% ge = ge_cams(ge, {P1, P2}, 'plot', 1);       % P1, P2 jsou kamery bez K ([I 0], [R t])
+% ge = ge_points(ge, p2e(X(:,best_inl_ix)));   % predavame euklidovske body, jenom inliery pred kamerami
+% ge = ge_close(ge);
 

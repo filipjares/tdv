@@ -64,81 +64,14 @@ Xu = corresp_get_Xu(corresp, in);
 Xn = X(:,Xu(:,1));
 corresp_count = size(Xu,1);
 un = zeros(2,corresp_count);
-for i = 1:size(Xu(:,2))
+for i = 1:corresp_count
     un(:,i) = [images(in).pts(Xu(i,2)).x; images(in).pts(Xu(i,2)).y];
 end
 un = e2p(un);
 
 %% RANSAC
 
-THR = 2; % [px]
-THR = 2*THR^2;
-
-Nmax = Inf;
-
-best_support = 0;
-R_best = [];
-t_best = [];
-
-n = 0;
-while true
-    n = n + 1;
-    
-    % Generate hypothesis R, t
-    indices = round(corresp_count*rand(3,1));   % select random indices
-    while indices(1) == indices(2) || indices(2) == indices(3)
-        if indices(1) == indices(2)
-            indices(2) = round(corresp_count*rand(1,1));
-        end
-        if indices(2) == indices(3)
-            indices(3) = round(corresp_count*rand(1,1));
-        end
-    end
-    X3 = Xn(:,indices);
-    u3 = un(:,indices);
-    Xc = p3p_grunert(X3, K\u3);
-    
-    for i = 1:size(Xc,2)
-        X3c = Xc{i};
-        [R, t] = XX2Rt_simple(X3, X3c);
-        % such that X3c = R*X3 + t
-        
-        P = K*[R t];
-        
-        % For each hypothesis R, t do:
-        % - compute set of inliers and support
-        
-        % these points have to be verified:
-        Xn;
-        
-        depths = depth_in_camera(Xn, P);
-        in_front = (depths > 0);
-        
-        reprojected_points = p2e(P*Xn(:,in_front));
-        original_points = p2e(un(:,in_front));
-        err = sum((reprojected_points - original_points).^2);
-        inl_ix = err < THR;
-        support = sum(inl_ix);
-        
-        if support > best_support
-            best_support = support;
-            R_best = R;
-            t_best = t;
-        end
-
-        % Update RANSAC stopping criterion w.r.t. the number of inliers
-        inlier_count = support;
-        inlier_probability = inlier_count/corresp_count;
-        if inlier_probability == 1
-            Nmax = 0;
-        else
-            Nmax = ransac_min_sample_size(0.95, inlier_probability, 3);
-        end
-        
-    end
-
-    if (n > Nmax); break; end
-end
+[R, t] = p3p_ransac(K, Xn, un);
 
 %% Vykreslit si obrazky
 

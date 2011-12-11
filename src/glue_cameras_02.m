@@ -48,12 +48,14 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
 ig = corresp_get_green_cameras(corresp);
 Xucount = corresp_get_Xucount(corresp, ig);
 [maxXucount, max_ig_ix] = max(Xucount);
+in = ig(max_ig_ix);
+fprintf('Camera number %u is the next\n', in);
 if (maxXucount < 3) % FIXME: what should be the limit?
+    fprintf('but it has less than 3 correspondences to the camera cloud\n');
     return
 end
 
-in = ig(max_ig_ix);
-fprintf('Camera number %u is the next\n', in);
+% Scene-to-image correspondences in the new camera
 Xu = corresp_get_Xu(corresp, in);
 
 %% Here comes the P3P RANSAC

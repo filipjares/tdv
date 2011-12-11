@@ -64,6 +64,8 @@ function [E, R, b, P1, P2, best_inl_ix, in_front] = estimate_E(K, pc)
                 v1 = e2p(p2e(K*P1*X));
                 v2 = e2p(p2e(K*P2*X));
                 % and compute sum of reprojection errors
+                % FIXME: here I should better use euclidean not projective
+                % coordinates to compute reprojection errors
                 err = sum((v1 - e2p(pc(1:2,:))).^2) + sum((v2 - e2p(pc(3:4,:))).^2); % TODO use different error function?
                 inl_ix = err < THR & in_front;
                 support = sum(inl_ix);

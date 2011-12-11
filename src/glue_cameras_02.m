@@ -69,12 +69,7 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
 
     % Scene-to-image correspondences (points)
     Xn = X(:,Xu(:,1));
-    corresp_count = size(Xu,1);
-    un = zeros(2,corresp_count);
-    for i = 1:corresp_count
-        un(:,i) = [images(in).pts(Xu(i,2)).x; images(in).pts(Xu(i,2)).y];
-    end
-    un = e2p(un);
+    un = e2p(get_image_points_coordinates(images, in, Xu(:,2)));
 
     %% RANSAC
 
@@ -96,11 +91,8 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
 
 %% Vykreslit si obrazky
 
-% u22 = zeros(2,size(Xu,1));
 % X22 = corresp_get_Xu(corresp, 2);
-% for i = 1:size(Xu(:,2))
-%     u22(:,i) = [images(2).pts(X22(i,2)).x; images(2).pts(X22(i,2)).y];
-% end
+% u22 = get_image_points_coordinates(images, 2, X22(:,2));
 % 
 % figure(1);
 % image(images(2).img);

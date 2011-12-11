@@ -1,4 +1,4 @@
-function [R, t] = p3p_ransac(K, X, u)
+function [R, t, best_inliers] = p3p_ransac(K, X, u)
 
     assert(size(X,2) == size(u,2));
     assert(size(X,1) == 4);
@@ -12,6 +12,7 @@ function [R, t] = p3p_ransac(K, X, u)
     Nmax = Inf;
 
     best_support = 0;
+    best_inliers = [];
     R_best = [];
     t_best = [];
 
@@ -48,14 +49,15 @@ function [R, t] = p3p_ransac(K, X, u)
             depths = depth_in_camera(X, P);
             in_front = (depths > 0);
 
-            reprojected_points = p2e(P*X(:,in_front));
-            original_points = p2e(u(:,in_front));
+            reprojected_points = p2e(P*X);
+            original_points = p2e(u);
             err = sum((reprojected_points - original_points).^2);
-            inl_ix = err < THR;
+            inl_ix = err < THR & in_front;
             support = sum(inl_ix);
 
             if support > best_support
                 best_support = support;
+                best_inliers = inl_ix;
                 R_best = R;
                 t_best = t;
             end

@@ -32,6 +32,7 @@ fprintf([ ...
 
 %% Estimate epipolar geometry for the initial camera pair (i1,i2);
 
+% TODO: move this to glue_cameras_02.m
 [EE, R2, b2, P1, P2, best_inl_ix, in_front] = estimate_E(K, pc{i1,i2});
 
 %% Save what we have

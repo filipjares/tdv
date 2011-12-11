@@ -16,6 +16,7 @@ function [E, R, b, P1, P2, best_inl_ix, in_front] = estimate_E(K, pc)
     %   - will I return everything? R, b, P1, P2?
     %   - rename all_u1 to something better, avoid using several variables
     %     for the same purpose
+    %   - improve random sample choice
     
     inlier_probability = 0.6;
     m = 5;  % min. number of image points correspondences determining E matrix

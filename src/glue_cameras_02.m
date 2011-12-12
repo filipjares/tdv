@@ -84,32 +84,54 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
     
     %%
     
+    % list of cameras already in the cluster neighbouring with the camera
+    % with index 'in'. We will iterate through them
     ilist = corresp_get_cneighbours(corresp, in);
+    for ic = ilist
+        % FIXME: here, I am changing contents of the m variable:, should I
+        % have cleared it earlier already?
+        
+        % get remaining image-to-image correspondences
+        m = corresp_get_m(corresp, in, ic); % TODO: move into get_image_points_coordinates.m?
+        
+        % Reconstruct new scene points using the cameras in and ic and
+        % image-to-image correspondences m. Sets of inliers and new scene points'
+        % IDs are obtained
+        Pin = cameras{in};
+        Pic = cameras{ic};
+        u_in = e2p(get_image_points_coordinates(images, in, m(:,1)));
+        u_ic = e2p(get_image_points_coordinates(images, ic, m(:,2)));
+        
+        newX = Pu2X(Pin, Pic, u_in, u_ic);
+        
+        depths_in = depth_in_camera(newX, Pin);
+        depths_ic = depth_in_camera(newX, Pic);
+        in_front = (depths_in > 0 & depths_ic > 0);
+
+        
+    end
     
 
 %end
 
 %% Vykreslit si obrazky
 
-% X22 = corresp_get_Xu(corresp, 2);
-% u22 = get_image_points_coordinates(images, 2, X22(:,2));
-% 
-% figure(1);
-% image(images(2).img);
-% hold on;
-% for i = 1:size(u22,2)
-%     plot(u22(1,i), u22(2,i), 'ob', 'markerfacecolor', 'b');
-% end
-% hold off;
-% axis equal
-% figure(2)
-% image(images(10).img);
-% hold on;
-% for i = 1:size(un,2)
-%     plot(un(1,i), un(2,i), 'ob', 'markerfacecolor', 'b');
-% end
-% hold off;
-% axis equal
+figure(1);
+image(images(ic).img);
+hold on;
+for i = 1:size(u_ic,2)
+    plot(u_ic(1,i), u_ic(2,i), 'o', 'markerfacecolor', color_hash(i));
+end
+hold off;
+axis equal
+figure(2)
+image(images(in).img);
+hold on;
+for i = 1:size(u_in,2)
+    plot(u_in(1,i), u_in(2,i), 'o', 'markerfacecolor', color_hash(i));
+end
+hold off;
+axis equal
 
 
 

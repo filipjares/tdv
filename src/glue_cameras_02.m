@@ -159,6 +159,9 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
         corr_ok = Xu_tentative(inl_ix); % The subset of good points - there is no one here
         corresp = corresp_verify_x(corresp, ic, corr_ok);
     end
+    
+    % That's all for this new camera:
+    corresp = corresp_finalize_camera(corresp);
 
 %end
 

@@ -90,6 +90,8 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
     THR = 2; % threshold, [px]
     THR = 2*THR^2;
     
+    Pin = K*cameras{in};
+    
     % list of cameras already in the cluster neighbouring with the camera
     % with index 'in'. We will iterate through them
     ilist = corresp_get_cneighbours(corresp, in);
@@ -100,7 +102,6 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
         % Reconstruct new scene points using the cameras in and ic and
         % image-to-image correspondences m. Sets of inliers and new scene points'
         % IDs are obtained
-        Pin = K*cameras{in};
         Pic = K*cameras{ic};
         u_in = get_image_points_coordinates(images, in, mm(:,1));
         u_ic = get_image_points_coordinates(images, ic, mm(:,2));
@@ -128,7 +129,36 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
         corresp = corresp_new_x(corresp, in, ic, inl_ix, new_xid);
         
     end
+   
     
+    %% Verification of Tentative Scene-to-Image Correspondences in the Cluster.
+    
+    % list of all cameras in the cluster
+    ilist = corresp_get_selected_cameras(corresp);
+
+    for ic = ilist
+        [Xu Xu_verified] = corresp_get_Xu(corresp, ic);
+        Xu_tentative = find(~Xu_verified);
+
+        % Verify (by reprojection error) scene-to-image correspondences in
+        % Xu_tentative. A subset of good points is obtained
+        
+        % FIXME: it is not necessary to check this, all that were added were in
+        % front of all cameras. Or Weren't they?
+        % in_front = depth_in_camera(X(:,Xu(Xu_tentative,1)), Pic) > 0;
+        Pic = K*cameras{ic};
+        
+        % image points and projections of space points - their 
+        u_ic = get_image_points_coordinates(images, ic, Xu(Xu_tentative,2));
+        X_ic = X(:,Xu(Xu_tentative,1));
+        v_ic = p2e(Pic*X_ic);
+        
+        err = sum((v_ic - u_ic).^2);
+        inl_ix = find(err < THR/2);     % & in_front
+
+        corr_ok = Xu_tentative(inl_ix); % The subset of good points - there is no one here
+        corresp = corresp_verify_x(corresp, ic, corr_ok);
+    end
 
 %end
 

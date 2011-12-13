@@ -92,15 +92,15 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
         % have cleared it earlier already?
         
         % get remaining image-to-image correspondences
-        m = corresp_get_m(corresp, in, ic); % TODO: move into get_image_points_coordinates.m?
+        mm = corresp_get_m(corresp, in, ic);
         
         % Reconstruct new scene points using the cameras in and ic and
         % image-to-image correspondences m. Sets of inliers and new scene points'
         % IDs are obtained
         Pin = cameras{in};
         Pic = cameras{ic};
-        u_in = e2p(get_image_points_coordinates(images, in, m(:,1)));
-        u_ic = e2p(get_image_points_coordinates(images, ic, m(:,2)));
+        u_in = e2p(get_image_points_coordinates(images, in, mm(:,1)));
+        u_ic = e2p(get_image_points_coordinates(images, ic, mm(:,2)));
         
         newX = Pu2X(Pin, Pic, u_in, u_ic);
         

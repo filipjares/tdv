@@ -87,7 +87,9 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
     % list of cameras already in the cluster neighbouring with the camera
     % with index 'in'. We will iterate through them
     ilist = corresp_get_cneighbours(corresp, in);
-    for ic = ilist
+    ic = 2; %for ic = ilist
+        
+        
         % FIXME: here, I am changing contents of the m variable:, should I
         % have cleared it earlier already?
         
@@ -97,19 +99,28 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
         % Reconstruct new scene points using the cameras in and ic and
         % image-to-image correspondences m. Sets of inliers and new scene points'
         % IDs are obtained
-        Pin = cameras{in};
-        Pic = cameras{ic};
-        u_in = e2p(get_image_points_coordinates(images, in, mm(:,1)));
-        u_ic = e2p(get_image_points_coordinates(images, ic, mm(:,2)));
+        Pin = K*cameras{in};
+        Pic = K*cameras{ic};
+        u_in = get_image_points_coordinates(images, in, mm(:,1));
+        u_ic = get_image_points_coordinates(images, ic, mm(:,2));
         
-        newX = Pu2X(Pin, Pic, u_in, u_ic);
+        newX = Pu2X(Pin, Pic, e2p(u_in), e2p(u_ic));
         
         depths_in = depth_in_camera(newX, Pin);
         depths_ic = depth_in_camera(newX, Pic);
         in_front = (depths_in > 0 & depths_ic > 0);
-
         
-    end
+        % reprojected points
+        v_in = p2e(Pin*newX);
+        v_ic = p2e(Pic*newX);
+        
+        THR = 2; % [px]
+        THR = 2*THR^2;
+        
+        err = sum((v_in - u_in).^2) + sum((v_ic - u_ic).^2); 
+                
+        
+    %end
     
 
 %end

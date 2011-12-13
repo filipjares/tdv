@@ -113,20 +113,12 @@ hold off;
 %%
 
 % Obarvene body, stejne jako v predchozim bloku
-ge = ge_vrml('out.wrl');
-ge = ge_cams(ge, {P1, P2}, 'plot', 1);       % P1, P2 jsou kamery bez K ([I 0], [R t])
-ge = ge_points(ge, p2e(X(:,ok)), 'color', colors/255);   % predavame euklidovske body
-ge = ge_close(ge);
+export_to_vrml('out.wrl', {P1, P2}, X(:,ok), colors/255);
 
 % Vsechny body
-% ge = ge_vrml('../data/EpipolarGeometry-TwoCameras-AllPoints.wrl');
-% ge = ge_cams(ge, {P1, P2}, 'plot', 1);     % P1, P2 jsou kamery bez K ([I 0], [R t])
-% ge = ge_points(ge, p2e(X));                % predavame euklidovske body, vsechny
-% ge = ge_close(ge);
+% export_to_vrml('../data/EpipolarGeometry-TwoCameras-AllPoints.wrl', {P1, P2}, X);
 
 % Jenom inliery (tj. jsou zaroven pred kamerami)
-% ge = ge_vrml('../data/EpipolarGeometry-TwoCameras-InliersInFrontOfCameras.wrl');
-% ge = ge_cams(ge, {P1, P2}, 'plot', 1);       % P1, P2 jsou kamery bez K ([I 0], [R t])
-% ge = ge_points(ge, p2e(X(:,best_inl_ix)));   % predavame euklidovske body, jenom inliery pred kamerami
-% ge = ge_close(ge);
+% export_to_vrml('../data/EpipolarGeometry-TwoCameras-InliersInFrontOfCameras.wrl', {P1, P2}, X(:,best_inl_ix));
+
 

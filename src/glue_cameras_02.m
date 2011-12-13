@@ -120,7 +120,7 @@ figure(1);
 image(images(ic).img);
 hold on;
 for i = 1:size(u_ic,2)
-    plot(u_ic(1,i), u_ic(2,i), 'o', 'markerfacecolor', color_hash(i));
+    plot(u_ic(1,i), u_ic(2,i), 'o', 'color', color_hash(i), 'markerfacecolor', color_hash(i));
 end
 hold off;
 axis equal
@@ -128,7 +128,7 @@ figure(2)
 image(images(in).img);
 hold on;
 for i = 1:size(u_in,2)
-    plot(u_in(1,i), u_in(2,i), 'o', 'markerfacecolor', color_hash(i));
+    plot(u_in(1,i), u_in(2,i), 'o', 'color', color_hash(i), 'markerfacecolor', color_hash(i));
 end
 hold off;
 axis equal

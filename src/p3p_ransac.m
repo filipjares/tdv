@@ -21,13 +21,13 @@ function [R, t, best_inliers] = p3p_ransac(K, X, u)
         n = n + 1;
 
         % Generate hypothesis R, t
-        indices = round(corresp_count*rand(3,1));   % select random indices
+        indices = max([1 1 1]', round(corresp_count*rand(3,1)));   % select random indices
         while indices(1) == indices(2) || indices(2) == indices(3)
             if indices(1) == indices(2)
-                indices(2) = round(corresp_count*rand(1,1));
+                indices(2) = max(1, round(corresp_count*rand(1,1)));
             end
             if indices(2) == indices(3)
-                indices(3) = round(corresp_count*rand(1,1));
+                indices(3) = max(1, round(corresp_count*rand(1,1)));
             end
         end
         X3 = X(:,indices);

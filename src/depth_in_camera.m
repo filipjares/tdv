@@ -13,6 +13,18 @@ function depth = depth_in_camera(X, P)
     % Points in X have to be in projective coordinates. X can contain
     % multiple points (columns).
     
+    if ~all(size(P) == [3 4])
+        error('Wrong camera matrix size. It has to be 3x4.');
+    end
+    
+    if size(X,1) == 3
+        X = e2p(X);
+    end
+    
+    if size(X,1) ~= 4
+        error('Wrong dimensions of the X parameter (has to be 3xn or 4xn).');
+    end
+    
     M = P(:,1:3);
     w = P(3,:)*X;
     detM = det(M);

@@ -128,7 +128,7 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
 %% Vykreslit si obrazky
 
 figure(1);
-plot_wbs(images(ic).img, images(in).img, p2e(u_ic), p2e(u_in));
+plot_wbs(images(ic).img, images(in).img, u_ic, u_in);
 
 
 

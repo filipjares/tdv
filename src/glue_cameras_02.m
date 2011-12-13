@@ -21,6 +21,8 @@ end
 
 assert(all(all(m{i1,i2}' == corresp_get_m( corresp, i1, i2 ))));
 
+% FIXME: It is not necessary to keep the contents of m and pc variables...
+
 %% Initialize cameras cell array (cameras there are without K) i.e. cameras(i) = [Ri ti]
 
 cameras = cell(ncams, 1);
@@ -82,17 +84,16 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
 
     % TODO
     
-    %%
+    %% Reconstruct new Scene points from Image-to-Image correspondences between
+    %  the newly added camera and cameras that are already in the cluster
+            
+    THR = 2; % threshold, [px]
+    THR = 2*THR^2;
     
     % list of cameras already in the cluster neighbouring with the camera
     % with index 'in'. We will iterate through them
     ilist = corresp_get_cneighbours(corresp, in);
-    ic = 2; %for ic = ilist
-        
-        
-        % FIXME: here, I am changing contents of the m variable:, should I
-        % have cleared it earlier already?
-        
+    for ic = ilist
         % get remaining image-to-image correspondences
         mm = corresp_get_m(corresp, in, ic);
         
@@ -114,13 +115,19 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
         v_in = p2e(Pin*newX);
         v_ic = p2e(Pic*newX);
         
-        THR = 2; % [px]
-        THR = 2*THR^2;
+        err = sum((v_in - u_in).^2) + sum((v_ic - u_ic).^2);
+        inl_ix = find(err < THR & in_front);
         
-        err = sum((v_in - u_in).^2) + sum((v_ic - u_ic).^2); 
-                
+        firstUnusedId = size(X,2) + 1;
+        inliers_count = length(inl_ix);
+        new_xid = firstUnusedId:(firstUnusedId + inliers_count - 1);
+        Xcount = Xcount + inliers_count;    % TODO: this variable is not necessary
+        X = [X, newX(:,inl_ix)];
+        assert(length(X) == Xcount);
         
-    %end
+        corresp = corresp_new_x(corresp, in, ic, inl_ix, new_xid);
+        
+    end
     
 
 %end

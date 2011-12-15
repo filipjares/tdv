@@ -29,3 +29,12 @@ STEREO
 VRML:
 
 	- na obarveni ply souboru lze pouzit balik ply... v kodech
+	- program: FreeWRL
+
+Komentáře ke 2 zprávě, přednášené kolegům, co už odevzdali
+
+	- na webu je formulář
+	- používat citace (WBS, ...)
+	- pokud možno všechny výsledky ověřit, měl bych dostat
+	  takové výsledky, které jsme očekávali ("vím, čím jsem
+	  to fotil, můžu to spočítat")

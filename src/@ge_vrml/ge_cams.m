@@ -96,7 +96,7 @@ for i = 1:length( ptrack )
     %   bulb( fh, t-d*j, [1;0;0], 0.01 );
     % end
     
-    bulb( fh, t, [1;1;0], 0.01 );
+    bulb( fh, t, [1;1;0], 0.1 );
   end
 end
   

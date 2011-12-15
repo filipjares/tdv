@@ -7,6 +7,8 @@
 %% Correspondences data setup
 
 % addpath corresp/
+% addpath p3p/
+% addpath ba/
 
 % Initialise correspondence tools with a number of cameras
 fprintf('Initialise correspondences tool\n');
@@ -38,21 +40,32 @@ X = Pu2X(P1, P2, u1, u2);
 Xcount = sum(best_inl_ix);  % number of confirmed scene points
 X = X(:,best_inl_ix);           % the confirmed scene points themselves
 
+u = cell(ncams, 1);
+for i = 1:ncams
+    u{i} = get_image_points_coordinates(images, i);
+end
+
 corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
 
 %% Here comes the Bundle Adjustment
 
-% TODO
+[Rt_new, X_new] = RtXun_ba({cameras{corresp.camsel}}, K, p2e(X), {u{corresp.camsel}}, {corresp.Xu{corresp.camsel}});
 
-%while true
+X = e2p(X_new);
+cam_ix = find(corresp.camsel);
+for i = 1:length(Rt_new)
+    cameras{cam_ix(i)} = Rt_new{i};
+end
+
+while true
     %% Choosing the next camera to add
 
     % list of ('green') cameras with tentative scene-to-image correspondences
     ig = corresp_get_green_cameras(corresp);
     if isempty(ig)
         fprintf('There are no other cameras with tentative scene-to-image correspondences\n');
-%        break;
-        return;
+        break;
+%        return;
     end
     Xucount = corresp_get_Xucount(corresp, ig);
     [maxXucount, max_ig_ix] = max(Xucount);
@@ -60,8 +73,8 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
     fprintf('Camera number %u is the next\n', in);
     if (maxXucount < 3) % FIXME: what should be the limit?
         fprintf('but it has less than 3 correspondences to the camera cloud\n');
-%        break;
-        return;
+        break;
+%       return;
     end
 
     % Scene-to-image correspondences in the new camera
@@ -82,7 +95,13 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
 
     %% Here comes another Bundle adjustment
 
-    % TODO
+    [Rt_new, X_new] = RtXun_ba({cameras{corresp.camsel}}, K, p2e(X), {u{corresp.camsel}}, {corresp.Xu{corresp.camsel}});
+
+    X = e2p(X_new);
+    cam_ix = find(corresp.camsel);
+    for i = 1:length(Rt_new)
+        cameras{cam_ix(i)} = Rt_new{i};
+    end
     
     %% Reconstruct new Scene points from Image-to-Image correspondences between
     %  the newly added camera and cameras that are already in the cluster
@@ -163,7 +182,7 @@ corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
     % That's all for this new camera:
     corresp = corresp_finalize_camera(corresp);
 
-%end
+end
 
 %% Vykreslit si obrazky
 

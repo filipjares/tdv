@@ -7,6 +7,10 @@ function u = get_image_points_coordinates(images, cam_ix, pt_indices)
     %
     % Ouptut: u - 2xn matrix containing euclidean coordinates of image points
 
+	if nargin < 3
+		pt_indices = 1:length(images(cam_ix).pts);
+	end
+
 	u = zeros(2,length(pt_indices));
     for i = 1:length(pt_indices)
         u(:,i) = [images(cam_ix).pts(pt_indices(i)).x; ...

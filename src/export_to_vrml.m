@@ -28,10 +28,14 @@ function export_to_vrml(filename, cameras, X, Xcolors)
     else
         colors = ones(3, size(X,2));
     end
-
+    
+    sel = X(1,:) > -15 & X(1,:) < 15 & ...  
+          X(2,:) > -15 & X(2,:) < 15 & ...  
+          X(3,:) > -15 & X(3,:) < 15;
+      
     ge = ge_vrml(filename);
     ge = ge_cams(ge, cameras, 'plot', 1);       % P1, P2 jsou kamery bez K ([I 0], [R t])
-    ge = ge_points(ge, X, 'color', colors);   % predavame euklidovske body
+    ge = ge_points(ge, X(:,sel), 'color', colors(:,sel));   % predavame euklidovske body
     ge = ge_close(ge);
 
 end

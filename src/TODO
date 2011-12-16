@@ -1,3 +1,10 @@
 
 - Use linear triangulation (slide 83) together with optimal triangulation.
   [HZ, ch. 12, section 12.5.2]
+
+- P3P Ransac: prověřit warning:
+	Warning: There are no three unique points 
+	> In p3p_grunert at 46
+	  In p3p_ransac at 35
+	    In glue_cameras_02 at 78
+

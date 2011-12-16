@@ -184,10 +184,10 @@ while true
 
 end
 
-%% Vykreslit si obrazky
+%% Save workspace & Export do VRML
 
-figure(1);
-plot_wbs(images(ic).img, images(in).img, u_ic, u_in);
+% save('../data/glue_cameras-02-output.mat');
+% export_to_vrml('out.wrl', cameras, X);
 
 
 

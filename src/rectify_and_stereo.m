@@ -26,5 +26,28 @@ D = gcs(im1r, im2r, []);
 P1r = H1*P1;
 P2r = H2*P2;
 
+%%
+
+% save('../data/rectify_and_stereo_pair-06-07.mat');
+
+%%
+
+ok = ~isnan(D);
+
+u1 = ones(3,sum(sum(ok)));
+u2 = ones(3,sum(sum(ok)));
+
+n = 0;
+for i = 1:size(im1r, 1)
+	pts_in_row = sum(ok(i,:));
+	col_ix = find(ok(i,:));
+	u1(1:2, (n+1):(n+pts_in_row)) = [i*ones(1,pts_in_row); col_ix];
+	u2(1:2, (n+1):(n+pts_in_row)) = [i*ones(1,pts_in_row); col_ix + D(i,col_ix) ];
+	n = n + pts_in_row;
+end
+
+X = Pu2X(P1r, P2r, u1, u2);
+
+% save('../data/points_from_stereo_pair_06-07.mat', 'X', 'P1r', 'P2r', 'H1', 'H2', 'P1', 'P2', 'F', 'i1', 'i2');
 
 

@@ -3,10 +3,19 @@
 
 .PHONY: all gv pics grafy kapitoly
 
-all: report1.pdf
+all: report.pdf
 
 gv: report1.ps
 	(gv $< &)
+
+report.pdf: report.tex pictures 
+	pdfcslatex $<; bibtex report; pdfcslatex $<; pdfcslatex $<
+
+report.ps: report.dvi
+	dvips $<
+
+report.dvi: report.tex pictures
+	latex -output-format dvi $<; bibtex report; latex -output-format dvi $<; latex -output-format dvi $<
 
 report1.pdf: report1.tex pictures 
 	pdfcslatex $<; bibtex report1; pdfcslatex $<; pdfcslatex $<

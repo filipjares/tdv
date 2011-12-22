@@ -6,9 +6,9 @@
 
 %% Correspondences data setup
 
-% addpath corresp/
-% addpath p3p/
-% addpath ba/
+addpath corresp/
+addpath p3p/
+addpath ba/
 
 % Initialise correspondence tools with a number of cameras
 fprintf('Initialise correspondences tool\n');

@@ -81,7 +81,6 @@ plot([CC2(1)*ones(1,size(i2,2)); i2(1,:)], [CC2(2)*ones(1,size(i2,2)); i2(2,:)],
 
 %% plot images of intersections of rays of both cameras
 
-% X = rays_intersection(p2e(C1), d1, p2e(C2), d2);
 X = Pu2X(P1, P2, u1, u2);
 xs = p2e(P*X);
 for j = 1:size(xs,2);
@@ -95,6 +94,8 @@ hold off;
 % (un)calibrated points (un - ?)
 v1 = K\u1;
 v2 = K\u2;
+
+addpath calibrated_p5/
 
 % "candidate solutions"
 Evec = calibrated_fivepoint(v1, v2);

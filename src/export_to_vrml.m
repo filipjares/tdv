@@ -26,7 +26,7 @@ function export_to_vrml(filename, cameras, X, Xcolors)
             error('Different number of points and colors');
         end
     else
-        colors = ones(3, size(X,2));
+        Xcolors = ones(3, size(X,2));
     end
     
     sel = X(1,:) > -15 & X(1,:) < 15 & ...  
@@ -35,7 +35,7 @@ function export_to_vrml(filename, cameras, X, Xcolors)
       
     ge = ge_vrml(filename);
     ge = ge_cams(ge, cameras, 'plot', 1);       % P1, P2 jsou kamery bez K ([I 0], [R t])
-    ge = ge_points(ge, X(:,sel), 'color', colors(:,sel));   % predavame euklidovske body
+    ge = ge_points(ge, X(:,sel), 'color', Xcolors(:,sel));   % predavame euklidovske body
     ge = ge_close(ge);
 
 end

@@ -1,3 +1,4 @@
+function rectify_and_stereo(i1, i2)
 
 fprintf('Loading data from previous steps ...\n');
 load ('../data/glue_cameras-02-output.mat', 'K', 'cameras');
@@ -6,8 +7,8 @@ images = initialize_empty_images_structure();
 addpath rectify/
 addpath gcs/
 
-i1 = 5;
-i2 = 6;
+% i1 = 2;
+% i2 = 6;
 
 P1 = K*cameras{i1};
 P2 = K*cameras{i2};
@@ -20,6 +21,12 @@ F = cameras2F(P1,P2);
 
 fprintf('Computing rectifying homographies and rectifying images...\n');
 [H1, H2, im1r, im2r] = rectify(F, im1, im2);
+
+im1r = im1r(1:2:end, 1:2:end);
+im2r = im2r(1:2:end, 1:2:end);
+
+H1 = diag([0.5 0.5 1])*H1;
+H2 = diag([0.5 0.5 1])*H2;
 
 fprintf('Computing disparity map of the pair...\n');
 D = gcs(im1r, im2r, []);
@@ -43,12 +50,26 @@ for i = 1:size(im1r, 1)
 	pts_in_row = sum(ok(i,:));
 	col_ix = find(ok(i,:));
 	u1(1:2, (n+1):(n+pts_in_row)) = [i*ones(1,pts_in_row); col_ix];
-	u2(1:2, (n+1):(n+pts_in_row)) = [i*ones(1,pts_in_row); col_ix + D(i,col_ix) ];
+	u2(1:2, (n+1):(n+pts_in_row)) = [i*ones(1,pts_in_row); col_ix - D(i,col_ix) ];
 	n = n + pts_in_row;
 end
 
 X = Pu2X(P1r, P2r, u1, u2);
 
-save(['../data/points_from_stereo_pair_', pair_str, '.mat'], 'X', 'P1r', 'P2r', 'H1', 'H2', 'P1', 'P2', 'F', 'i1', 'i2');
-export_to_vrml(['../data/points_from_stereo_pair_', pair_str, '.wrl'], {P1, P2}, X);
+% save(['../data/points_from_stereo_pair_', pair_str, '.mat'], 'X', 'P1r', 'P2r', 'H1', 'H2', 'P1', 'P2', 'F', 'i1', 'i2');
+% export_to_vrml(['../data/points_from_stereo_pair_', pair_str, '.wrl'], {P1, P2}, X);
 
+%% Display rectified images
+
+figure(1); imshow(im1r);
+figure(2); imshow(im2r);
+
+assert(size(im1r,1) == size(im2r,1));
+umax = max(size(im1r,2), size(im2r,2));
+
+j = 1000;
+figure(1); h1 = line([1, umax], [j, j]);
+figure(2); h2 = line([1, umax], [j, j]);
+
+
+end

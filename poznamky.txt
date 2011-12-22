@@ -38,3 +38,13 @@ Komentáře ke 2 zprávě, přednášené kolegům, co už odevzdali
 	- pokud možno všechny výsledky ověřit, měl bych dostat
 	  takové výsledky, které jsme očekávali ("vím, čím jsem
 	  to fotil, můžu to spočítat")
+
+Poissonovská rekonstrukce
+
+	- má nějaké parametry (možná skryté), mělo by být možné nastavit
+	  např. jak přesný má povrch být
+
+imagesc
+get( gca, 'clim')
+
+disparita se u druhého obrázku odečítá

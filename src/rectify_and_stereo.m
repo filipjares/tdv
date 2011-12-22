@@ -6,8 +6,8 @@ images = initialize_empty_images_structure();
 addpath rectify/
 addpath gcs/
 
-i1 = 6;
-i2 = 7;
+i1 = 5;
+i2 = 6;
 
 P1 = K*cameras{i1};
 P2 = K*cameras{i2};
@@ -28,7 +28,8 @@ P2r = H2*P2;
 
 %%
 
-% save('../data/rectify_and_stereo_pair-06-07.mat');
+pair_str = [num2str(i1, '%02u') '-' num2str(i2, '%02u')];
+% save(['../data/rectify_and_stereo_pair-', pair_str, '.mat']);
 
 %%
 
@@ -48,6 +49,6 @@ end
 
 X = Pu2X(P1r, P2r, u1, u2);
 
-% save('../data/points_from_stereo_pair_06-07.mat', 'X', 'P1r', 'P2r', 'H1', 'H2', 'P1', 'P2', 'F', 'i1', 'i2');
-
+save(['../data/points_from_stereo_pair_', pair_str, '.mat'], 'X', 'P1r', 'P2r', 'H1', 'H2', 'P1', 'P2', 'F', 'i1', 'i2');
+export_to_vrml(['../data/points_from_stereo_pair_', pair_str, '.wrl'], {P1, P2}, X);
 

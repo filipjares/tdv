@@ -54,7 +54,7 @@ assert(d == 1 && all(a == v0) && all(b == [0 0 1]'));
 [d, a, b] = lines_distance([-1 -1 0]', [1 1 0]', [1 -1 1]', [1 1 0]');
 assert(abs(d - sqrt(3)) < EPS && all(isnan(a)) && all(isnan(b)));
 
-%% Lines intersection function:
+%% Rays intersection function:
 
 clear all;
 
@@ -101,4 +101,69 @@ for i = 1:5
     end
     
 end
+
+%% Pu2X
+
+clear all;
+
+% Object (House) vertices (X) definition:
+z = 4;
+X1 = e2p([ ...
+      -0.5  0.5 0.5 -0.5 -0.5 -0.3 -0.3 -0.2 -0.2  0  0.5; ...
+      -0.5 -0.5 0.5  0.5 -0.5 -0.7 -0.9 -0.9 -0.8 -1 -0.5; ...
+       z    z   z    z    z    z    z    z    z  z    z ]);
+X2 = X1;
+X2(3,:) = X1(3,:)+0.5;
+X = [X1 X2];
+
+% The internal camera matrix
+K = [ 1000    0 500; ...
+         0 1000 500; ...
+         0    0   1 ];
+
+% P1
+C = [0; 0.5; 0];
+P1 = K*[eye(3) -1*C];
+% P2
+alpha = 0.5; c = cos(alpha); s = sin(alpha);
+R = [ ...
+    1  0  0; ...
+    0  c -s; ...
+    0  s  c];
+C = [0;-3;0.5];
+P2 = K*R*[eye(3) -1*C];
+
+u1 = P1*X;
+u2 = P2*X;
+    
+XX = e2p(p2e(Pu2X(P1, P2, u1, u2)));
+
+assert(norm(XX - X) < 100*eps);
+
+%% cameras2F
+
+% C = [0; 0.5; 0];
+% P1 = [eye(3) zeros(3,1)];
+% P2 = [eye(3) -C];
+% 
+% u1 = P1*X;
+% u2 = P2*X;
+
+u1 = K\u1;
+u2 = K\u2;
+
+E = cameras2F(K\P1,K\P2);
+
+assert(size(u1,2) == size(u2,2));
+for i = 1:size(u1,2)
+    assert(abs(u2(:,i)' * E * u1(:,i)) < 100*eps(1000));
+end
+
+%% EutoRb
+
+% P1 = [eye(3) zeros(3,1)];
+% P2 = [eye(3) -C];
+
+E = cameras2F(K\P1, K\P2);
+[RR bb PP1 PP2] = EutoRb(E, u1, u2);
 

@@ -40,6 +40,7 @@ X = Pu2X(P1, P2, u1, u2);
 
 Xcount = sum(best_inl_ix);  % number of confirmed scene points
 X = X(:,best_inl_ix);           % the confirmed scene points themselves
+colors = [1 1 1]' * ones(1,size(X,2)); % point from initial camera pair in white
 
 u = cell(ncams, 1);
 for i = 1:ncams
@@ -144,6 +145,7 @@ while true
         new_xid = firstUnusedId:(firstUnusedId + inliers_count - 1);
         Xcount = Xcount + inliers_count;    % TODO: this variable is not necessary
         X = [X, newX(:,inl_ix)];
+        colors = [colors, color_hash(in)' * ones(1,inliers_count)];
         assert(length(X) == Xcount);
         
         corresp = corresp_new_x(corresp, in, ic, inl_ix, new_xid);

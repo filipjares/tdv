@@ -18,6 +18,9 @@
 %                          border_bottom
 %
 
+% Path
+addpath toolbox/
+
 MARKER_SIZE = 10;
 
 X_LO = 1;

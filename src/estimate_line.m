@@ -12,6 +12,10 @@
 %           * Points
 %           * Line found by non-robust ML estimation.
 %           * Line found by robust ML estimation.
+%% Path to utility functions
+
+addpath toolbox/
+
 %% Definitions
 
 % Image boundaries

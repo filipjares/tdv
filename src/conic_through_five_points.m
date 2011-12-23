@@ -39,6 +39,8 @@ border_right  = borders(:,2);
 border_bottom = borders(:,3);
 border_left   = borders(:,4);
 
+addpath toolbox/
+
 % Plot borders:
 figure(1);
 plot(0,0);

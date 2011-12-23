@@ -5,6 +5,7 @@ load('../data/Kcalib.mat', 'K');
 fprintf('Loading image data and image-to-image correspondences.\n');
 load('../data/images_and_sparse_correspondences.mat', 'images', 'm', 'pc');
 
+addpath toolbox/
 % addpath calibrated_p5/
 
 %% Choose initial camera pair (i1,i2) with most image-to-image correspodences

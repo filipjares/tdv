@@ -1,3 +1,7 @@
+%% Toolbox path
+
+addpath toolbox/
+
 %% Remove radial distortion of input pictures
 
 % addpath rd_undistort

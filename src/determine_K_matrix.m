@@ -46,6 +46,7 @@ USER_INPUT = false;
 
 %% Remove the radial distortion
 
+addpath toolbox/
 % addpath rd_undistort
 % rddirundistort(rd, 'pictures', 'linear_pictures');
 

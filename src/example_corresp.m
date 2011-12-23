@@ -1,6 +1,11 @@
 % Example presented in the paper:
 % http://cmp.felk.cvut.cz/cmp/courses/TDV/2010W/labs/gluing_correspondences.pdf
 
+%% Paths
+
+addpath corresp/
+% addpath toolbox/
+
 %% 2.2.1 Data Setup
 
 % Initialise correspondence tools with a number of cameras

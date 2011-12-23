@@ -6,6 +6,7 @@
 
 %% Correspondences data setup
 
+addpath toolbox/
 addpath corresp/
 addpath p3p/
 addpath ba/

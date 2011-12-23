@@ -9,8 +9,9 @@
 % 4. Choose a triple of images and select and visualize correspondences
 %    that links all the images and are consistent, as in figure3 . 
 
-%% Add wbs to path if neccessary
+%% Add paths
 
+addpath toolbox/
 addpath wbs/
 addpath corresp/
 

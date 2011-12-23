@@ -1,4 +1,8 @@
 
+%% Path
+
+addpath toolbox/
+
 %% Depth in camera function:
 
 clear all;

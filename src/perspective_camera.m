@@ -1,4 +1,6 @@
 
+addpath toolbox/
+
 % Object (House) vertices definition:
 z = 4;
 X1 = e2p([ ...

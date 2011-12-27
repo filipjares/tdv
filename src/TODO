@@ -8,3 +8,5 @@
 	  In p3p_ransac at 35
 	    In glue_cameras_02 at 78
 
+- Rektifikace kamery - poradi souradnic je opacne, nez bych cekal
+  (prohozene sloupce a radky)

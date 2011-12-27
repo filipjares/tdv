@@ -48,8 +48,9 @@ n = 0;
 for i = 1:size(im1r, 1)
 	pts_in_row = sum(ok(i,:));
 	col_ix = find(ok(i,:));
-	u1(1:2, (n+1):(n+pts_in_row)) = [i*ones(1,pts_in_row); col_ix];
-	u2(1:2, (n+1):(n+pts_in_row)) = [i*ones(1,pts_in_row); col_ix - D(i,col_ix) ];
+    % Zde je poradi souradnic opacne, nez bych 
+	u1(1:2, (n+1):(n+pts_in_row)) = [col_ix; i*ones(1,pts_in_row)];
+	u2(1:2, (n+1):(n+pts_in_row)) = [col_ix - D(i,col_ix); i*ones(1,pts_in_row)];
 	n = n + pts_in_row;
 end
 

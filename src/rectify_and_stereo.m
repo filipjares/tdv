@@ -34,27 +34,71 @@ P2r = H2*P2;
 
 %%
 
+fprintf('Saving intermediate results...\n');
 pair_str = [num2str(i1, '%02u') '-' num2str(i2, '%02u')];
 save(['../data/rectify_and_stereo_pair-', pair_str, '.mat']);
 
-%%
+%% 
 
-ok = ~isnan(D);
+fprintf('Computing image point coordinates and colors...\n');
 
-u1 = ones(3,sum(sum(ok)));
-u2 = ones(3,sum(sum(ok)));
+% Size of border used to avoid reconstructing near-border artifacts
+BORDER = 40;
+HEIGHT = size(images(i1).img, 1);
+WIDTH = size(images(i1).img, 2);
+
+ok = ~isnan(D);     % valid disparities
+
+% prepare arrays for points and their colors
+u1 = ones(3,sum(sum(ok)));  % point coordinates in the first (rectified) picture
+u2 = ones(3,sum(sum(ok)));  % point coordinates in the second (rectified) picture
+c = zeros(3,sum(sum(ok)));  % colors of these points
 
 n = 0;
 for i = 1:size(im1r, 1)
-	pts_in_row = sum(ok(i,:));
-	col_ix = find(ok(i,:));
-    % Zde je poradi souradnic opacne, nez bych 
-	u1(1:2, (n+1):(n+pts_in_row)) = [col_ix; i*ones(1,pts_in_row)];
-	u2(1:2, (n+1):(n+pts_in_row)) = [col_ix - D(i,col_ix); i*ones(1,pts_in_row)];
-	n = n + pts_in_row;
+    pts_in_row = sum(ok(i,:));  % valid disparities count in current row
+    if (pts_in_row == 0)
+        continue;
+    end
+    
+    col_ix = find(ok(i,:));     % indices of points with valid disparities
+    
+    % coordinates of points in current row in 1st pic (having valid disparities)
+    u1_in_row = [col_ix; i*ones(1,pts_in_row); ones(1,pts_in_row)];
+    
+    % coordinates of these points in original picture (before rectification)
+    u1_orig = round(p2e(H1\u1_in_row));
+    % indices of points with valid disparities having sufficient distance from the border
+    inside_border = find(u1_orig(1,:) > BORDER & u1_orig(1,:) < WIDTH - BORDER ...
+            & u1_orig(2,:) > BORDER & u1_orig(2,:) < HEIGHT - BORDER);
+    
+    ok_pts_in_row = size(inside_border,2);  % useful points count
+    
+    if (ok_pts_in_row == 0)
+        continue;
+    end
+    
+    new_points_ix = (n+1):(n+ok_pts_in_row); % indices of useful points
+	
+    % coordinates
+    u1(:, new_points_ix) = u1_in_row(:, inside_border);
+    u2(1:2, new_points_ix) = [col_ix(inside_border) - D(i,col_ix(inside_border)); i*ones(1,ok_pts_in_row)];
+    
+    % colors
+    for j = 1:ok_pts_in_row
+        c(:,new_points_ix(j)) = images(i1).img(u1_orig(2,inside_border(j)), u1_orig(1,inside_border(j)), :);
+    end    
+	n = n + ok_pts_in_row;
 end
 
+u1 = u1(:,1:n);
+u2 = u2(:,1:n);
+c  =  c(:,1:n);
+
 %%
+
+fprintf('Computing space points (reprojections)...\n');
+
 tic;
 X2 = Pu2X(P1r, P2r, u1, u2);
 XX = X2(:,1:10:end);
@@ -64,6 +108,8 @@ toc
 % export_to_vrml(['../data/points_from_stereo_pair_', pair_str, '.wrl'], {P1, P2}, XX);
 
 % export_to_vrml(['../data/points_from_stereo_pair_', pair_str, '-both_results.wrl'], {P1, P2}, [X, XX], [ [1 0 0]'*ones(1,size(X,2)), [0 1 0]'*ones(1,size(XX,2)) ]);
+
+export_to_vrml(['../data/points_from_stereo_pair_', pair_str, '-color.wrl'], {P1, P2}, X2, c/255);
 
 save('../data/rectify_and_stereo-output.mat');
 

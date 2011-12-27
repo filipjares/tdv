@@ -8,5 +8,8 @@
 	  In p3p_ransac at 35
 	    In glue_cameras_02 at 78
 
-- Rektifikace kamery - poradi souradnic je opacne, nez bych cekal
-  (prohozene sloupce a radky)
+- Rektifikace kamery
+	- Kdyz aplikuji na souradnice v obrazech z kamer
+	  homografie H1 a H2 ziskane pomoci funkce rectify,
+	  je poradi souradnic takto rektifikovanych bodu opacne
+	  nez bych cekal.

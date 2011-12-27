@@ -54,8 +54,45 @@ for i = 1:skip:size(u2,2)
 end
 hold off;
 
+%%
+
 u1r = p2e(H1 * e2p(u1));
 u2r = p2e(H2 * e2p(u2));
+d = (u1r(1,:) - u2r(1,:));
 
+%%
 
+D2 = D;
+for i = 1:skip:size(u1r,2)
+    x = round(u1r(1,i));
+    y = round(u1r(2,i));
+    D2(y + [-10:10], x + [-10:10]) = d(i);
+end
 
+CX = Pu2X(P1r, P2r, u1r, u2r);
+
+figure(3);
+imagesc(D2);
+colormap('jet');
+set(gca, 'clim', [-70 -20]);
+colorbar;
+axis image;
+title(['Camera ' num2str(i1) ' rectified']);
+
+%%
+
+figure(4);
+imagesc(D);
+colormap('jet');
+set(gca, 'clim', [-70 -20]);
+colorbar;
+axis image;
+title(['Camera ' num2str(i1) ' rectified']);
+hold on;
+k = 0;
+for i = 1:skip:size(u1r,2)
+    k = k + 1;
+    x = round(u1r(1,i));
+    y = round(u1r(2,i));
+    plot(x, y, 'o', 'markersize', 8, 'markerfacecolor', color_hash(k));
+end

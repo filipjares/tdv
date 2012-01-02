@@ -80,13 +80,13 @@ XX = Pu2X(P1r, P2r, u1, u2);
 
 %% Save
 
-fprintf('Writing data...\n');
-pair_str = [num2str(i1, '%02u') '-' num2str(i2, '%02u')];
-fprintf('\t... Disparity map\n');
-imwrite(D, colormap('lines'), ['../data/disparity_pair_', pair_str, '.png'], 'png');
-fprintf('\t... Data\n');
-save(['../data/points_from_stereo_pair_', pair_str, '.mat'], 'XX', 'P1r', 'P2r', 'H1', 'H2', 'P1', 'P2', 'F', 'i1', 'i2');
-fprintf('\t... VRML\n');
-export_to_vrml(['../data/points_from_stereo_pair_', pair_str, '-color.wrl'], {P1, P2}, XX, c/255);
+% fprintf('Writing data...\n');
+% pair_str = [num2str(i1, '%02u') '-' num2str(i2, '%02u')];
+% fprintf('\t... Disparity map\n');
+% imwrite(D, colormap('lines'), ['../data/disparity_pair_', pair_str, '.png'], 'png');
+% fprintf('\t... Data\n');
+% save(['../data/points_from_stereo_pair_', pair_str, '.mat'], 'XX', 'P1r', 'P2r', 'H1', 'H2', 'P1', 'P2', 'F', 'i1', 'i2', 'X', 'c');
+% fprintf('\t... VRML\n');
+% export_to_vrml(['../data/points_from_stereo_pair_', pair_str, '-color.wrl'], {P1, P2}, XX, c/255);
 
 end

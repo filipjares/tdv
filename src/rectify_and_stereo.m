@@ -1,4 +1,4 @@
-function [XX, c] = rectify_and_stereo(i1, i2, P1, P2, im1, im2)
+function [XX, c, pos] = rectify_and_stereo(i1, i2, P1, P2, im1, im2)
 
 F = cameras2F(P1,P2);
 
@@ -31,6 +31,7 @@ ok = ~isnan(D);     % valid disparities
 u1 = ones(3,sum(sum(ok)));  % point coordinates in the first (rectified) picture
 u2 = ones(3,sum(sum(ok)));  % point coordinates in the second (rectified) picture
 c = zeros(3,sum(sum(ok)));  % colors of these points
+pos = zeros(2,sum(sum(ok))); % coordinates of points XX in the first picture
 
 n = 0;
 for i = 1:size(im1r, 1)
@@ -61,6 +62,7 @@ for i = 1:size(im1r, 1)
     % coordinates
     u1(:, new_points_ix) = u1_in_row(:, inside_border);
     u2(1:2, new_points_ix) = [col_ix(inside_border) - D(i,col_ix(inside_border)); i*ones(1,ok_pts_in_row)];
+    pos(:, new_points_ix) = u1_orig(:,inside_border);
     
     % colors
     for j = 1:ok_pts_in_row
@@ -72,6 +74,7 @@ end
 u1 = u1(:,1:n);
 u2 = u2(:,1:n);
 c  =  c(:,1:n);
+pos  = pos(:,1:n);
 
 %% Reconstruct 3D points
 

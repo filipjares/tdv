@@ -1,4 +1,4 @@
-function export_to_vrml(filename, cameras, X, Xcolors)
+function export_to_vrml(filename, cameras, X, Xcolors, points)
 
     if ~iscell(cameras)
         error('The cameras parameter has to be cell array containing camera matrices.');
@@ -29,6 +29,16 @@ function export_to_vrml(filename, cameras, X, Xcolors)
         Xcolors = ones(3, size(X,2));
     end
     
+    if nargin > 4
+        if (size(points,1) == 4)
+            points = p2e(points);
+        end
+        
+        if (size(points,1) ~= 3)
+            error('pts parameter has to be 3xn euclidean or 4xn homogenous array of points');
+        end
+    end
+    
     sel = X(1,:) > -15 & X(1,:) < 15 & ...  
           X(2,:) > -15 & X(2,:) < 15 & ...  
           X(3,:) > -15 & X(3,:) < 15;
@@ -36,6 +46,7 @@ function export_to_vrml(filename, cameras, X, Xcolors)
     ge = ge_vrml(filename);
     ge = ge_cams(ge, cameras, 'plot', 1);       % P1, P2 jsou kamery bez K ([I 0], [R t])
     ge = ge_points(ge, X(:,sel), 'color', Xcolors(:,sel));   % predavame euklidovske body
+    ge = ge_bulbs(ge, points);
     ge = ge_close(ge);
 
 end

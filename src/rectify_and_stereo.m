@@ -1,4 +1,4 @@
-function [XX, c, pos] = rectify_and_stereo(i1, i2, P1, P2, im1, im2)
+function [XX, c, pos, D_no_border] = rectify_and_stereo(i1, i2, P1, P2, im1, im2)
 
 F = cameras2F(P1,P2);
 
@@ -21,7 +21,7 @@ P2r = H2*P2;
 fprintf('Computing image point coordinates and colors...\n');
 
 % Size of border used to avoid reconstructing near-border artifacts
-BORDER = 40;
+BORDER = 50;
 HEIGHT = size(im1, 1);
 WIDTH = size(im1, 2);
 
@@ -32,6 +32,7 @@ u1 = ones(3,sum(sum(ok)));  % point coordinates in the first (rectified) picture
 u2 = ones(3,sum(sum(ok)));  % point coordinates in the second (rectified) picture
 c = zeros(3,sum(sum(ok)));  % colors of these points
 pos = zeros(2,sum(sum(ok))); % coordinates of points XX in the first picture
+D_no_border = nan(size(im1,1), size(im1,2));
 
 n = 0;
 for i = 1:size(im1r, 1)
@@ -67,6 +68,7 @@ for i = 1:size(im1r, 1)
     % colors
     for j = 1:ok_pts_in_row
         c(:,new_points_ix(j)) = im1(u1_orig(2,inside_border(j)), u1_orig(1,inside_border(j)), :);
+        D_no_border(u1_orig(2,inside_border(j)), u1_orig(1,inside_border(j))) = D(i,col_ix(inside_border(j)));
     end    
 	n = n + ok_pts_in_row;
 end
@@ -83,10 +85,15 @@ XX = Pu2X(P1r, P2r, u1, u2);
 
 %% Save
 
-% fprintf('Writing data...\n');
-% pair_str = [num2str(i1, '%02u') '-' num2str(i2, '%02u')];
+fprintf('Writing data...\n');
+pair_str = [num2str(i1, '%02u') '-' num2str(i2, '%02u')];
 % fprintf('\t... Disparity map\n');
-% imwrite(D, colormap('lines'), ['../data/disparity_pair_', pair_str, '.png'], 'png');
+imwrite(im1, ['../data/disparity_pair_', pair_str, '-im1.png'], 'png');
+imwrite(D_no_border, ['../data/disparity_pair_', pair_str, '-im1-D.png'], 'png');
+imwrite(D_no_border, colormap('hot'), ['../data/disparity_pair_', pair_str, '-im1-D-c.png'], 'png');
+imwrite(im1r, ['../data/disparity_pair_', pair_str, '-im1r.png'], 'png');
+imwrite(D, ['../data/disparity_pair_', pair_str, '-im1r-D.png'], 'png');
+imwrite(D, colormap('hot'), ['../data/disparity_pair_', pair_str, '-im1r-D-c.png'], 'png');
 % fprintf('\t... Data\n');
 % save(['../data/points_from_stereo_pair_', pair_str, '.mat'], 'XX', 'P1r', 'P2r', 'H1', 'H2', 'P1', 'P2', 'F', 'i1', 'i2', 'X', 'c');
 % fprintf('\t... VRML\n');

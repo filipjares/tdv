@@ -11,6 +11,7 @@ images = initialize_empty_images_structure();
 Xhoriz = cell(1,8);
 Choriz = cell(1,8);
 pos = cell(1, 11 + 8);
+Dim = cell(1, 11 + 8);
 
 % horizontal pairs
 k = 0;
@@ -25,7 +26,7 @@ for i = 1:11
     im1 = imread(images(i1).filename);
     im2 = imread(images(i2).filename);
     fprintf('\tcomputing stereo\n');
-    [Xhoriz{i}, Choriz{i}, pos{k}] = rectify_and_stereo(i1, i2, P1, P2, im1, im2);
+    [Xhoriz{i}, Choriz{i}, pos{k}, Dim{k}] = rectify_and_stereo(i1, i2, P1, P2, im1, im2);
     clear im1 im2;
 end
 
@@ -44,7 +45,7 @@ for i = 1:8
     im1 = imread(images(i1).filename);
     im2 = imread(images(i2).filename);
     fprintf('\tcomputing stereo\n');
-    [Xvert{i}, Cvert{i}, pos{k}] = rectify_and_stereo(i1, i2, P1, P2, im1, im2);
+    [Xvert{i}, Cvert{i}, pos{k}, Dim{k}] = rectify_and_stereo(i1, i2, P1, P2, im1, im2);
     clear im1 im2;
 end
 

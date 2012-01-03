@@ -37,6 +37,8 @@ function export_to_vrml(filename, cameras, X, Xcolors, points)
         if (size(points,1) ~= 3)
             error('pts parameter has to be 3xn euclidean or 4xn homogenous array of points');
         end
+    else
+        points = zeros(3,0);
     end
     
     sel = X(1,:) > -15 & X(1,:) < 15 & ...  

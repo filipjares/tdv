@@ -70,6 +70,6 @@ function Pts = getPts(im1_pts, X, pos)
 
     for i = 1:size(im1_pts,2);
         k = find(pos(1,:) == im1_pts(1,i) & pos(2,:) == im1_pts(2,i));
-        Pts(:,i) = X(:,k);
+        Pts(:,i) = X(:,k(1));
     end
 end

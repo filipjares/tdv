@@ -3,13 +3,15 @@ function ix = filter_points(X3D, pos, cameras)
     % volani: filter_points(Xvert{2}, pos{13}, cameras);
 
     % 3 points defining a plane of ground
-    groundPlane = [3181 559; 3183 1964; 2978 1010]';
+    % groundPlane = [3181 559; 3183 1964; 2978 1010]'; % unscaled
+    groundPlane = [1591 278; 1592 982; 1489 505]';
 
     % two points next to each other
     % plane = [2955 1026; 2955 1027]';
 
     % 3 points defining plane of door
-    doorPlane = [1543 1726; 1704 956; 2585 975]';
+    % doorPlane = [1543 1726; 1704 956; 2585 975]'; % unscaled
+    doorPlane = round([1543 1726; 1704 956; 2585 975]'/2);
 
     % 3 planes defining plane of text above the door
     % plane = [98 2111; 805 1573; 249 954]';

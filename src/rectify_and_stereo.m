@@ -5,11 +5,11 @@ F = cameras2F(P1,P2);
 fprintf('Computing rectifying homographies and rectifying images...\n');
 [H1, H2, im1r, im2r] = rectify(F, im1, im2);
 
-im1r = im1r(1:2:end, 1:2:end);
-im2r = im2r(1:2:end, 1:2:end);
+% im1r = im1r(1:2:end, 1:2:end);
+% im2r = im2r(1:2:end, 1:2:end);
 
-H1 = diag([0.5 0.5 1])*H1;
-H2 = diag([0.5 0.5 1])*H2;
+% H1 = diag([0.5 0.5 1])*H1;
+% H2 = diag([0.5 0.5 1])*H2;
 
 fprintf('Computing disparity map of the pair...\n');
 D = gcs(im1r, im2r, []);
@@ -21,7 +21,7 @@ P2r = H2*P2;
 fprintf('Computing image point coordinates and colors...\n');
 
 % Size of border used to avoid reconstructing near-border artifacts
-BORDER = 50;
+BORDER = 25;
 HEIGHT = size(im1, 1);
 WIDTH = size(im1, 2);
 
@@ -87,16 +87,16 @@ XX = Pu2X(P1r, P2r, u1, u2);
 
 fprintf('Writing data...\n');
 pair_str = [num2str(i1, '%02u') '-' num2str(i2, '%02u')];
-% fprintf('\t... Disparity map\n');
+fprintf('\t... Disparity map\n');
 imwrite(im1, ['../data/disparity_pair_', pair_str, '-im1.png'], 'png');
 imwrite(D_no_border, ['../data/disparity_pair_', pair_str, '-im1-D.png'], 'png');
 imwrite(D_no_border, colormap('hot'), ['../data/disparity_pair_', pair_str, '-im1-D-c.png'], 'png');
 imwrite(im1r, ['../data/disparity_pair_', pair_str, '-im1r.png'], 'png');
 imwrite(D, ['../data/disparity_pair_', pair_str, '-im1r-D.png'], 'png');
 imwrite(D, colormap('hot'), ['../data/disparity_pair_', pair_str, '-im1r-D-c.png'], 'png');
-% fprintf('\t... Data\n');
-% save(['../data/points_from_stereo_pair_', pair_str, '.mat'], 'XX', 'P1r', 'P2r', 'H1', 'H2', 'P1', 'P2', 'F', 'i1', 'i2', 'X', 'c');
-% fprintf('\t... VRML\n');
-% export_to_vrml(['../data/points_from_stereo_pair_', pair_str, '-color.wrl'], {P1, P2}, XX, c/255);
+fprintf('\t... Data\n');
+save(['../data/points_from_stereo_pair_', pair_str, '.mat'], 'XX', 'P1r', 'P2r', 'H1', 'H2', 'P1', 'P2', 'F', 'i1', 'i2', 'c');
+fprintf('\t... VRML\n');
+export_to_vrml(['../data/points_from_stereo_pair_', pair_str, '-color.wrl'], {P1, P2}, XX, c/255);
 
 end

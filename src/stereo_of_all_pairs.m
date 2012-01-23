@@ -13,7 +13,8 @@ Choriz = cell(1,8);
 pos = cell(1, 11 + 8);
 Dim = cell(1, 11 + 8);
 
-% horizontal pairs
+%% horizontal pairs
+
 k = 0;
 for i = 1:11
     k = k + 1;
@@ -31,11 +32,12 @@ for i = 1:11
     [Xhoriz{i}, Choriz{i}, pos{k}, Dim{k}] = rectify_and_stereo(i1, i2, P1, P2, im1, im2);
     clear im1 im2;
 end
+%% vertical pairs
 
 Xvert = cell(1,8);
 Cvert = cell(1,8);
+k = 11
 
-% vertical pairs
 for i = 1:8
     k = k + 1;
     i1 = i;

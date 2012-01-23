@@ -8,18 +8,31 @@ load ('../data/glue_cameras-02-output.mat', 'K', 'cameras');
 images = initialize_empty_images_structure();
 % TODO: add K to cameras
 
-Xhoriz = cell(1,8);
-Choriz = cell(1,8);
-pos = cell(1, 11 + 8);
-Dim = cell(1, 11 + 8);
+%% prepare table of (vertical and horizontal) camera pairs for stereo
 
-%% horizontal pairs
-
-k = 0;
+% each row in the pairs table contains one pair (indices of cameras in the pair)
+pairs = nan(11+8, 2);
 for i = 1:11
-    k = k + 1;
-    i1 = i;
-    i2 = i+1;
+   pairs(i,:) = [i, i+1]; 
+end
+for i = 1:8
+    pairs(i+11,:) = [i, i+4];
+end
+
+%% compute stereo of all the pairs
+
+N = size(pairs,1);  % count of pairs
+
+% prepare variables
+XStereo = cell(1,N);
+CStereo = cell(1,N);
+PosStereo = cell(1, N);
+DStereo = cell(1, N);
+
+% process stereo
+for i = 1:N
+    i1 = pairs(i, 1);
+    i2 = pairs(i, 2);
     fprintf('Pair %02u - %02u...\n', i1, i2);
     fprintf('\tloading data\n');
     P1 = diag([0.5 0.5 1])*K*cameras{i1};
@@ -29,42 +42,10 @@ for i = 1:11
     im1 = im1(1:2:end,1:2:end,:);
     im2 = im2(1:2:end,1:2:end,:);
     fprintf('\tcomputing stereo\n');
-    [Xhoriz{i}, Choriz{i}, pos{k}, Dim{k}] = rectify_and_stereo(i1, i2, P1, P2, im1, im2);
+    [XStereo{i}, CStereo{i}, PosStereo{i}, DStereo{i}] = rectify_and_stereo(i1, i2, P1, P2, im1, im2);
     clear im1 im2;
 end
 %% vertical pairs
 
-Xvert = cell(1,8);
-Cvert = cell(1,8);
-k = 11
-
-for i = 1:8
-    k = k + 1;
-    i1 = i;
-    i2 = i + 4;
-    fprintf('Pair %02u - %02u...\n', i1, i2);
-    fprintf('\tloading data\n');
-    P1 = diag([0.5 0.5 1])*K*cameras{i1};
-    P2 = diag([0.5 0.5 1])*K*cameras{i2};
-    im1 = imread(images(i1).filename);
-    im2 = imread(images(i2).filename);
-    im1 = im1(1:2:end,1:2:end,:);
-    im2 = im2(1:2:end,1:2:end,:);
-    fprintf('\tcomputing stereo\n');
-    [Xvert{i}, Cvert{i}, pos{k}, Dim{k}] = rectify_and_stereo(i1, i2, P1, P2, im1, im2);
-    clear im1 im2;
-end
-
 save('../data/stereo_all_pairs.mat');
-
-% X = []; c = [];
-% for i = 1:11
-%     X = [X, Xhoriz{i}];
-%     c = [c, Choriz{i}];
-% end
-% for i = 1:8
-%     X = [X, Xvert{i}];
-%     c = [c, Cvert{i}];
-% end;
-% export_to_vrml('../data/stereo_all_pairs.wrl', cameras, X, c/255);
 

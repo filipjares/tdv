@@ -1,28 +1,51 @@
 
 addpath toolbox/
 
+% pair       1st cam  2nd cam
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 01               1        2
+% 02               2        3
+% 03               3        4
+% 04               4        5
+% 05               5        6
+% 06               6        7
+% 07               7        8
+% 08               8        9
+% 09               9       10
+% 10              10       11
+% 11              11       12
+% 12               1        5
+% 13               2        6
+% 14               3        7
+% 15               4        8
+% 16               5        9
+% 17               6       10
+% 18               7       11
+% 19               8       12
+
 % pairs containing useful stereo data (omitting garbage)
-pairs = [
-    1,  2;
-    1,  5;
-    2,  6;
-    3,  7;
-    6,  7;
-    6,  10;
-    7,  11;
-    8,  12;
-    9,  10;
-    %10, 11;
+pair_ixs = [
+         1, ...         %    1        2
+         6, ...         %    6        7
+         9, ...         %    9       10
+        10, ...         %   10       11
+        12, ...         %    1        5
+        13, ...         %    2        6
+        14, ...         %    3        7
+        17, ...         %    6       10
+        18, ...         %    7       11
+        19  ...         %    8       12
     ];
 
-N = size(pairs,1);
+N = length(pair_ixs);
 X = cell(1,N);
 total_points_count = 0;
 all_pairs_str = [];
 
 for i = 1:N
-    i1 = pairs(i,1);
-    i2 = pairs(i,2);
+    pair_index = pair_ixs(i);
+    i1 = pairs(pair_index,1);
+    i2 = pairs(pair_index,2);
     pair_str = [num2str(i1, '%02u') '-' num2str(i2, '%02u')];
     all_pairs_str = [all_pairs_str, '.', pair_str];
     load(['../data/points_from_stereo_pair_', pair_str, '.mat'], 'XX');

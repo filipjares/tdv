@@ -1,4 +1,4 @@
-function psr(X)
+function psr(X, psr_output, psr_dep)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %   Surface reconstruction from oriented points                      %
 %   Radim Tylecek, CMP FEL CVUT Praha, 2010.                         %
@@ -26,8 +26,12 @@ function psr(X)
 big_tri = 5; % max factor threshold of max to min triangle side length
 show = 0;  % plot figures
 psr_path = 'PoissonRecon64'; % psr executable, use *64 on 64bit systems
-psr_output = 'psr.ply';      % output filename
-psr_dep = 10;                % psr detail level (max 12)
+if (nargin < 2)
+    psr_output = 'psr.ply';      % output filename
+end
+if (nargin < 3)
+    psr_dep = 10;                % psr detail level (max 12)
+end
 
 %% open output file for points and normals
 npts = 'psr.npts';

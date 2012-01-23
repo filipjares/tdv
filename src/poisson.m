@@ -32,18 +32,20 @@ addpath psr/
 
 % indices of camera pairs that will be used for surface reconstruction
 % (and that contain useful stereo data, omitting garbage)
-pair_ixs = [
-         1, ...         %    1        2
-         6, ...         %    6        7
-         9, ...         %    9       10
-        10, ...         %   10       11
-        12, ...         %    1        5
-        13, ...         %    2        6
-        14, ...         %    3        7
-        17, ...         %    6       10
-        18, ...         %    7       11
-        19  ...         %    8       12
-    ];
+% pair_ixs = [
+%          1, ...         %    1        2
+%          6, ...         %    6        7
+%          9, ...         %    9       10
+%         10, ...         %   10       11
+%         12, ...         %    1        5
+%         13, ...         %    2        6
+%         14, ...         %    3        7
+%         17, ...         %    6       10
+%         18, ...         %    7       11
+%         19, ...         %    8       12
+%         11, ...         %   11       12
+%     ];
+pair_ixs = 1:19;       % use all the pairs
 N = length(pair_ixs);  % count of pairs
 
 X = cell(1,N);
@@ -69,5 +71,10 @@ end
 
 %%
 
-psr(X);
-
+for i = [10 11 12]
+    disp(['Computation for depth = ' num2str(i)]);
+	num_str = num2str(i, '%02u');
+    psr(X, ['../data/psr-results/psr-all_hor_and_vert_pairs-depth_' num_str '.ply'], i);
+    disp(' ');
+    disp(' ');
+end

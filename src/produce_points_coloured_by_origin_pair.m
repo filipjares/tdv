@@ -38,10 +38,12 @@ for i = 1:N
     ix = (last+1):(last+count);
     XX(:, ix) = X{i};
     cc(:, ix) = color_hash(i)'*ones(1,count);
+    last = last + count;
 end
 
 load(['../data/points_from_stereo_pair_01-02.mat'], 'P1');
-export_to_vrml(['../data/points_coloured_by_origin_pair-pairs' all_pairs_str '.wrl'], {P1}, XX, cc);
+export_filename_base = ['../data/points_coloured_by_origin_pair-pairs' all_pairs_str];
+export_to_vrml([export_filename_base '.wrl'], {P1}, XX, cc);
 
 %%
 
@@ -58,4 +60,6 @@ for i = 1:N
 end
 hold off;
 legend(leg)
+
+print(1, [export_filename_base '.png'], '-dpng');
 

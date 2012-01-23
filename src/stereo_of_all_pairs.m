@@ -1,8 +1,8 @@
 %% All pairs stereo
 
-% addpath toolbox/
-% addpath rectify/
-% addpath gcs/
+addpath toolbox/
+addpath rectify/
+addpath gcs/
 
 load ('../data/glue_cameras-02-output.mat', 'K', 'cameras');
 images = initialize_empty_images_structure();

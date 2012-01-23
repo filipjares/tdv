@@ -1,4 +1,6 @@
 
+addpath toolbox/
+
 % pairs containing useful stereo data (omitting garbage)
 pairs = [
     1,  2;

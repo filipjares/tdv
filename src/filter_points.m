@@ -1,4 +1,4 @@
-function ix = filter_points(X3D, pos, cameras)
+function ix = filter_points(X3D, X3Ddef, posDef, cameras)
 
     % volani: filter_points(Xvert{2}, pos{13}, cameras);
 
@@ -32,8 +32,8 @@ function ix = filter_points(X3D, pos, cameras)
     
     c = ones(3,size(X,2));
 
-    groundPts = getPts(groundPlane, X3D, pos);
-    doorPts = getPts(doorPlane, X3D, pos);
+    groundPts = getPts(groundPlane, X3Ddef, posDef);
+    doorPts = getPts(doorPlane, X3Ddef, posDef);
     
     % export_to_vrml('/tmp/pts-sparse.wrl', cameras, X(:,1:100:end), c(:,1:100:end), doorPts);
     

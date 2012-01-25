@@ -28,7 +28,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 %escapeinside={\%*}{*)}   % if you want to add a comment within your code
 }
 
-\title{1. Zpráva pro předmět 3D Počítačové vidění -- A4M33TDV}
+\title{Digitální model scény z dvanácti fotografií \\ \ \\ \large Zpráva pro předmět 3D Počítačové vidění -- A4M33TDV}
 \date{29. 11. 2011}
 \author{Filip Jareš, jaresfil@fel.cvut.cz}
 
@@ -38,36 +38,29 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 
 \section{Úvod}
 
-Tato zpráva popisuje semestrální práci pro předmět 3D počítačové vidění, jejímž cílem je na základě
+Tato zpráva popisuje semestrální práci pro předmět 3D počítačové vidění, jejímž cílem bylo na základě
 dvanácti fotografií vybraného objektu (portálu/dveří) zrekonstruovat nasnímanou scénu a vytvořit
 trojrozměrný digitální model této scény.
 
-Práce ještě není dokončená, proto v této verzi zpráva popisuje pouze dosud hotovou část řešení:
-výběr scény, zvolenou konfiguraci kamer, nástroj použitý pro odstranění radiálního zkreslení
-a~metodu kalibrace kamery. Nakonec potom hledání řídkých korespondencí mezi obrazy a~odhad
-epipolární geometrie mezi dvojicemi snímků.
+Použité řešení lze rozdělit na čtyři hlavní fáze: (i) zachycení scény a přípravu snímků pro pozdější
+zpracování; (ii) rekonstrukci řídkého mraku prostorových bodů z~těchto snímků; (iii) rekonstrukci hustého
+mraku bodů s použitím stereo párování a (iv) poissonovskou rekonstrukci povrchu scény.
 
-\section{Řešení}
+% V dalším textu jsou jednotlivé fáze popsány podrobněji.
 
-\subsection{Struktura řešení}
+Důležitým krokem fáze (i) je odstranění radiálního zkreslení a kalibrace kamery. Hlavními částmi fáze
+(ii) je nalezení řídkých korespondencí mezi obrazy a použití těchto korespondencí k odhadu epipolární
+geometrie dvojic snímků a tedy odhadu relativních rotací a translací dvojic kamer.  Následuje
+\uv{slepování} takových dvojic kamer, tedy jejich umístění do společného souřadného systému. Řídký mrak
+bodů vzniká zpětným promítáním korespondujících bodů do prostoru. V rámci dalšího kroku (iii)
+je pro stereo párování využita znalost epipolární geometrie použitých párů kamer. Nakonec je na hustý
+mrak bodů použit algoritmus poissonovské rekonstrukce (iv), který vytvoří model povrchu.
 
-Použité řešení úlohy rekonstrukce 3D scény z několika fotografií lze rozdělit na tři hlavní fáze:
-(i) zachycení scény a přípravu snímků pro pozdější zpracování; (ii) rekonstrukci řídkého mraku
-prostorových bodů z~těchto snímků a (iii) rekonstrukci hustého mraku bodů s použitím stereo párování,
-které poskytne husté korespondence mezi dvojicemi obrazů se známou epipolární geometrií.
-Tato první verze zprávy popisuje pouze fázi první a částečně fázi druhou.
+% Pryc?
+V následující části jsou jednotlivé fáze vytváření digitálního modelu popsány podrobněji.
 
-Důležitým krokem fáze (i) je odstranění radiálního zkreslení. Hlavními částmi fáze (ii) je nalezení
-řídkých korespondencí mezi obrazy a použití těchto korespondencí k odhadu epipolární geometrie
-dvojic snímků a tedy odhadu relativních rotací a translací dvojic kamer. Následuje \uv{slepování}
-takových dvojic kamer, tedy jejich umístění do společného souřadného systému.
+\section{Scéna a předběžné zpracování fotografií}
 
-V následující části jsou jednotlivé kroky prvních dvou fází (kromě slepování kamer) popsány
-podrobněji.
-
-\subsection{Popis řešení}
-
-\subsubsection{Výběr scény}
 Jako objekt pro rekonstrukci byly vybrány domovní dveře domu v pražské Jeseniově ulici. Byly
 vyfotografovány z dvanácti míst tak, jak je to přibližně znázorněno na \figref{fig:usporadaniKamer}.
 Kolmá vzdálenost od dveří byla u všech kamer přibližně stejná (zhruba 4\,m) a dveře byly ze čtyř
@@ -330,6 +323,9 @@ RANSACem.
 	% FIXME:
 	%	- zkontrolovat format oproti webu, zvolit vhodny .bst soubor
 	%	- doplnit (?), aktualizovat odkazy a data
+
+% Parametry:
+% - orezani okraju kvuli stereu - 50 pixelu/25 pixelu u podvzorkovaneho obrazku
 
 %\bibliographystyle{plain_cz}
 \bibliographystyle{czechiso}

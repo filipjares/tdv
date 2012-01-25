@@ -150,8 +150,23 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	nafocených snímků nej\-prve odstranit radiální zkreslení. K tomuto účelu byl použit nástroj
 	\emph{rd\_undistort}, který byl k dispozici od vyučujících \cite{code_repo}.  Jako podklad pro
 	kalibraci tohoto nástroje posloužily tři snímky kalibračního obrazce. Jeden z nich je na
-	obrázku~\ref{fig:radialCalibration}.
+	obrázku~\ref{fig:radialCalibration}. Výsledky odstraňování radiální zkreslení (výstup nástroje
+	rd\_undistort) je shrnut v \tabref{tab:rd_undistort}.
 	% \url{http://cmp.felk.cvut.cz/cmp/courses/TDV/code/rd\_undistort\_20110112.zip}
+
+		\begin{table}[h]
+			\centering
+			\begin{tabular}{|l|rrrr|}
+				\hline
+									& RMS	& min	& medián	& max	\\
+				\hline
+				před korekcí [px]	& 7,57	& 0,36	& 5,94		& 27,25		\\
+				po korekci [px]		& 1,43	& 0,01	& 0,94		& 6,42		\\
+				\hline
+			\end{tabular}
+			\caption{Výsledky odstranění radiálního zkreslení. Hodnoty jsou v pixelech.}
+			\label{tab:rd_undistort}
+		\end{table}
 	
 	\def\IAC{\boldsymbol \omega}
 	

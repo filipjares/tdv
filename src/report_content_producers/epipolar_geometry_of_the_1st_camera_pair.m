@@ -1,31 +1,31 @@
 %% Toolbox path
 
-addpath toolbox/
+addpath ../
+addpath ../toolbox/
+addpath ../calibrated_p5/
 
 %% Remove radial distortion of input pictures
 
 % addpath rd_undistort
-% load('../data/Kcalib.mat', 'rd');
-% rddirundistort(rd, 'pictures/sb', 'linear_pictures/sb');
+% load('../../data/Kcalib.mat', 'rd');
+% rddirundistort(rd, '../pictures/sb', '../linear_pictures/sb');
 
 %% Load correspondencies
 
 % using following pictures:
-% 'linear_pictures/sb/IMG_5954.JPG'
-% 'linear_pictures/sb/IMG_5961.JPG'
-% 'linear_pictures/sb/IMG_5955.JPG'
+% '../linear_pictures/sb/IMG_5954.JPG'
+% '../linear_pictures/sb/IMG_5961.JPG'
+% '../linear_pictures/sb/IMG_5955.JPG'
 
 % Load data:
 % clear all;
 % load seek_sparse_correspondencies-output.mat
 
-load('../data/images_and_sparse_correspondences.mat', 'images', 'm', 'pc');
-% 
-% addpath calibrated_p5/
+load('../../data/images_and_sparse_correspondences.mat', 'images', 'm', 'pc');
 
 %% Load calibration matrix
 
-load('../data/Kcalib.mat', 'K');
+load('../../data/Kcalib.mat', 'K');
 
 %% Estimate the epipolar geometry
 

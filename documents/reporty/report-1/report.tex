@@ -7,6 +7,9 @@
 
 \input{init_setup.tex}
 
+\usepackage[sorting=none]{biblatex}
+\bibliography{bibliography}
+
 %FIXME: odlišit font, aby části kódu byly odlišitelné od okolního textu
 \lstset{ %
 language=Matlab,           % choose the language of the code
@@ -206,6 +209,12 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				navzájem kolmých směrech protínající se v jednotlivých úběžnících.}
 		\end{figure}
 	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                            REKONSTRUKCE ŘÍDKÉHO MRAKU BODŮ                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Řídký mrak bodů}
+	
 	\subsection{Nalezení předběžných korespondencí} Pro nalezení řídkých korespondencí mezi body ve
 	dvojicích obrazů byl opět použit dodaný kód -- \emph{WBS Matcher} \cite{code_repo},
 	\cite{WBS_Matcher}.  Nejprve byly (pro každý obrázek nezávisle) k automaticky vybraným
@@ -214,7 +223,33 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	
 	Pro každý snímek vytvořil WBS Matcher přibližně 30\,000 deskriptorů. Počet nalezených předběžných
 	korespondencí pro pár obrazů se pohyboval mezi 400 až 7\,000. Tyto korespondence byly poté v
-	následujícím kroku použity pro odhad epipolární geometrie pří\-slu\-šných kamer.
+	následujícím kroku použity pro odhad epipolární geometrie pří\-slu\-šných kamer. Počty deskriptorů
+	jsou pro jednotlivé obrázky uvedeny v \tabref{tab:wbs_features} spolu se záznamem o tom,
+	se kterým dalším obrázkem tvoří daný obrázek pár s nejmenším/největším počtem předběžných korespondencí.
+	
+		\begin{table}[h]
+			\centering
+			\begin{tabular}{|c|c|cccc|}
+				\hline
+				$i$ & $N_i$ & $j$ & $n_j$ & $k$ & $n_k$ \\
+				\hline
+				a) & 27309 & l) & 275 & e) & 5105 \\
+				b) & 32038 & l) & 296 & f) & 7053 \\
+				c) & 31634 & i) & 387 & g) & 5470 \\
+				d) & 27784 & a) & 293 & h) & 4266 \\
+				e) & 30907 & l) & 276 & a) & 5105 \\
+				f) & 33436 & h) & 288 & b) & 7053 \\
+				g) & 31379 & a) & 381 & c) & 5470 \\
+				h) & 28405 & a) & 279 & d) & 4266 \\
+				i) & 31892 & h) & 290 & e) & 2797 \\
+				j) & 33674 & h) & 340 & f) & 4039 \\
+				k) & 30405 & a) & 288 & g) & 3372 \\
+				l) & 17692 & a) & 275 & h) & 2086 \\
+				\hline
+			\end{tabular}
+			\caption{Přehled.. $j$ = obr. s nejmenším počtem korespondencí; $k$ = obr. s největším počtem korespondencí}
+			\label{tab:wbs_features}
+		\end{table}
 	
 	
 	\subsection{Odhad epipolární geometrie} Odhad esenciální matice $\matrix E$ daného páru
@@ -297,10 +332,6 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	\dots
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%                            REKONSTRUKCE ŘÍDKÉHO MRAKU BODŮ                                        %%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                STEREO A HUSTÝ MRAK BODŮ                                           %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -339,8 +370,9 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 % - orezani okraju kvuli stereu - 50 pixelu/25 pixelu u podvzorkovaneho obrazku
 
 %\bibliographystyle{plain_cz}
-\bibliographystyle{czechiso}
-\bibliography{bibliography}
+%\bibliographystyle{czechiso}
+\printbibliography
+%\bibliography{bibliography}
 
 \end{document}
 

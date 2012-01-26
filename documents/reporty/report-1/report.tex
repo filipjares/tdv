@@ -230,6 +230,12 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Řídký mrak bodů}
+
+	Zpracování obrázků a identifikace parametrů kamery v předchozím kroku nám umožnilo přistoupit
+	k~rekonstrukci geometrie všech dvanácti kamer. Jako vedlejší produkt tohoto procesu jsme získali řídký
+	mrak bodů. Proces byl tvořen třemi kroky: (1) nalezením předběžných korespondencí, (2) odhadem
+	epipolární geometrie prvního páru kamer (páru s největším počtem předběžných korespondencí) a (3)
+	postupným přilepováním dalších kamer.
 	
 	\subsection{Nalezení předběžných korespondencí}
 
@@ -368,13 +374,16 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 		spo\-ju\-jí\-cí zvýrazněný bod z~jednoho obrazu s~místem, kde leží bod ve druhém obraze. Inliery jsou
 		znázorněny červeně, outliery černě.
 		
-	
 		% Notes:
 		%
 		% terminology:
 		%	correspondence = truth,
 		%	match = algorithm’s result; hypothesised corresp.
 	
+	\subsection{Přilepování dalších kamer}
+
+		Po získání odhadu epipolární geometrie prvního páru kamer následovalo postupné přilepování
+		dalších kamer.
 		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                STEREO A HUSTÝ MRAK BODŮ                                           %%

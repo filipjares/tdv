@@ -1,4 +1,4 @@
-function [E, R, b, P1, P2, best_inl_ix, in_front] = estimate_E(K, pc)
+function [E, R, b, P1, P2, best_inl_ix, best_in_front, ransac_info] = estimate_E(K, pc)
     % Robust ML Estimate
     %
     % [E, R, b, P1, P2, best_inl_ix, in_front] = estimate_E(K, pc, ...
@@ -28,17 +28,19 @@ function [E, R, b, P1, P2, best_inl_ix, in_front] = estimate_E(K, pc)
 
     best_support = -1;
     best_inl_ix = [];
+    best_in_front = [];
     best_ix = [];
     bestE = [];
 
     THR = 2; % [px]
+    ransac_info.threshold = THR;
     THR = 2*THR^2;
 
     i = 0;
     while true
         % choose sample of points
         % ix = (i*m+1):(i*m+5);
-        ix = (i+1):(i+5);
+        ix = (i+1):(i+5);           % FIXME: this is not random
         u1 = all_u1(:,ix);
         u2 = all_u2(:,ix);
 
@@ -74,6 +76,7 @@ function [E, R, b, P1, P2, best_inl_ix, in_front] = estimate_E(K, pc)
                     best_support = support;
                     bestE = E;
                     best_inl_ix = inl_ix;
+                    best_in_front = in_front;
                     best_ix = ix;
                 end
             end
@@ -83,6 +86,8 @@ function [E, R, b, P1, P2, best_inl_ix, in_front] = estimate_E(K, pc)
         if (i > N); break; end
     end
 
+    ransac_info.iterations_count = i;
+    
     E = bestE;
     u1 = all_u1(:,best_ix);
     u2 = all_u2(:,best_ix);

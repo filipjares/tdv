@@ -340,28 +340,42 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 		chybou menší než empiricky určený práh (použili jsme práh odpovídající chybě 2 pixely v~každém
 		obrazu).  Výsledkem RANSACu byla epipolární geometrie charakterizovaná rotací $\matrix R$ a
 		translací $\matrix b$ a rozdělení korespondencí na inliery a outliery.
+
+		Počet použitých iterací v RANSACu (přesněji počet pětic korespondencí použitých pro vytváření
+		hypotéz) byl 39. Parametry RANSACu a některé výsledky jsou shrnuty v
+		\tabref{tabFirstPairEEstimate}.
 		
-		Pro vybraný pár obrazů jsou korespondence a epipoláry několika vybraných bodů zobrazeny na
-		\figref{figKorespondenceAEpipolary}. Korespondence jsou znázorněny jako úsečky spojující
-		zvýrazněný bod z jednoho obrazu s místem, kde leží bod ve druhém obraze. Inliery jsou znázorněny
-		červeně, outliery černě. Počet použitých iterací v RANSACu (přesněji počet pětic korespondencí
-		použitých pro vytváření hypotéz) byl 38 pro jeden pár pohledů. Ve zobrazené dvojici pohledů jsou
-		přibližně 70\% korespondencí inliery.
+			\begin{table}[h]
+				\centering
+				\begin{tabular}{|lrr|}
+					\hline
+					Práh RANSACu [px]				& 2		&	\\
+					Počet iterací RANSACu			& 39	&	\\
+					Počet předběžných korespondencí (bodů)		& 7053	& 100.0\,\%	\\
+					Počet bodů před oběma kamerami	& 6984	& 99.0\,\%	\\
+					Počet inlierů					& 5047	& 71.6\,\%	\\
+					Počet outlierů					& 2006	& 28.4\,\%	\\
+					\hline
+				\end{tabular}
+				\caption{Přehled parametrů a výsledků RANSACu použitého pro odhad epipolární geometrie
+					prvního páru kamer}
+				\label{tabFirstPairEEstimate}
+			\end{table}
+
+		Pro vybraný pár obrazů (nejedná se o pár (b,f)) jsou korespondence a epipoláry ně\-ko\-li\-ka
+		vy\-bra\-ných
+		bodů zobrazeny na \figref{figKorespondenceAEpipolary}. Korespondence jsou znázorněny jako úsečky
+		spo\-ju\-jí\-cí zvýrazněný bod z~jednoho obrazu s~místem, kde leží bod ve druhém obraze. Inliery jsou
+		znázorněny červeně, outliery černě.
+		
 	
+		% Notes:
+		%
+		% terminology:
+		%	correspondence = truth,
+		%	match = algorithm’s result; hypothesised corresp.
 	
-	% - zkusit vypisovat úspěšnost RANSACu
-	% - vygenerovat data pro všechny páry
-	% - počet iterací RANSACu: 38
-	% - práh v RANSACu: 2px
-	
-	% Notes:
-	%
-	% terminology:
-	%	correspondence = truth,
-	%	match = algorithm’s result; hypothesised corresp.
-	
-	\dots
-	
+		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                STEREO A HUSTÝ MRAK BODŮ                                           %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

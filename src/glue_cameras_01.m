@@ -37,8 +37,30 @@ fprintf([ ...
 
 % TODO: move this to glue_cameras_02.m
 fprintf('Estimating epipolar geometry of the first pair..\n');
-[EE, R2, b2, P1, P2, best_inl_ix, in_front] = estimate_E(K, pc{i1,i2});
+[EE, R2, b2, P1, P2, best_inl_ix, in_front, ransac_info] = estimate_E(K, pc{i1,i2});
 
 %% Save what we have
 
 % save('../data/glue_cameras-01-output.mat');
+
+%% Print table for the report
+
+total = size(best_inl_ix, 2);
+
+fprintf('\n\nTable for the report:\n\n');
+fprintf('\\begin{table}[h]\n');
+fprintf('\t\\centering\n');
+fprintf('\t\\begin{tabular}{|lrr|}\n');
+fprintf('\t\t\\hline\n');
+fprintf('\t\tPráh RANSACu\t\t\t& %d\\,px\t\\\\\n', ransac_info.threshold);
+fprintf('\t\tPočet iterací RANSACu\t\t& %d\t\\\\\n', ransac_info.iterations_count);
+fprintf('\t\tPočet předběžných korespondencí (bodů)\t& %d\t& %2.1f\\,\\%%\t\\\\\n', total, 100);
+fprintf('\t\tPočet bodů před oběma kamerami\t& %d\t& %2.1f\\,\\%%\t\\\\\n', sum(in_front), 100*sum(in_front)/total);
+fprintf('\t\tPočet inlierů\t\t\t& %d\t& %2.1f\\,\\%%\t\\\\\n', sum(best_inl_ix), 100*sum(best_inl_ix)/total);
+fprintf('\t\tPočet outlierů\t\t\t& %d\t& %2.1f\\,\\%%\t\\\\\n', total - sum(best_inl_ix), 100 - 100*sum(best_inl_ix)/total);
+fprintf('\t\t\\hline\n');
+fprintf('\t\\end{tabular}\n');
+fprintf('\t\\caption{\n');
+fprintf('\t\t}\n');
+fprintf('\t\\label{tabFirstPairEEstimate}\n');
+fprintf('\\end{table}\n');

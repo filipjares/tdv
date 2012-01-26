@@ -83,7 +83,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 \section{Scéna}
 
 	Jako objekt pro rekonstrukci byly vybrány domovní dveře domu v pražské Jeseniově ulici. Byly
-	vyfotografovány z dvanácti míst tak, jak je to přibližně znázorněno na \figref{fig:usporadaniKamer}.
+	vyfotografovány z dvanácti míst tak, jak je to přibližně znázorněno na \figref{figUsporadaniKamer}.
 	Kolmá vzdálenost od dveří byla u všech kamer přibližně stejná (zhruba 4\,m) a dveře byly ze čtyř
 	míst vyfotografovány vždy ze tří rúzných výškových úrovní (zhruba z výšky 30\,cm, 130\,cm a
 	200\,cm).
@@ -91,15 +91,15 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 			\centering
 			\includegraphics[width=8cm]{pictures/usporadani_kamer.pdf}
 			\caption{Schéma uspořádání kamer při snímání scény}
-			\label{fig:usporadaniKamer}
+			\label{figUsporadaniKamer}
 		\end{figure}
 	Fotografie s rozlišením $3264\times2448$ pixelů byly pořízeny fotoaparátem Canon Ixus 80
-	IS na nejkratší ohniskovou vzdálenost. Zachyceny jsou na \figref{fig:fotografie}.
+	IS na nejkratší ohniskovou vzdálenost. Zachyceny jsou na \figref{figFotografie}.
 		\begin{figure}[htbp]
 				\centering
 				\subfigure[] {
 					\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5959.JPG}}
-				      \label{fig:firstInputImage}
+				      \label{figFirstInputImage}
 				}
 				\subfigure[] {
 					\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5955.JPG}}
@@ -116,11 +116,11 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				}
 				\subfigure[] {
 					\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5954.JPG}}
-				      \label{fig:i0}
+				      \label{figI0}
 				}
 				\subfigure[] {
 					\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5961.JPG}}
-				      \label{fig:i1}
+				      \label{figI1}
 				}
 				\subfigure[] {
 					\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5964.JPG}}
@@ -139,8 +139,8 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 					\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5963.JPG}}
 				}
 			\caption{Snímky scény, které byly použity pro rekonstrukci, označení obrázků
-				odpovídá označení kamer na obrázku \ref{fig:usporadaniKamer}}
-			\label{fig:fotografie}
+				odpovídá označení kamer na obrázku \ref{figUsporadaniKamer}}
+			\label{figFotografie}
 		\end{figure}
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -153,8 +153,8 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	nafocených snímků nej\-prve odstranit radiální zkreslení. K tomuto účelu byl použit nástroj
 	\emph{rd\_undistort}, který byl k dispozici od vyučujících \cite{code_repo}.  Jako podklad pro
 	kalibraci tohoto nástroje posloužily tři snímky kalibračního obrazce. Jeden z nich je na
-	obrázku~\ref{fig:radialCalibration}. Výsledky odstraňování radiální zkreslení (výstup nástroje
-	rd\_undistort) je shrnut v \tabref{tab:rd_undistort}.
+	obrázku~\ref{figRadialCalibration}. Výsledky odstraňování radiální zkreslení (výstup nástroje
+	rd\_undistort) je shrnut v \tabref{tabRd_undistort}.
 	% \url{http://cmp.felk.cvut.cz/cmp/courses/TDV/code/rd\_undistort\_20110112.zip}
 
 		\begin{table}[h]
@@ -168,7 +168,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				\hline
 			\end{tabular}
 			\caption{Výsledky odstranění radiálního zkreslení. Hodnoty jsou v pixelech.}
-			\label{tab:rd_undistort}
+			\label{tabRd_undistort}
 		\end{table}
 	
 	\def\IAC{\boldsymbol \omega}
@@ -176,7 +176,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	K rekonstrukci scény je rovněž potřebná znalost kalibrační matice $\matrix K$ použité kamery
 	\cite[sekce 8.8]{Hartley2004}.  $\matrix K$ má obecně pět stupňů volnosti.  U fotoaparátu jsme
 	předpokládali čtver\-co\-vé pixely bez zkosení, zbylé tři stupně volnosti kalibrační matice jsme
-	určili na základě znalosti úběžníků třech kolmých směrů v jediném obraze (viz. \figref{fig:kalibraceKamery}).
+	určili na základě znalosti úběžníků třech kolmých směrů v jediném obraze (viz. \figref{figKalibraceKamery}).
 	Z každého páru ta\-ko\-vých ú\-běž\-ní\-ků $\vector u_i$, $\vector u_j$ vyplývá jedna podmínka na obraz
 	absolutní kuželosečky $\IAC$:
 		\begin{equation}
@@ -185,7 +185,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	Kalibrační matici jsme určili z obrazu absolutní kuželosečky na základě vztahu
 		\begin{equation} \IAC = (\matrix K \matrix K\T)^{-1} \end{equation}
 	pomocí Choleskyho faktorizace. Výsledná kalibrační matice byla:
-		\begin{equation} \label{eq:matrixK}
+		\begin{equation} \label{eqMatrixK}
 			\matrix K = \begin{pmatrix}
 					3442,3	& 0		& 1614,3 \\
 					0	& 3442,3	& 1185,7 \\
@@ -196,15 +196,15 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 			\centering
 			\subfigure[] {
 				\fbox{\includegraphics[width=7cm]{pictures/radial_calibration_pattern.jpg}}
-				\label{fig:radialCalibration}
+				\label{figRadialCalibration}
 			}
 			\subfigure[] {
 				\fbox{\includegraphics[width=7cm]{pictures/ubezniky_cube.pdf}}
-				\label{fig:kalibraceKamery}
+				\label{figKalibraceKamery}
 			}
-			\caption{Snímky použité pro kalibraci: \subref{fig:radialCalibration} vzor použitý
+			\caption{Snímky použité pro kalibraci: \subref{figRadialCalibration} vzor použitý
 				pro kalibraci nástroje pro odstranění radiálního zkreslení.
-				\subref{fig:kalibraceKamery} Snímek kvádru použitého pro
+				\subref{figKalibraceKamery} Snímek kvádru použitého pro
 				kalibraci kamery; červeně, zeleně a modře jsou vyznačeny rovnoběžky ve třech
 				navzájem kolmých směrech protínající se v jednotlivých úběžnících.}
 		\end{figure}
@@ -267,7 +267,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	s pou\-ži\-tím implementace pětibodového algoritmu od autorů
 	\cite{stewenius-engels-nister-isprsj-2006} na základě vzorků pěti náhodně vybraných korespondencí
 	mezi body z obrazů těchto kamer.  Na body byla před použitím pěti\-bo\-do\-vé\-ho algoritmu aplikována
-	transformace $\matrix K^{-1}$ (odpovídající inverzi kalibrační matice ze vztahu \eqref{eq:matrixK}). Pro danou
+	transformace $\matrix K^{-1}$ (odpovídající inverzi kalibrační matice ze vztahu \eqref{eqMatrixK}). Pro danou
 	pětici korespondencí je obecně vý\-sled\-kem pěti\-bo\-do\-vé\-ho algoritmu více esenciálních matic. Z nich byly
 	ovšem jako hypotézy v~RANSACu použity pouze ty matice $\matrix E$, pro něž existuje rozklad na pár
 	kanonických kamer se všemi pěti body před oběma kamerami (rozklad splňující pro danou pětici bodů
@@ -297,10 +297,10 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 			\caption{Pár obrazů se zobrazenými korespondencemi: červeně korespondence odpovídající
 				epipolární geometrii, černě chybné. Pro vybrané body (označené křížky) jsou
 				stejnými barvami znázorněny vzájemně si odpovídající epipoláry. Obrazy
-				odpovídají snímkům \ref{fig:i0} a \ref{fig:i1}. V obou obrazech je možné
+				odpovídají snímkům \ref{figI0} a \ref{figI1}. V obou obrazech je možné
 				si všimnout podduškovitého obrysu okrajů, který vznikl po odstranění
 				radiálního zkreslení.}
-			\label{fig:korespondenceAEpipolary}
+			\label{figKorespondenceAEpipolary}
 		\end{figure}
 	
 	\paragraph{Hodnocení hypotéz} Každá nalezená dvojice kanonických kamer $\matrix P_1$, $\matrix P_2$ byla
@@ -311,7 +311,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	a rozdělení korespondencí na inliery a outliery.
 	
 	Pro vybraný pár obrazů jsou korespondence a epipoláry několika vybraných bodů zobrazeny na
-	\figref{fig:korespondenceAEpipolary}. Korespondence jsou znázorněny jako úsečky spojující
+	\figref{figKorespondenceAEpipolary}. Korespondence jsou znázorněny jako úsečky spojující
 	zvýrazněný bod z jednoho obrazu s místem, kde leží bod ve druhém obraze. Inliery jsou znázorněny
 	červeně, outliery černě. Počet použitých iterací v RANSACu (přesněji počet pětic korespondencí použitých
 	pro vytváření hypotéz) byl 38 pro jeden pár pohledů. Ve zobrazené dvojici pohledů jsou přibližně
@@ -350,7 +350,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	
 \section{Zhodnocení}
 	
-	Na základě fotografií v \figref{fig:fotografie} a ze znalosti kalibrační matice kamery $\matrix K$
+	Na základě fotografií v \figref{figFotografie} a ze znalosti kalibrační matice kamery $\matrix K$
 	jsme určili vzájemnou geometrii párů kamer (jejich vzájemné otočení a směr posunutí). Dalším krokem
 	bude jejich umístění do společného souřadného systému.
 	

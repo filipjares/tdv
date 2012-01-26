@@ -3,7 +3,7 @@
 
 disp('Loading output of the sparse correspondences computation');
 disp('This may take a while...');
-load('../data/images_and_sparse_correspondences.mat', 'images', 'm');
+load('../../data/images_and_sparse_correspondences.mat', 'images', 'm');
 disp('Now doing the computations');
 
 %% Create matrix n such that n(i,j) == number of correspondences between image i and j

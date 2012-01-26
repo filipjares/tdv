@@ -6,9 +6,11 @@ fprintf('Loading image data and image-to-image correspondences.\n');
 load('../data/images_and_sparse_correspondences.mat', 'images', 'm', 'pc');
 
 addpath toolbox/
-% addpath calibrated_p5/
+addpath calibrated_p5/
 
 %% Choose initial camera pair (i1,i2) with most image-to-image correspodences
+
+fprintf('Choosing the initial camera pair.\n');
 
 ncams = length(images);
 
@@ -34,6 +36,7 @@ fprintf([ ...
 %% Estimate epipolar geometry for the initial camera pair (i1,i2);
 
 % TODO: move this to glue_cameras_02.m
+fprintf('Estimating epipolar geometry of the first pair..\n');
 [EE, R2, b2, P1, P2, best_inl_ix, in_front] = estimate_E(K, pc{i1,i2});
 
 %% Save what we have

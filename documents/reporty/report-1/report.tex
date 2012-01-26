@@ -93,8 +93,9 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 			\caption{Schéma uspořádání kamer při snímání scény}
 			\label{figUsporadaniKamer}
 		\end{figure}
-	Fotografie s rozlišením $3264\times2448$ pixelů byly pořízeny fotoaparátem Canon Ixus 80
-	IS na nejkratší ohniskovou vzdálenost. Zachyceny jsou na \figref{figFotografie}.
+	Fotografie s rozlišením $3264\times2448$ pixelů byly pořízeny fotoaparátem Canon Ixus~80~IS na
+	nejkratší ohniskovou vzdálenost (t.j. ekvivalentní ohniskovou vzdálenost 38\,mm). Zachyceny
+	jsou na \figref{figFotografie}.
 		\begin{figure}[htbp]
 				\centering
 				\subfigure[] {
@@ -174,9 +175,23 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	\def\IAC{\boldsymbol \omega}
 	
 	K rekonstrukci scény je rovněž potřebná znalost kalibrační matice $\matrix K$ použité kamery
-	\cite[sekce 8.8]{Hartley2004}.  $\matrix K$ má obecně pět stupňů volnosti.  U fotoaparátu jsme
-	předpokládali čtver\-co\-vé pixely bez zkosení, zbylé tři stupně volnosti kalibrační matice jsme
-	určili na základě znalosti úběžníků třech kolmých směrů v jediném obraze (viz. \figref{figKalibraceKamery}).
+	\cite[sekce 8.8]{Hartley2004}. U fotoaparátu jsme předpokládali čtver\-co\-vé pixely bez zkosení.
+	Kalibrační matice takové kamery má tvar \eqref{eqGeneralKMatrixWithSquarePixels}, $f$ v tomto případě
+	představuje ohniskovou vzdálenost v pixelech a~$u_0$, $v_0$ polohu hlavního bodu (rovněž v pixelech).
+	Vzhledem ke znalosti ekvivalentní ohniskové vzdálenosti (38\,mm) a rozlišení fotoaparátu
+	($3264\times2448$\,px, rozměry políčka kinofilmu jsou $36 \times 24$\,mm) můžeme očekávat ohniskovou
+	vzdálenost blízkou hodnotě
+	$f = \frac{38\,\mathrm{mm}}{36\,\mathrm{mm}}\;3264\,\mathrm{px} = 3445\,\mathrm{px}.$
+		\begin{equation}
+			\label{eqGeneralKMatrixWithSquarePixels}
+			\matrix K = \begin{pmatrix}
+					f	& 0		& u_0 \\
+					0	& f		& v_0 \\
+					0	& 0		& 1
+				\end{pmatrix}.
+		\end{equation}
+	K určení tří stupňů volnosti matice $\matrix K$ ve tvaru \eqref{eqGeneralKMatrixWithSquarePixels} jsme
+	změřili polohu úběžníků třech kolmých směrů v jediném obraze (\figref{figKalibraceKamery}).
 	Z každého páru ta\-ko\-vých ú\-běž\-ní\-ků $\vector u_i$, $\vector u_j$ vyplývá jedna podmínka na obraz
 	absolutní kuželosečky $\IAC$:
 		\begin{equation}
@@ -184,7 +199,8 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 		\end{equation}
 	Kalibrační matici jsme určili z obrazu absolutní kuželosečky na základě vztahu
 		\begin{equation} \IAC = (\matrix K \matrix K\T)^{-1} \end{equation}
-	pomocí Choleskyho faktorizace. Výsledná kalibrační matice byla:
+	pomocí Choleskyho faktorizace. Ohnisková vzdálenost takto získané kalibrační matice se od očekávané
+	hodnoty liší o méně než jedno promile:
 		\begin{equation} \label{eqMatrixK}
 			\matrix K = \begin{pmatrix}
 					3442,3	& 0		& 1614,3 \\

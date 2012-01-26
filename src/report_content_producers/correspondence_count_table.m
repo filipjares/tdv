@@ -85,7 +85,7 @@ fprintf('\t\tkorespondencí. Ve sloupci $n_{ij}$ je uveden počet předběžnýc
 fprintf('\t\t$(i,j)$ a ve sloupci $n_{ik}$ počet předběžných korespondencí v páru $(i,k)$.\n');
 fprintf('\t\tHodnoty $i$, $j$, $k$ odpovídají popiskám kamer na \\figref{figUsporadaniKamer} resp.\n');
 fprintf('\t\tpopiskám vstupních obrázků na \\figref{figFotografie}}\n');
-fprintf('\t\\label{tab:wbs_features}\n');
+fprintf('\t\\label{tabWbsFeatures}\n');
 fprintf('\\end{table}\n');
 
 %% matrix with "labels" and correspondence count

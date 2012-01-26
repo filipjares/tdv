@@ -215,113 +215,115 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 
 \section{Řídký mrak bodů}
 	
-	\subsection{Nalezení předběžných korespondencí} Pro nalezení řídkých korespondencí mezi body ve
-	dvojicích obrazů byl opět použit dodaný kód -- \emph{WBS Matcher} \cite{code_repo},
-	\cite{WBS_Matcher}.  Nejprve byly (pro každý obrázek nezávisle) k automaticky vybraným
-	\uv{význačným} bodům vypočteny a přiřazeny deskriptory. Na základě porovnání těchto deskriptorů byly
-	potom vytvořeny korespondence mezi obrazy.
-	
-	Pro každý snímek vytvořil WBS Matcher přibližně 30\,000 deskriptorů. Počet nalezených předběžných
-	korespondencí pro pár obrazů se pohyboval mezi 400 až 7\,000. Tyto korespondence byly poté v
-	následujícím kroku použity pro odhad epipolární geometrie pří\-slu\-šných kamer.  V řádcích tabulky
-	\ref{tabWbs_features} je pro každý obrázek $i$ uveden počet deskriptorů $N_i$ a také odkaz na dva
-	obrázky, $j$ resp. $k$, se kterými tvoří obrázek $i$ pár s nejmenším resp. největším počtem
-	předběžných korespondencí.
-	
-		\begin{table}[h]
-			\centering
-			\begin{tabular}{|c|c|cccc|}
-				\hline
-				$i$ & $N_i$ & $j$ & $n_{ij}$ & $k$ & $n_{ik}$ \\
-				\hline
-				a & 27309 & l & 275 & e & 5105 \\
-				b & 32038 & l & 296 & f & 7053 \\
-				c & 31634 & i & 387 & g & 5470 \\
-				d & 27784 & a & 293 & h & 4266 \\
-				e & 30907 & l & 276 & a & 5105 \\
-				f & 33436 & h & 288 & b & 7053 \\
-				g & 31379 & a & 381 & c & 5470 \\
-				h & 28405 & a & 279 & d & 4266 \\
-				i & 31892 & h & 290 & e & 2797 \\
-				j & 33674 & h & 340 & f & 4039 \\
-				k & 30405 & a & 288 & g & 3372 \\
-				l & 17692 & a & 275 & h & 2086 \\
-				\hline
-			\end{tabular}
-			\caption{Přehled výsledků \emph{WBS Matcheru}: počet deskriptorů $N_i$ v jednotlivých
-				obrázcích $i$ a páry s nejmenším $(i,j)$ resp. největším $(i,k)$ počtem předběžných
-				korespondencí. Ve sloupci $n_{ij}$ je uveden počet předběžných korespondencí v páru
-				$(i,j)$ a ve sloupci $n_{ik}$ počet předběžných korespondencí v páru $(i,k)$.
-				Hodnoty $i$, $j$, $k$ odpovídají popiskám kamer na \figref{figUsporadaniKamer} resp.
-				popiskám vstupních obrázků na \figref{figFotografie}}
-			\label{tabWbs_features}
-		\end{table}
-	
-	
-	\subsection{Odhad epipolární geometrie} Odhad esenciální matice $\matrix E$ daného páru
-	ka\-mer je založen na použití předběžných korespondencí získaných v~předchozím
-	kroku. Protože jsou nalezené korespondence kontaminovány chybami, byl jakožto metoda robustního
-	odhadu použit algoritmus RANSAC \cite{RansacOverview}. Ten je tvořen smyčkou, v níž jsou
-	opakovaně vytvářeny hypotézy (matice $\matrix E$), pro které je ověřována jejich konzistence
-	s daty. RANSAC vybere z prověřených hypotéz tu, která je v největší míře kon\-zis\-ten\-tní s daty.
-	
-	% \paragraph{Def.: Podmínka chirality} \emph{Pár kanonických kamer $\matrix P_1$, $\matrix P_2$ a prostorový
-	% bod $\vector X$ splňuje podmínku chirality právě tehdy, pokud bod $\vector X$ leží před oběma
-	% kamerami.}
-	
-	\paragraph{Vytváření Hypotéz} Esenciální matice, představující hypotézy pro daný pár pohledů, byly generovány
-	s pou\-ži\-tím implementace pětibodového algoritmu od autorů
-	\cite{stewenius-engels-nister-isprsj-2006} na základě vzorků pěti náhodně vybraných korespondencí
-	mezi body z obrazů těchto kamer.  Na body byla před použitím pěti\-bo\-do\-vé\-ho algoritmu aplikována
-	transformace $\matrix K^{-1}$ (odpovídající inverzi kalibrační matice ze vztahu \eqref{eqMatrixK}). Pro danou
-	pětici korespondencí je obecně vý\-sled\-kem pěti\-bo\-do\-vé\-ho algoritmu více esenciálních matic. Z nich byly
-	ovšem jako hypotézy v~RANSACu použity pouze ty matice $\matrix E$, pro něž existuje rozklad na pár
-	kanonických kamer se všemi pěti body před oběma kamerami (rozklad splňující pro danou pětici bodů
-	podmínku chirality).
-	
-	Pro ověření podmínky chirality byly pro každou matici $\matrix E$ vytvořeny čtyři páry
-	ka\-no\-ni\-ckých kamer $\matrix P_1 = \begin{bmatrix} \matrix I & \vector 0 \end{bmatrix}$,
-	$\matrix P_2 = \matrix R \begin{bmatrix} \matrix I & \vector{-b} \end{bmatrix}$,
-	dané čtyřmi možnými rozklady matice $\matrix E$ na vzájemnou rotaci $\matrix R$ a posunutí
-	kamer $\vect b$ podle \cite[Essential Matrix Properties, str. 79]{SaraLectures}.
-	Pro každý takový pár kamer byly z pětice korespondujících párů obrazových bodů vypočteny triangulací
-	polohy pětice prostorových bodů $\vector X$.
-	
-	Pokud pro danou $\matrix E$ existuje rozklad na
-	kanonické kamery $\matrix P_1$, $\matrix P_2$, které splňují spolu se svými body $\vector X$
-	podmínku chirality, byla tato exenciální matice (resp. její rozklad na kamery $\matrix P_1$, $\matrix P_2$)
-	použita jako hypotéza.
-	
-		\begin{figure}[htb]
+	\subsection{Nalezení předběžných korespondencí}
+
+		Pro nalezení řídkých korespondencí mezi body ve dvojicích obrazů byl opět použit dodaný kód --
+		\emph{WBS Matcher} \cite{code_repo}, \cite{WBS_Matcher}.  Nejprve byly (pro každý obrázek
+		nezávisle) k automaticky vybraným \uv{význačným} bodům vypočteny a přiřazeny deskriptory. Na
+		základě porovnání těchto deskriptorů byly potom vytvořeny korespondence mezi obrazy.
+		
+		Pro každý snímek vytvořil WBS Matcher přibližně 30\,000 deskriptorů. Počet nalezených předběžných
+		korespondencí pro pár obrazů se pohyboval mezi 400 až 7\,000. Tyto korespondence byly poté v
+		následujícím kroku použity pro odhad epipolární geometrie pří\-slu\-šných kamer.  V řádcích
+		tabulky \ref{tabWbs_features} je pro každý obrázek $i$ uveden počet deskriptorů $N_i$ a také
+		odkaz na dva obrázky, $j$ resp. $k$, se kterými tvoří obrázek $i$ pár s nejmenším resp. největším
+		počtem předběžných korespondencí.
+		
+			\begin{table}[h]
 				\centering
-				\subfigure[] {
-					\fbox{\includegraphics[width=9.3cm,angle=-90,clip=true,trim=165px 105px 110px 80px]{pictures/matches-left-with_epipolar_lines.jpg}}
-				}
-				\subfigure[] {
-					\fbox{\includegraphics[width=9.3cm,angle=-90,clip=true,trim=165px 105px 110px 80px]{pictures/matches-right-with_epipolar_lines.jpg}}
-				}
-			\caption{Pár obrazů se zobrazenými korespondencemi: červeně korespondence odpovídající
-				epipolární geometrii, černě chybné. Pro vybrané body (označené křížky) jsou
-				stejnými barvami znázorněny vzájemně si odpovídající epipoláry. Obrazy
-				odpovídají snímkům \ref{figI0} a \ref{figI1}. V obou obrazech je možné
-				si všimnout podduškovitého obrysu okrajů, který vznikl po odstranění
-				radiálního zkreslení.}
-			\label{figKorespondenceAEpipolary}
-		\end{figure}
+				\begin{tabular}{|c|c|cccc|}
+					\hline
+					$i$ & $N_i$ & $j$ & $n_{ij}$ & $k$ & $n_{ik}$ \\
+					\hline
+					a & 27309 & l & 275 & e & 5105 \\
+					b & 32038 & l & 296 & f & 7053 \\
+					c & 31634 & i & 387 & g & 5470 \\
+					d & 27784 & a & 293 & h & 4266 \\
+					e & 30907 & l & 276 & a & 5105 \\
+					f & 33436 & h & 288 & b & 7053 \\
+					g & 31379 & a & 381 & c & 5470 \\
+					h & 28405 & a & 279 & d & 4266 \\
+					i & 31892 & h & 290 & e & 2797 \\
+					j & 33674 & h & 340 & f & 4039 \\
+					k & 30405 & a & 288 & g & 3372 \\
+					l & 17692 & a & 275 & h & 2086 \\
+					\hline
+				\end{tabular}
+				\caption{Přehled výsledků \emph{WBS Matcheru}: počet deskriptorů $N_i$ v jednotlivých
+					obrázcích $i$ a páry s nejmenším $(i,j)$ resp. největším $(i,k)$ počtem předběžných
+					korespondencí. Ve sloupci $n_{ij}$ je uveden počet předběžných korespondencí v páru
+					$(i,j)$ a ve sloupci $n_{ik}$ počet předběžných korespondencí v páru $(i,k)$.
+					Hodnoty $i$, $j$, $k$ odpovídají popiskám kamer na \figref{figUsporadaniKamer} resp.
+					popiskám vstupních obrázků na \figref{figFotografie}}
+				\label{tabWbs_features}
+			\end{table}
 	
-	\paragraph{Hodnocení hypotéz} Každá nalezená dvojice kanonických kamer $\matrix P_1$, $\matrix P_2$ byla
-	testována oproti všem nalezeným korespondencím. Pro každou korespondenci byla spočtena reprojekční
-	chyba a byla určena opora hypotézy v datech jakožto počet korespondencí s reprojekční chybou menší
-	než empiricky určený práh (použili jsme práh odpovídající chybě 2 pixely v~každém obrazu).
-	Výsledkem RANSACu byla epipolární geometrie charakterizovaná rotací $\matrix R$ a translací $\matrix b$
-	a rozdělení korespondencí na inliery a outliery.
 	
-	Pro vybraný pár obrazů jsou korespondence a epipoláry několika vybraných bodů zobrazeny na
-	\figref{figKorespondenceAEpipolary}. Korespondence jsou znázorněny jako úsečky spojující
-	zvýrazněný bod z jednoho obrazu s místem, kde leží bod ve druhém obraze. Inliery jsou znázorněny
-	červeně, outliery černě. Počet použitých iterací v RANSACu (přesněji počet pětic korespondencí použitých
-	pro vytváření hypotéz) byl 38 pro jeden pár pohledů. Ve zobrazené dvojici pohledů jsou přibližně
-	70\% korespondencí inliery.
+	\subsection{Odhad epipolární geometrie}
+	
+		Odhad esenciální matice $\matrix E$ daného páru ka\-mer je založen na použití předběžných
+		korespondencí získaných v~předchozím kroku. Protože jsou nalezené korespondence kontaminovány
+		chybami, byl jakožto metoda robustního odhadu použit algoritmus RANSAC \cite{RansacOverview}. Ten
+		je tvořen smyčkou, v níž jsou opakovaně vytvářeny hypotézy (matice $\matrix E$), pro které je
+		ověřována jejich konzistence s daty. RANSAC vybere z prověřených hypotéz tu, která je v největší
+		míře kon\-zis\-ten\-tní s daty.
+		
+		% \paragraph{Def.: Podmínka chirality} \emph{Pár kanonických kamer $\matrix P_1$, $\matrix P_2$ a
+		% prostorový bod $\vector X$ splňuje podmínku chirality právě tehdy, pokud bod $\vector X$ leží
+		% před oběma kamerami.}
+		
+		\paragraph{Vytváření Hypotéz} Esenciální matice, představující hypotézy pro daný pár pohledů,
+		byly generovány s pou\-ži\-tím implementace pětibodového algoritmu od autorů
+		\cite{stewenius-engels-nister-isprsj-2006} na základě vzorků pěti náhodně vybraných korespondencí
+		mezi body z obrazů těchto kamer.  Na body byla před použitím pěti\-bo\-do\-vé\-ho algoritmu
+		aplikována transformace $\matrix K^{-1}$ (odpovídající inverzi kalibrační matice ze vztahu
+		\eqref{eqMatrixK}). Pro danou pětici korespondencí je obecně vý\-sled\-kem pěti\-bo\-do\-vé\-ho
+		algoritmu více esenciálních matic. Z nich byly ovšem jako hypotézy v~RANSACu použity pouze ty
+		matice $\matrix E$, pro něž existuje rozklad na pár kanonických kamer se všemi pěti body před
+		oběma kamerami (rozklad splňující pro danou pětici bodů podmínku chirality).
+		
+		Pro ověření podmínky chirality byly pro každou matici $\matrix E$ vytvořeny čtyři páry
+		ka\-no\-ni\-ckých kamer $\matrix P_1 = \begin{bmatrix} \matrix I & \vector 0 \end{bmatrix}$,
+		$\matrix P_2 = \matrix R \begin{bmatrix} \matrix I & \vector{-b} \end{bmatrix}$, dané čtyřmi
+		možnými rozklady matice $\matrix E$ na vzájemnou rotaci $\matrix R$ a posunutí kamer $\vect b$
+		podle \cite[Essential Matrix Properties, str. 79]{SaraLectures}.  Pro každý takový pár kamer byly
+		z pětice korespondujících párů obrazových bodů vypočteny triangulací polohy pětice prostorových
+		bodů $\vector X$.
+		
+		Pokud pro danou $\matrix E$ existuje rozklad na kanonické kamery $\matrix P_1$, $\matrix P_2$,
+		které splňují spolu se svými body $\vector X$ podmínku chirality, byla tato exenciální matice
+		(resp. její rozklad na kamery $\matrix P_1$, $\matrix P_2$) použita jako hypotéza.
+		
+			\begin{figure}[htb]
+					\centering
+					\subfigure[] {
+						\fbox{\includegraphics[width=9.3cm,angle=-90,clip=true,trim=165px 105px 110px 80px]{pictures/matches-left-with_epipolar_lines.jpg}}
+					}
+					\subfigure[] {
+						\fbox{\includegraphics[width=9.3cm,angle=-90,clip=true,trim=165px 105px 110px 80px]{pictures/matches-right-with_epipolar_lines.jpg}}
+					}
+				\caption{Pár obrazů se zobrazenými korespondencemi: červeně korespondence odpovídající
+					epipolární geometrii, černě chybné. Pro vybrané body (označené křížky) jsou
+					stejnými barvami znázorněny vzájemně si odpovídající epipoláry. Obrazy
+					odpovídají snímkům \ref{figI0} a \ref{figI1}. V obou obrazech je možné
+					si všimnout podduškovitého obrysu okrajů, který vznikl po odstranění
+					radiálního zkreslení.}
+				\label{figKorespondenceAEpipolary}
+			\end{figure}
+		
+		\paragraph{Hodnocení hypotéz} Každá nalezená dvojice kanonických kamer $\matrix P_1$, $\matrix
+		P_2$ byla testována oproti všem nalezeným korespondencím. Pro každou korespondenci byla spočtena
+		reprojekční chyba a byla určena opora hypotézy v datech jakožto počet korespondencí s reprojekční
+		chybou menší než empiricky určený práh (použili jsme práh odpovídající chybě 2 pixely v~každém
+		obrazu).  Výsledkem RANSACu byla epipolární geometrie charakterizovaná rotací $\matrix R$ a
+		translací $\matrix b$ a rozdělení korespondencí na inliery a outliery.
+		
+		Pro vybraný pár obrazů jsou korespondence a epipoláry několika vybraných bodů zobrazeny na
+		\figref{figKorespondenceAEpipolary}. Korespondence jsou znázorněny jako úsečky spojující
+		zvýrazněný bod z jednoho obrazu s místem, kde leží bod ve druhém obraze. Inliery jsou znázorněny
+		červeně, outliery černě. Počet použitých iterací v RANSACu (přesněji počet pětic korespondencí
+		použitých pro vytváření hypotéz) byl 38 pro jeden pár pohledů. Ve zobrazené dvojici pohledů jsou
+		přibližně 70\% korespondencí inliery.
 	
 	
 	% - zkusit vypisovat úspěšnost RANSACu

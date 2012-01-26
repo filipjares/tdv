@@ -1,5 +1,7 @@
 
-disp('Loading output ofthe sparse correspondences computation');
+%% Script producing table of descriptors count and overview of  "best" and "worst" pair for each picture
+
+disp('Loading output of the sparse correspondences computation');
 disp('This may take a while...');
 load('../data/images_and_sparse_correspondences.mat', 'images', 'm');
 disp('Now doing the computations');
@@ -52,24 +54,42 @@ c_nonnan_ix =  isnan(nmaxr) & ~isnan(nmaxc);
 nmax(r_nonnan_ix) = nmaxr(r_nonnan_ix); nmax_i(r_nonnan_ix) = nmaxr_i(r_nonnan_ix);
 nmax(c_nonnan_ix) = nmaxc(c_nonnan_ix); nmax_i(c_nonnan_ix) = nmaxc_i(c_nonnan_ix);
 
-%%
+%% Prepare the table
 
-ids     = cellstr([ [images([1:12]).figId]' repmat(')', 12, 1) ]);
-min_ids = cellstr([ [images(nmin_i).figId]' repmat(')', 12, 1) ]);
-max_ids = cellstr([ [images(nmax_i).figId]' repmat(')', 12, 1) ]);
+ids     = cellstr([images([1:12]).figId]');
+min_ids = cellstr([images(nmin_i).figId]');
+max_ids = cellstr([images(nmax_i).figId]');
 table = [ids num2cell(np) min_ids num2cell(nmin') max_ids num2cell(nmax')];
 heading = {'obrázek', 'počet bodů', ...
             'obr. s nejmenším počtem korespondencí', 'počet', ...
             'obr. s největším počtem korespondencí', 'počet'};
-%%
-% the table
-fprintf('\n\n%s & %s & %s & %s & %s & %s \\\\\n', heading{:});
-%%
+        
+%% Output of the table
+
+fprintf('\n\nTable for the report:\n\n');
+fprintf('\\begin{table}[h]\n');
+fprintf('\t\\centering\n');
+fprintf('\t\\begin{tabular}{|c|c|cccc|}\n');
+fprintf('\t\t\\hline\n');
+% fprintf('%s & %s & %s & %s & %s & %s \\\\\n', heading{:});
+fprintf('\t\t$i$ & $N_i$ & $j$ & $n_{ij}$ & $k$ & $n_{ik}$ \\\\\n');
+fprintf('\t\t\\hline\n');
 for i = 1:size(table,1)
-    fprintf('%s & %d & %s & %d & %s & %d \\\\\n', table{i,:});
+    fprintf('\t\t%s & %d & %s & %d & %s & %d \\\\\n', table{i,:});
 end
-%%
-% matrix with "labels"
-disp(' ');
-[num2cell(' abcdefghijkl'); [num2cell('abcdefghijkl')' num2cell(n)] ]
+fprintf('\t\t\\hline\n');
+fprintf('\t\\end{tabular}\n');
+fprintf('\t\\caption{Přehled výsledků \\emph{WBS Matcheru}: počet deskriptorů $N_i$ v jednotlivých\n');
+fprintf('\t\tobrázcích $i$ a páry s nejmenším $(i,j)$ resp. největším $(i,k)$ počtem předběžných\n');
+fprintf('\t\tkorespondencí. Ve sloupci $n_{ij}$ je uveden počet předběžných korespondencí v páru\n');
+fprintf('\t\t$(i,j)$ a ve sloupci $n_{ik}$ počet předběžných korespondencí v páru $(i,k)$.\n');
+fprintf('\t\tHodnoty $i$, $j$, $k$ odpovídají popiskám kamer na \\figref{figUsporadaniKamer} resp.\n');
+fprintf('\t\tpopiskám vstupních obrázků na \\figref{figFotografie}}\n');
+fprintf('\t\\label{tab:wbs_features}\n');
+fprintf('\\end{table}\n');
+
+%% matrix with "labels" and correspondence count
+fprintf('\n\n');
+fprintf('Overview of count of correspondences for individual picture pairs:\n\n');
+disp([num2cell(' abcdefghijkl'); [num2cell('abcdefghijkl')' num2cell(n)] ]);
 

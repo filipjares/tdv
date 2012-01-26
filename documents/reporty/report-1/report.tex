@@ -223,32 +223,38 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	
 	Pro každý snímek vytvořil WBS Matcher přibližně 30\,000 deskriptorů. Počet nalezených předběžných
 	korespondencí pro pár obrazů se pohyboval mezi 400 až 7\,000. Tyto korespondence byly poté v
-	následujícím kroku použity pro odhad epipolární geometrie pří\-slu\-šných kamer. Počty deskriptorů
-	jsou pro jednotlivé obrázky uvedeny v \tabref{tab:wbs_features} spolu se záznamem o tom,
-	se kterým dalším obrázkem tvoří daný obrázek pár s nejmenším/největším počtem předběžných korespondencí.
+	následujícím kroku použity pro odhad epipolární geometrie pří\-slu\-šných kamer.  V řádcích tabulky
+	\ref{tabWbs_features} je pro každý obrázek $i$ uveden počet deskriptorů $N_i$ a také odkaz na dva
+	obrázky, $j$ resp. $k$, se kterými tvoří obrázek $i$ pár s nejmenším resp. největším počtem
+	předběžných korespondencí.
 	
 		\begin{table}[h]
 			\centering
 			\begin{tabular}{|c|c|cccc|}
 				\hline
-				$i$ & $N_i$ & $j$ & $n_j$ & $k$ & $n_k$ \\
+				$i$ & $N_i$ & $j$ & $n_{ij}$ & $k$ & $n_{ik}$ \\
 				\hline
-				a) & 27309 & l) & 275 & e) & 5105 \\
-				b) & 32038 & l) & 296 & f) & 7053 \\
-				c) & 31634 & i) & 387 & g) & 5470 \\
-				d) & 27784 & a) & 293 & h) & 4266 \\
-				e) & 30907 & l) & 276 & a) & 5105 \\
-				f) & 33436 & h) & 288 & b) & 7053 \\
-				g) & 31379 & a) & 381 & c) & 5470 \\
-				h) & 28405 & a) & 279 & d) & 4266 \\
-				i) & 31892 & h) & 290 & e) & 2797 \\
-				j) & 33674 & h) & 340 & f) & 4039 \\
-				k) & 30405 & a) & 288 & g) & 3372 \\
-				l) & 17692 & a) & 275 & h) & 2086 \\
+				a & 27309 & l & 275 & e & 5105 \\
+				b & 32038 & l & 296 & f & 7053 \\
+				c & 31634 & i & 387 & g & 5470 \\
+				d & 27784 & a & 293 & h & 4266 \\
+				e & 30907 & l & 276 & a & 5105 \\
+				f & 33436 & h & 288 & b & 7053 \\
+				g & 31379 & a & 381 & c & 5470 \\
+				h & 28405 & a & 279 & d & 4266 \\
+				i & 31892 & h & 290 & e & 2797 \\
+				j & 33674 & h & 340 & f & 4039 \\
+				k & 30405 & a & 288 & g & 3372 \\
+				l & 17692 & a & 275 & h & 2086 \\
 				\hline
 			\end{tabular}
-			\caption{Přehled.. $j$ = obr. s nejmenším počtem korespondencí; $k$ = obr. s největším počtem korespondencí}
-			\label{tab:wbs_features}
+			\caption{Přehled výsledků \emph{WBS Matcheru}: počet deskriptorů $N_i$ v jednotlivých
+				obrázcích $i$ a páry s nejmenším $(i,j)$ resp. největším $(i,k)$ počtem předběžných
+				korespondencí. Ve sloupci $n_{ij}$ je uveden počet předběžných korespondencí v páru
+				$(i,j)$ a ve sloupci $n_{ik}$ počet předběžných korespondencí v páru $(i,k)$.
+				Hodnoty $i$, $j$, $k$ odpovídají popiskám kamer na \figref{figUsporadaniKamer} resp.
+				popiskám vstupních obrázků na \figref{figFotografie}}
+			\label{tabWbs_features}
 		\end{table}
 	
 	

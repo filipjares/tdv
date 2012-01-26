@@ -62,13 +62,13 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 		\item[(5)] poissonovská rekonstrukce povrchu scény.
 	\end{enumerate}
 	
-	Prvním krokem byl samozřejmě výběr scény a její nasnímání (1).
-	Důležitým krokem fáze (2) bylo odstranění radiálního zkreslení a kalibrace kamery. Hlavními částmi fáze
-	(3) bylo nalezení řídkých korespondencí mezi obrazy a použití těchto korespondencí k odhadu epipolární
-	geometrie dvojic snímků a tedy odhadu relativních rotací a translací dvojic kamer.  Následovalo
-	\uv{slepování} takových dvojic kamer, tedy jejich umístění do společného souřadného systému. Řídký
+	Prvním krokem byl samozřejmě výběr scény a její nasnímání (1).  Důležitým krokem fáze (2) bylo
+	odstranění radiálního zkreslení a kalibrace kamery. Hlavními částmi fáze (3) bylo nalezení řídkých
+	korespondencí mezi obrazy a použití páru s největším počtem korespondencí k odhadu epipolární
+	geometrie tohoto páru, tedy k odhadu relativní rotace a translace této dvojice kamer.  Následovalo
+	\uv{přilepování} dalších dvojic kamer, tedy jejich umísťování do společného souřadného systému. Řídký
 	mrak bodů vznikl zpětným promítáním korespondujících bodů do prostoru. V rámci kroku (4) byla pro
-	stereo párování využita znalost epipolární geometrie použitých párů kamer, získaná v předchozím
+	stereo párování využita znalost epipolární geometrie použitých párů kamer získaná v předchozím
 	kroku.  Z každé použité dvojice obrazů byla stereo párováním získána část výsledného hustého mraku
 	bodů.  Nakonec byl na hustý mrak bodů použit algoritmus poissonovské rekonstrukce (5), který vytvořil
 	model povrchu.
@@ -225,7 +225,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 		Pro každý snímek vytvořil WBS Matcher přibližně 30\,000 deskriptorů. Počet nalezených předběžných
 		korespondencí pro pár obrazů se pohyboval mezi 400 až 7\,000. Tyto korespondence byly poté v
 		následujícím kroku použity pro odhad epipolární geometrie pří\-slu\-šných kamer.  V řádcích
-		tabulky \ref{tabWbs_features} je pro každý obrázek $i$ uveden počet deskriptorů $N_i$ a také
+		tabulky \ref{tabWbsFeatures} je pro každý obrázek $i$ uveden počet deskriptorů $N_i$ a také
 		odkaz na dva obrázky, $j$ resp. $k$, se kterými tvoří obrázek $i$ pár s nejmenším resp. největším
 		počtem předběžných korespondencí.
 		
@@ -255,14 +255,19 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 					$(i,j)$ a ve sloupci $n_{ik}$ počet předběžných korespondencí v páru $(i,k)$.
 					Hodnoty $i$, $j$, $k$ odpovídají popiskám kamer na \figref{figUsporadaniKamer} resp.
 					popiskám vstupních obrázků na \figref{figFotografie}}
-				\label{tabWbs_features}
+				\label{tabWbsFeatures}
 			\end{table}
 	
 	
-	\subsection{Odhad epipolární geometrie}
+	\subsection{Odhad epipolární geometrie prvního páru kamer}
 	
-		Odhad esenciální matice $\matrix E$ daného páru ka\-mer je založen na použití předběžných
-		korespondencí získaných v~předchozím kroku. Protože jsou nalezené korespondence kontaminovány
+		Dalším krokem byl odhad epipolární geometrie prvního páru kamer a jejich umístění do souřadného
+		systému daného polohou první kamery. Jako první pár kamer byl vybrán pár, jehož obrázky měly
+		největší počet předběžných korespondencí (viz \tabref{tabWbsFeatures}), tedy pár
+		$(\mathrm{b},\mathrm{f})$.
+
+		Odhad esenciální matice $\matrix E$ prvního páru ka\-mer byl založen na použití předběžných
+		korespondencí získaných v~předchozím kroku. Protože byly nalezené korespondence kontaminovány
 		chybami, byl jakožto metoda robustního odhadu použit algoritmus RANSAC \cite{RansacOverview}. Ten
 		je tvořen smyčkou, v níž jsou opakovaně vytvářeny hypotézy (matice $\matrix E$), pro které je
 		ověřována jejich konzistence s daty. RANSAC vybere z prověřených hypotéz tu, která je v největší

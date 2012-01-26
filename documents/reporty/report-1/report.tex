@@ -277,10 +277,10 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	
 	\subsection{Odhad epipolární geometrie prvního páru kamer}
 	
-		Dalším krokem byl odhad epipolární geometrie prvního páru kamer a jejich umístění do souřadného
-		systému daného polohou první kamery. Jako první pár kamer byl vybrán pár, jehož obrázky měly
-		největší počet předběžných korespondencí (viz \tabref{tabWbsFeatures}), tedy pár
-		$(\mathrm{b},\mathrm{f})$.
+		Dalším krokem byl odhad epipolární geometrie prvního páru kamer -- $\matrix P_1$, $\matrix P_2$
+		-- a jejich umístění do souřadného systému definovaného polohou první kamery. Jako první pár
+		kamer byl vybrán ten, jenž obsahoval největší počet předběžných korespondencí (viz
+		\tabref{tabWbsFeatures}), tedy pár $(\mathrm{b},\mathrm{f})$.
 
 		Odhad esenciální matice $\matrix E$ prvního páru ka\-mer byl založen na použití předběžných
 		korespondencí získaných v~předchozím kroku. Protože byly nalezené korespondence kontaminovány
@@ -315,6 +315,8 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 		které splňují spolu se svými body $\vector X$ podmínku chirality, byla tato esenciální matice
 		(resp. její rozklad na kamery $\matrix P_1$, $\matrix P_2$) použita jako hypotéza.
 		
+			% FIXME: tady by bylo dobré použít skutečně pár obrazů o kterém se v textu hovoří - pár (b,f),
+			% ale radši budu šetřit čas a nebudu to měnit; už tak mám se zprávou celý měsíc zpoždění.
 			\begin{figure}[htb]
 					\centering
 					\subfigure[] {

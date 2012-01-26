@@ -79,7 +79,7 @@ for i = 1:size(table,1)
 end
 fprintf('\t\t\\hline\n');
 fprintf('\t\\end{tabular}\n');
-fprintf('\t\\caption{Přehled výsledků \\emph{WBS Matcheru}: počet deskriptorů $N_i$ v jednotlivých\n');
+fprintf('\t\\caption{Přehled výsledků \\emph{WBS Matcheru}: počet význačných bodů $N_i$ v jednotlivých\n');
 fprintf('\t\tobrázcích $i$ a páry s nejmenším $(i,j)$ resp. největším $(i,k)$ počtem předběžných\n');
 fprintf('\t\tkorespondencí. Ve sloupci $n_{ij}$ je uveden počet předběžných korespondencí v páru\n');
 fprintf('\t\t$(i,j)$ a ve sloupci $n_{ik}$ počet předběžných korespondencí v páru $(i,k)$.\n');

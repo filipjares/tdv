@@ -395,12 +395,35 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	\subsection{Přilepování dalších kamer}
 
 		Do systému kamer $\mathcal C$ byly dále pomocí hladového algoritmu postupně přilepovány další
-		kamery. Jako další byla tedy vždy vybrána kamera $\matrix P_i$ s největším počtem korespondencí
-		do stávajícího mraku 3D bodů. Na tyto korespondence byl v rámci RANSACu aplikován dodaný P3P
-		algoritmus \cite{code_repo} a byla tak určena poloha nové kamery $\matrix P_i$ vzhledem
-		k~souřadnému systému systému kamer $\mathcal C$ (tj. vzhledem k souřadnému systému kamery
-		$\matrix P_1$). Parametry a~výsledky RANSACu pro jednotlivé přidávané kamery jsou shrnuty
-		v~\tabref{tabP3PRansac}.
+		kamery. Použit byl následující postup.
+
+		\begin{enumerate}
+			\item Byl vybrán obraz $i$ s největším počtem korespondencí do stávajícího mraku 3D bodů.
+			\item Na tyto korespondence byl v rámci RANSACu aplikován dodaný P3P algoritmus
+				\cite{code_repo} a byla tak určena poloha nové kamery $\matrix P_i$ vzhledem
+				k~souřadnému systému systému kamer $\mathcal C$ (tj. vzhledem k souřadnému systému kamery
+				$\matrix P_1$).
+			\item Inliery z P3P RANSACu byly označeny jako potvrzené korespondence.
+			\item Z korespondencí mezi obrazem $i$ a obrazy ostatních kamer v~$\mathcal C$, které
+				ještě neměly odpovídající 3D bod, byly zrekonstruovány nové 3D body a byly přidány do
+				mraku.
+			\item Nová kamera $\matrix P_i$ byla přidána do $\mathcal C$. Poté byl stávající mrak 3D
+				bodů spolu se systémem kamer $\mathcal C$ zpřesněn metodou vyrovnání svazku \cite{code_repo}.
+			\item Pokud zbýval obraz $j$, takový že $\matrix P_j \notin \mathcal C$, byl pro něj
+				postup zopakován (v bodu 1. bylo položeno $i := j$).
+		\end{enumerate}
+
+		\noindent
+		Parametry a~výsledky RANSACu pro jednotlivé přidávané kamery jsou shrnuty v~\tabref{tabP3PRansac}.
+		Získané uspořádaní kamer spolu s řídkým mrakem je na \figref{figCamerasAndSparseCloud}
+
+		% Do systému kamer $\mathcal C$ byly dále pomocí hladového algoritmu postupně přilepovány další
+		% kamery. Jako další byla tedy vždy vybrána kamera $\matrix P_i$ s největším počtem korespondencí
+		% do stávajícího mraku 3D bodů. Na tyto korespondence byl v rámci RANSACu aplikován dodaný P3P
+		% algoritmus \cite{code_repo} a byla tak určena poloha nové kamery $\matrix P_i$ vzhledem
+		% k~souřadnému systému systému kamer $\mathcal C$ (tj. vzhledem k souřadnému systému kamery
+		% $\matrix P_1$). Parametry a~výsledky RANSACu pro jednotlivé přidávané kamery jsou shrnuty
+		% v~\tabref{tabP3PRansac}.
 
 			\begin{table}[h]
 				\centering
@@ -418,11 +441,22 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				\label{tabP3PRansac}
 			\end{table}
 
-		Inliery z P3P RANSACu byly označeny jako potvrzené korespondence a byly přidány do mraku 3D bodů.
-		Nová kamera $\matrix P_i$ byla přidána do $\mathcal C$. Poté byl stávající mrak 3D bodů spolu se
-		systémem kamer $\mathcal C$ opět zpřesněn metodou vyrovnání svazku \cite{code_repo}.
-		Z korespondencí mezi obrazem kamery $\matrix P_i$ a obrazy ostatních kamer v~$\mathcal C$, které
-		ještě nemají 3D bod byly zrekonstruovány nové 3D body.
+		% Inliery z P3P RANSACu byly označeny jako potvrzené korespondence a byly přidány do mraku 3D bodů.
+		% Nová kamera $\matrix P_i$ byla přidána do $\mathcal C$. Poté byl stávající mrak 3D bodů spolu se
+		% systémem kamer $\mathcal C$ opět zpřesněn metodou vyrovnání svazku \cite{code_repo}.
+		% Z korespondencí mezi obrazem kamery $\matrix P_i$ a obrazy ostatních kamer v~$\mathcal C$, které
+		% ještě nemají 3D bod byly zrekonstruovány nové 3D body.
+
+			\begin{figure}[htb]
+					\centering
+						\includegraphics[width=9.3cm,clip=true,trim=165px 105px 110px 80px]{pictures/usporadani_kamer.pdf}
+				\caption{Uspořádání kamer a řídký mrak bodů}
+				\label{figCamerasAndSparseCloud}
+			\end{figure}
+
+		Pro správu korespondencí mezi obrazy a korespondencí mezi obrazy a mrakem 3D bodů byl využit
+		opět kód dodaný vyučujícími \cite{code_repo}, \cite{gluing_correspondences}, 
+		Pro manipulaci s korespondencemi mezi obrazy a OP
 		
 	\subsection{TODO}
 		Využití nástroje corresp \cite{code_repo}

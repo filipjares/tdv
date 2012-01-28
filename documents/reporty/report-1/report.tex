@@ -474,10 +474,48 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 %%                                STEREO A HUSTÝ MRAK BODŮ                                           %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
-\section{Stereo}
+\section{Stereo, hustý mrak bodů}
+	
+	V předchozí části jsme získali polohy kamer ve společném souřadném systému. Jako další
+	přišla na řadu rekonstrukce hustého mraku bodů.
+	Pro vybrané dvojice kamer jsme provedli rekonstrukci hustého mraku bodů pomocí sterea.  Použili jsme
+	horizontální a vertikální dvojice sousedních kamer, jsou vyznačeny na \figref{figCamerasAndSparseCloud}
+	modře resp. žlutě.
+
+	Nejprve byly obrazy podvzorkovány na poloviční rozlišení. Pro jednotlivé páry bylo provedeno
+	epipolární vyrovnání těchto obrazů, tj. byly vypočteny homografie, kterými byly jednak upraveny
+	vstupní, podvzorkované, obrazy a byly jimi upraveny kamery. Upravené kamery byly použity po výpočtu
+	disparit k triangulaci výsledných korespondencí a tedy k získání jednotlivých bodů trojrozměrné
+	scény. Pohled na takto získaný mrak bodů pocházející z jednoho páru kamer je na
+	\figref{figStereoPair26}. Mraky dvojic bodů získané z jednotlivých dvojic obrazů stereo-párováním
+	byly nakonec sloučeny do jediného hustého mraku bodů.
+
+
+
 	
 	Použili jsme \cite{Cech-BenCOS-CVPR-2007}
 
+			\begin{figure}[htb]
+					\centering
+					\subfigure[] {
+						\fbox{\includegraphics[height=5cm]{pictures/stereo_pair_02_06_result.png}}
+					}
+					\subfigure[] {
+						\fbox{\includegraphics[height=5cm]{pictures/stereo_pair_02_06_result-detail.png}}
+					}
+				\caption{Dva pohledy na body získané stereo-párováním dvojice obrazů (b,f)}
+				\label{figStereoPair26}
+			\end{figure}
+	
+			\begin{figure}[htb]
+					\centering
+						\includegraphics[width=12.8cm]{pictures/points_from_stereo_coloured_by_pair-pairs-01_02-01_05-02_06-03_07.png}
+						\hskip 10pt
+						\includegraphics[height=2cm]{pictures/points_from_stereo_coloured-legend.pdf}
+				\caption{Hustý mrak bodů ze čtyř párů kamer obarvený podle zdrojového páru kamer}
+				\label{figStereoPair26}
+			\end{figure}
+	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                               POISSONOVSKÁ REKONSTRUKCE                                           %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

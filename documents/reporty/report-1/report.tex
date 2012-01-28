@@ -349,7 +349,12 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				\label{tabFirstPairEEstimate}
 			\end{table}
 
-		Popsaným postupem byla získána epipolární geometrie prvního páru kamer. Jako sou\-řad\-ný systém,
+		Popsaným postupem byla získána epipolární geometrie prvního páru kamer. Tento pár vytvořil základ
+		systému kamer $\mathcal C$.
+			$$ \mathcal C := \{\matrix P_1,\ \matrix P_2\},
+				\qquad \matrix P_1 = \matrix K \begin{bmatrix} \matrix I & \vector 0 \end{bmatrix},
+				\qquad \matrix P_2 = \matrix K \begin{bmatrix} \matrix R & \vector t \end{bmatrix} $$
+		Jako sou\-řad\-ný systém systému $\mathcal C$,
 		do kterého byly dále přidávány další kamery byl zvolen souřadný systém první kamery.  Měřitko
 		bylo zvoleno -- vzdálenost prvních dvou kamer byla položena rovna jedné.  Inlier korespondence
 		z~právě popsaného kroku byly označeny jako \emph{potvrzené} a byl z~nich zrekonstruován prvotní
@@ -386,12 +391,44 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 		% terminology:
 		%	correspondence = truth,
 		%	match = algorithm’s result; hypothesised corresp.
-	
+
 	\subsection{Přilepování dalších kamer}
 
-		Po získání odhadu epipolární geometrie prvního páru kamer následovalo postupné přilepování
-		dalších kamer.
+		Do systému kamer $\mathcal C$ byly dále pomocí hladového algoritmu postupně přilepovány další
+		kamery. Jako další byla tedy vždy vybrána kamera $\matrix P_i$ s největším počtem korespondencí
+		do stávajícího mraku 3D bodů. Na tyto korespondence byl v rámci RANSACu aplikován dodaný P3P
+		algoritmus \cite{code_repo} a byla tak určena poloha nové kamery $\matrix P_i$ vzhledem
+		k~souřadnému systému systému kamer $\mathcal C$ (tj. vzhledem k souřadnému systému kamery
+		$\matrix P_1$). Parametry a~výsledky RANSACu pro jednotlivé přidávané kamery jsou shrnuty
+		v~\tabref{tabP3PRansac}.
+
+			\begin{table}[h]
+				\centering
+				\begin{tabular}{|lrr|}
+					\hline
+					Práh RANSACu [px]				& TODO	&	\\
+					Počet iterací RANSACu			& TODO	&	\\
+					Počet předběžných korespondencí (bodů)		& TODO	& TODO\,\%	\\
+					Počet bodů před oběma kamerami	& TODO	& TODO\,\%	\\
+					Počet inlierů					& TODO	& TODO\,\%	\\
+					Počet outlierů					& TODO	& TODO\,\%	\\
+					\hline
+				\end{tabular}
+				\caption{Parametry a výsledky RANSACu použitého pro určení polohy nově přidávané kamery}
+				\label{tabP3PRansac}
+			\end{table}
+
+		Inliery z P3P RANSACu byly označeny jako potvrzené korespondence a byly přidány do mraku 3D bodů.
+		Nová kamera $\matrix P_i$ byla přidána do $\mathcal C$. Poté byl stávající mrak 3D bodů spolu se
+		systémem kamer $\mathcal C$ opět zpřesněn metodou vyrovnání svazku \cite{code_repo}.
+		Z korespondencí mezi obrazem kamery $\matrix P_i$ a obrazy ostatních kamer v~$\mathcal C$, které
+		ještě nemají 3D bod byly zrekonstruovány nové 3D body.
 		
+	\subsection{TODO}
+		Využití nástroje corresp \cite{code_repo}
+			hotové -- ne-předběžné korespondence?
+		RANSAC - tabulka
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                STEREO A HUSTÝ MRAK BODŮ                                           %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

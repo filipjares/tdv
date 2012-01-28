@@ -11,8 +11,8 @@ images = initialize_empty_images_structure();
 %% prepare table of (vertical and horizontal) camera pairs for stereo
 
 % each row in the pairs table contains one pair (indices of cameras in the pair)
-pairs = nan(11+8, 2);
-for i = 1:11
+pairs = nan(9+8, 2);
+for i = [1 2 3, 5 6 7, 9 10 11]
    pairs(i,:) = [i, i+1]; 
 end
 for i = 1:8

@@ -104,6 +104,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				}
 				\subfigure[] {
 					\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5955.JPG}}
+				      \label{figInputPictureB}
 				}
 				\subfigure[] {
 					\fbox{\includegraphics[width=4.3cm,angle=-90]{pictures/IMG_5962.JPG}}
@@ -435,6 +436,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 					Počet bodů před oběma kamerami	& TODO	& TODO\,\%	\\
 					Počet inlierů					& TODO	& TODO\,\%	\\
 					Počet outlierů					& TODO	& TODO\,\%	\\
+					Velikost řídkého mraku bodů		& 26873 &			\\
 					\hline
 				\end{tabular}
 				\caption{Parametry a výsledky RANSACu použitého pro určení polohy nově přidávané kamery}
@@ -482,19 +484,6 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	horizontální a vertikální dvojice sousedních kamer, jsou vyznačeny na \figref{figCamerasAndSparseCloud}
 	modře resp. žlutě.
 
-	Nejprve byly obrazy podvzorkovány na poloviční rozlišení. Pro jednotlivé páry bylo provedeno
-	epipolární vyrovnání těchto obrazů, tj. byly vypočteny homografie, kterými byly jednak upraveny
-	vstupní, podvzorkované, obrazy a byly jimi upraveny kamery. Upravené kamery byly použity po výpočtu
-	disparit k triangulaci výsledných korespondencí a tedy k získání jednotlivých bodů trojrozměrné
-	scény. Pohled na takto získaný mrak bodů pocházející z jednoho páru kamer je na
-	\figref{figStereoPair26}. Mraky dvojic bodů získané z jednotlivých dvojic obrazů stereo-párováním
-	byly nakonec sloučeny do jediného hustého mraku bodů.
-
-
-
-	
-	Použili jsme \cite{Cech-BenCOS-CVPR-2007}
-
 			\begin{figure}[htb]
 					\centering
 					\subfigure[] {
@@ -507,13 +496,62 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				\label{figStereoPair26}
 			\end{figure}
 	
+	Nejprve byly obrazy podvzorkovány na poloviční rozlišení. Pro jednotlivé páry bylo provedeno
+	epipolární vyrovnání těchto obrazů, tj. byly vypočteny homografie, kterými byly jednak upraveny
+	vstupní, podvzorkované, obrazy a byly jimi upraveny kamery. Upravené kamery byly použity po výpočtu
+	disparit k triangulaci výsledných korespondencí a tedy k získání jednotlivých bodů trojrozměrné
+	scény. Pohled na takto získaný mrak bodů pocházející z jednoho páru kamer je na
+	\figref{figStereoPair26}. Mraky dvojic bodů získané z jednotlivých dvojic obrazů stereo-párováním
+	byly nakonec sloučeny do jediného hustého mraku bodů.
+
+			\begin{figure}[htb]
+					\centering
+					\subfigure[] {
+						\label{figRectifiedImagesForStereoA}
+						\fbox{\includegraphics[height=5.37cm]{pictures/disparity_pair_02-06-im1r.png}}
+					}
+					\subfigure[] {
+						\label{figRectifiedImagesForStereoB}
+						\fbox{\includegraphics[height=5.37cm]{pictures/disparity_pair_02-06-im2r.png}}
+					}
+				\caption{Pár obrazů (b,f) po epipolárním vyrovnání (aplikování rektifikačních homografií);
+					obrázek \subref{figRectifiedImagesForStereoA} odpovídá obrázku \ref{figInputPictureB},
+					obrázek \subref{figRectifiedImagesForStereoB} obrázku \ref{figI0}}
+				\label{figRectifiedImagesForStereo}
+			\end{figure}
+
+			\begin{figure}[htb]
+					\centering
+					\subfigure[] {
+						\label{figSourceAndDisparitySource}
+						\fbox{\includegraphics[width=9.3cm,angle=-90]{pictures/disparity_pair_02-06-im1.png}}
+					}
+					\subfigure[] {
+						\label{figSourceAndDisparityDisparity}
+						\fbox{\includegraphics[width=9.3cm,angle=-90]{pictures/disparity.png}}
+					}
+
+				\caption{\subref{figSourceAndDisparitySource} -- obraz \ref{figInputPictureB}; 
+					\subref{figSourceAndDisparityDisparity} -- jemu odpovídající disparitní mapa v rámci páru
+					(b,f);
+					Okraje disparitní mapy jsou oříznuty, aby se zamezilo vzniku nežádoucích artefaktů,
+					které by vznikly kvůli černým okrajům vstupního obrázku vzniklým při odstranění
+					radiálního zkreslení.}
+				\label{figSourcePictureAndDisparityMapForTheBFPair}
+			\end{figure}
+	
+
+
+	
+	Použili jsme \cite{Cech-BenCOS-CVPR-2007}
+
 			\begin{figure}[htb]
 					\centering
 						\includegraphics[width=12.8cm]{pictures/points_from_stereo_coloured_by_pair-pairs-01_02-01_05-02_06-03_07.png}
 						\hskip 10pt
 						\includegraphics[height=2cm]{pictures/points_from_stereo_coloured-legend.pdf}
 				\caption{Hustý mrak bodů ze čtyř párů kamer obarvený podle zdrojového páru kamer}
-				\label{figStereoPair26}
+				\label{figPointsFromStereoColouredBySourcePair}
 			\end{figure}
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

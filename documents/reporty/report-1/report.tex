@@ -437,7 +437,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				\label{tabP3PRansac}
 			\end{table}
 
-			\begin{figure}[htb]
+			\begin{figure}[htbp]
 					\centering
 						%\fbox{						% clipping order: left bottom right top
 						\includegraphics[width=11cm,clip=true,trim=3cm 8.5cm 3cm 8cm]{pictures/cameras_and_sparse_points_cloud.pdf}
@@ -492,7 +492,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	\figref{figStereoPair26}. Mraky dvojic bodů získané z jednotlivých dvojic obrazů stereo-párováním
 	byly nakonec sloučeny do jediného hustého mraku bodů.
 
-			\begin{figure}[htb]
+			\begin{figure}[htbp]
 					\centering
 					\subfigure[] {
 						\label{figRectifiedImagesForStereoA}
@@ -508,7 +508,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				\label{figRectifiedImagesForStereo}
 			\end{figure}
 
-			\begin{figure}[htb]
+			\begin{figure}[htbp]
 					\centering
 					\subfigure[] {
 						\label{figSourceAndDisparitySource}
@@ -518,7 +518,6 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 						\label{figSourceAndDisparityDisparity}
 						\fbox{\includegraphics[width=9.3cm,angle=-90]{pictures/disparity.png}}
 					}
-
 				\caption{\subref{figSourceAndDisparitySource} -- obraz \ref{figInputPictureB}; 
 					\subref{figSourceAndDisparityDisparity} -- jemu odpovídající disparitní mapa v rámci páru
 					(b,f);
@@ -533,7 +532,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	
 	Použili jsme \cite{Cech-BenCOS-CVPR-2007}
 
-			\begin{figure}[htb]
+			\begin{figure}[htbp]
 					\centering
 						\includegraphics[width=12.8cm]{pictures/points_from_stereo_coloured_by_pair-pairs-01_02-01_05-02_06-03_07.png}
 						\hskip 10pt
@@ -545,6 +544,27 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                               POISSONOVSKÁ REKONSTRUKCE                                           %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+			\begin{figure}[htbp]
+					\centering
+					\subfigure[] {
+						\fbox{\includegraphics[width=13.17cm]{pictures/text-detail.png}}
+					}
+					\subfigure[] {
+						\fbox{\includegraphics[height=4.45cm]{pictures/psr-all_hor_and_vert_pairs-depth_12-color-cropped-snapshot02.png}}
+					}
+					\subfigure[] {
+						\fbox{\includegraphics[height=4.45cm]{pictures/psr-all_hor_and_vert_pairs-depth_12-color-cropped-snapshot01.png}}
+					}
+					\subfigure[] {
+						\fbox{\includegraphics[height=4.45cm]{pictures/psr-all_hor_and_vert_pairs-depth_12-color-cropped-snapshot00.png}}
+					}
+					\subfigure[] {
+						\fbox{\includegraphics[width=13.17cm]{pictures/psr-all_hor_and_vert_pairs-depth_12-color-cropped-snapshot06.png}}
+					}
+				\caption{Výsledný povrch}
+				\label{figResult}
+			\end{figure}
 	
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

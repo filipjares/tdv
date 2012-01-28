@@ -82,8 +82,6 @@ while true
     % Scene-to-image correspondences in the new camera
     Xu = corresp_get_Xu(corresp, in);
 
-    %% Here comes the P3P RANSAC
-
     % Scene-to-image correspondences (points)
     Xn = X(:,Xu(:,1));
     un = e2p(get_image_points_coordinates(images, in, Xu(:,2)));

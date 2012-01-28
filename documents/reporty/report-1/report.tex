@@ -454,15 +454,16 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				\label{figCamerasAndSparseCloud}
 			\end{figure}
 
-		Pro správu korespondencí mezi obrazy a korespondencí mezi obrazy a mrakem 3D bodů byl využit
-		opět kód dodaný vyučujícími \cite{code_repo}, \cite{gluing_correspondences}, 
-		Pro manipulaci s korespondencemi mezi obrazy a OP
+		Při implementaci postupného přilepování kamer bylo nezbytné systematicky pracovat
+		s~meziobrazovými korespondencemi, získanými pomocí WBS Matcheru. Z těchto korespondencí postupně
+		vznikaly korespondence mezi význačnými body v jednotlivých obrazech a prostorovými body ve scéně.
+		Při přidávání nové kamery do systému kamer $\mathcal C$ bylo nutné, aby se korespondence mezi
+		obrazem z nově přidávané kamery a obrazy z ostatních kamer správně přenesly do korespondencí mezi
+		význačnými body z jednotlivých kamer a 3D body ve scéně.
+		Jako nástroj pro tuto správu korespondencí byl s výhodou použit nástroj \emph{corresp},
+		který byl opět dodán vyučujícími \cite{code_repo}. Přehledně je popsán v
+		\cite{gluing_correspondences}.
 		
-	\subsection{TODO}
-		Využití nástroje corresp \cite{code_repo}
-			hotové -- ne-předběžné korespondence?
-		RANSAC - tabulka
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                STEREO A HUSTÝ MRAK BODŮ                                           %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -479,6 +480,12 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                        ZÁVĚR                                                      %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{TODO}
+		Využití nástroje corresp \cite{code_repo}
+			hotové -- ne-předběžné korespondence?
+		RANSAC - tabulka
+
 	
 \section{Zhodnocení}
 	
@@ -500,6 +507,13 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 
 % Parametry:
 % - orezani okraju kvuli stereu - 50 pixelu/25 pixelu u podvzorkovaneho obrazku
+
+% Slovníček
+%
+% interest point -- význačný bod
+% tentative correspondences -- předběžné korespondence
+% camera cluster -- systém kamer
+% 
 
 %\bibliographystyle{plain_cz}
 %\bibliographystyle{czechiso}

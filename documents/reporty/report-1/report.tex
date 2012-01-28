@@ -321,25 +321,6 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 		které splňují spolu se svými body $\vector X$ podmínku chirality, byla tato esenciální matice
 		(resp. její rozklad na kamery $\matrix P_1$, $\matrix P_2$) použita jako hypotéza.
 		
-			% FIXME: tady by bylo dobré použít skutečně pár obrazů o kterém se v textu hovoří - pár (b,f),
-			% ale radši budu šetřit čas a nebudu to měnit; už tak mám se zprávou celý měsíc zpoždění.
-			\begin{figure}[htb]
-					\centering
-					\subfigure[] {
-						\fbox{\includegraphics[width=9.3cm,angle=-90,clip=true,trim=165px 105px 110px 80px]{pictures/matches-left-with_epipolar_lines.jpg}}
-					}
-					\subfigure[] {
-						\fbox{\includegraphics[width=9.3cm,angle=-90,clip=true,trim=165px 105px 110px 80px]{pictures/matches-right-with_epipolar_lines.jpg}}
-					}
-				\caption{Pár obrazů se zobrazenými korespondencemi: červeně korespondence odpovídající
-					epipolární geometrii, černě chybné. Pro vybrané body (označené křížky) jsou
-					stejnými barvami znázorněny vzájemně si odpovídající epipoláry. Obrazy
-					odpovídají snímkům \ref{figI0} a \ref{figI1}. V obou obrazech je možné
-					si všimnout podduškovitého obrysu okrajů, který vznikl po odstranění
-					radiálního zkreslení.}
-				\label{figKorespondenceAEpipolary}
-			\end{figure}
-		
 		\paragraph{Hodnocení hypotéz} Každá nalezená dvojice kanonických kamer $\matrix P_1$, $\matrix
 		P_2$ byla testována oproti všem nalezeným korespondencím. Pro každou korespondenci byla spočtena
 		reprojekční chyba a byla určena opora hypotézy v datech jakožto počet korespondencí s reprojekční
@@ -368,11 +349,37 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				\label{tabFirstPairEEstimate}
 			\end{table}
 
-		Pro vybraný pár obrazů (nejedná se o pár (b,f)) jsou korespondence a epipoláry ně\-ko\-li\-ka
-		vy\-bra\-ných
-		bodů zobrazeny na \figref{figKorespondenceAEpipolary}. Korespondence jsou znázorněny jako úsečky
-		spo\-ju\-jí\-cí zvýrazněný bod z~jednoho obrazu s~místem, kde leží bod ve druhém obraze. Inliery jsou
-		znázorněny červeně, outliery černě.
+		Popsaným postupem byla získána epipolární geometrie prvního páru kamer. Jako sou\-řad\-ný systém,
+		do kterého byly dále přidávány další kamery byl zvolen souřadný systém první kamery.  Měřitko
+		bylo zvoleno -- vzdálenost prvních dvou kamer byla položena rovna jedné.  Inlier korespondence
+		z~právě popsaného kroku byly označeny jako \emph{potvrzené} a byl z~nich zrekonstruován prvotní
+		mrak 3D bodů. Tento prvotní mrak bodů byl spolu s prvním párem kamer zpřesněn metodou vyrovnání
+		svazku (Bundle Adjustment, opět bylo použito dodaného kódu, \cite{code_repo}).
+
+			% FIXME: tady by bylo dobré použít skutečně pár obrazů o kterém se v textu hovoří - pár (b,f),
+			% ale radši budu šetřit čas a nebudu to měnit; už tak mám se zprávou celý měsíc zpoždění.
+			\begin{figure}[htb]
+					\centering
+					\subfigure[] {
+						\fbox{\includegraphics[width=9.3cm,angle=-90,clip=true,trim=165px 105px 110px 80px]{pictures/matches-left-with_epipolar_lines.jpg}}
+					}
+					\subfigure[] {
+						\fbox{\includegraphics[width=9.3cm,angle=-90,clip=true,trim=165px 105px 110px 80px]{pictures/matches-right-with_epipolar_lines.jpg}}
+					}
+				\caption{Pár obrazů se zobrazenými korespondencemi: červeně korespondence odpovídající
+					epipolární geometrii, černě chybné. Pro vybrané body (označené křížky) jsou
+					stejnými barvami znázorněny vzájemně si odpovídající epipoláry. Obrazy
+					odpovídají snímkům \ref{figI0} a \ref{figI1}. V obou obrazech je možné
+					si všimnout podduškovitého obrysu okrajů, který vznikl po odstranění
+					radiálního zkreslení.}
+				\label{figKorespondenceAEpipolary}
+			\end{figure}
+	
+		Pro vybraný pár obrazů (nejedná se o pár (b,f), který byl ve skutečnosti použit jako prvotní pár)
+		jsou korespondence a epipoláry ně\-ko\-li\-ka vy\-bra\-ných bodů zobrazeny na
+		\figref{figKorespondenceAEpipolary}. Korespondence jsou znázorněny jako úsečky spo\-ju\-jí\-cí
+		zvýrazněný bod z~jednoho obrazu s~místem, kde leží bod ve druhém obraze. Inliery jsou znázorněny
+		červeně, outliery černě.
 		
 		% Notes:
 		%

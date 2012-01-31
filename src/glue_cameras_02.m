@@ -48,7 +48,7 @@ for i = 1:ncams
     u{i} = get_image_points_coordinates(images, i);
 end
 
-corresp_initial = corresp;  % copy for reference (for the report)
+info.init_corresp = corresp;  % copy for reference (for the report)
 corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
 
 %% Here comes the Bundle Adjustment
@@ -67,6 +67,7 @@ info.cam_id = nan(10,1); % 1st col: camera id, 2nd col: inliner count
 info.ransac_info = cell(10,1);
 info.other_cam_new_X = cell(10,1);
 info.tentative_verification = cell(10,1);
+info.corresp = cell(10,1);
 
 while true
     %% Choosing the next camera to add
@@ -207,6 +208,8 @@ while true
         info.tentative_verification{info.i}{info.other_cam_i}.tentativeXCount = length(Xu_tentative);
         info.tentative_verification{info.i}{info.other_cam_i}.tentativeXInl = length(inl_ix);
     end
+    
+    info.corresp{info.i} = corresp;
     
     % That's all for this new camera:
     corresp = corresp_finalize_camera(corresp);

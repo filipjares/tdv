@@ -14,6 +14,7 @@ function [R, t, best_inliers, ransac_info] = p3p_ransac(K, X, u)
 
     best_support = 0;
     best_inliers = [];
+    ransac_info.best_inlier_probability = 0;
     R_best = [];
     t_best = [];
 
@@ -66,6 +67,9 @@ function [R, t, best_inliers, ransac_info] = p3p_ransac(K, X, u)
             % Update RANSAC stopping criterion w.r.t. the number of inliers
             inlier_count = support;
             inlier_probability = inlier_count/corresp_count;
+            if (ransac_info.best_inlier_probability < inlier_probability)
+                ransac_info.best_inlier_probability = inlier_probability;
+            end
             if inlier_probability == 1
                 Nmax = 0;
             else

@@ -3,6 +3,7 @@
 
 % assume we have in the workspace
 % what is in '../data/glue_cameras-01-output.mat'
+load('../data/glue_cameras-01-output.mat');
 
 %% Correspondences data setup
 
@@ -47,6 +48,7 @@ for i = 1:ncams
     u{i} = get_image_points_coordinates(images, i);
 end
 
+corresp_initial = corresp;  % copy for reference (for the report)
 corresp = corresp_start(corresp, i1, i2, find(best_inl_ix), 1:Xcount);
 
 %% Here comes the Bundle Adjustment
@@ -58,6 +60,13 @@ cam_ix = find(corresp.camsel);
 for i = 1:length(Rt_new)
     cameras{cam_ix(i)} = Rt_new{i};
 end
+
+% for the report
+info.i = 0; % camera counter
+info.cam_id = nan(10,1); % 1st col: camera id, 2nd col: inliner count
+info.ransac_info = cell(10,1);
+info.other_cam_new_X = cell(10,1);
+info.tentative_verification = cell(10,1);
 
 while true
     %% Choosing the next camera to add
@@ -88,7 +97,13 @@ while true
 
     %% RANSAC
 
-    [R, t, xinl] = p3p_ransac(K, Xn, un);
+    [R, t, xinl, ransac_info] = p3p_ransac(K, Xn, un);
+    info.i = info.i + 1;
+    info.cam_id(info.i) = in;
+    info.ransac_info{info.i} = ransac_info;
+    info.other_cam_i = 0; % temp. counter
+    info.other_cam_new_X{info.i} = cell(11,1);
+    info.tentative_verification{info.i} = cell(12,1);
     
     corresp = corresp_join_camera(corresp, in, xinl);
     cameras{in} = [R t];
@@ -148,6 +163,12 @@ while true
         
         corresp = corresp_new_x(corresp, in, ic, inl_ix, new_xid);
         
+        info.other_cam_i = info.other_cam_i + 1;
+        info.other_cam_new_X{info.i};
+        info.other_cam_new_X{info.i}{info.other_cam_i}.otherCamId = ic;
+        info.other_cam_new_X{info.i}{info.other_cam_i}.newXCount = size(newX,2);
+        info.other_cam_new_X{info.i}{info.other_cam_i}.newXInlCount = inliers_count;
+        info.other_cam_new_X{info.i}{info.other_cam_i}.allXCount = Xcount;
     end
    
     
@@ -155,6 +176,8 @@ while true
     
     % list of all cameras in the cluster
     ilist = corresp_get_selected_cameras(corresp);
+    
+    info.other_cam_i = 0;
 
     for ic = ilist
         [Xu Xu_verified] = corresp_get_Xu(corresp, ic);
@@ -178,6 +201,11 @@ while true
 
         corr_ok = Xu_tentative(inl_ix); % The subset of good points - there is no one here
         corresp = corresp_verify_x(corresp, ic, corr_ok);
+        
+        info.other_cam_i = info.other_cam_i + 1;
+        info.tentative_verification{info.i}{info.other_cam_i}.camId = ic;
+        info.tentative_verification{info.i}{info.other_cam_i}.tentativeXCount = length(Xu_tentative);
+        info.tentative_verification{info.i}{info.other_cam_i}.tentativeXInl = length(inl_ix);
     end
     
     % That's all for this new camera:
@@ -190,6 +218,7 @@ end
 % save('../data/glue_cameras-02-output.mat');
 % export_to_vrml('out.wrl', cameras, X);
 
+save('../data/info-glue_cameras-02.mat', 'info');
 
 
 

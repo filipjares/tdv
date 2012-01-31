@@ -1,4 +1,4 @@
-function [R, t, best_inliers] = p3p_ransac(K, X, u)
+function [R, t, best_inliers, ransac_info] = p3p_ransac(K, X, u)
 
     assert(size(X,2) == size(u,2));
     assert(size(X,1) == 4);
@@ -7,6 +7,7 @@ function [R, t, best_inliers] = p3p_ransac(K, X, u)
     corresp_count = size(u,2);
 
     THR = 2; % [px]
+    ransac_info.threshold = THR;
     THR = 2*THR^2;
 
     Nmax = Inf;
@@ -75,6 +76,9 @@ function [R, t, best_inliers] = p3p_ransac(K, X, u)
 
         if (n > Nmax); break; end
     end
+    
+    ransac_info.iterations_count = n;
+    ransac_info.inliers_count = best_support;
     
     R = R_best;
     t = t_best;

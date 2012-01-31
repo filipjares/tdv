@@ -430,7 +430,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 					Počet bodů před oběma kamerami	& TODO	& TODO\,\%	\\
 					Počet inlierů					& TODO	& TODO\,\%	\\
 					Počet outlierů					& TODO	& TODO\,\%	\\
-					Velikost řídkého mraku bodů		& 26873 &			\\
+					Velikost řídkého mraku bodů		& 25\,322 &			\\
 					\hline
 				\end{tabular}
 				\caption{Parametry a výsledky RANSACu použitého pro určení polohy nově přidávané kamery}
@@ -547,15 +547,11 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	
 \section{Poissonovská rekonstrukce povrchu}
 
-	Posledním krokem byla samotná rekonstrukce povrchu z hustého mraku bodů.
-
-	Oříznutí mraku bodů
-	
-	Opět byl použit dodaný kód,
-	tentokrát využívající implementaci popsanou v~článku \cite{Kazhdan:2006:PSR}.
-	
-	Takto získaný povrch
-	byl nakonec obarven barvami
+	Posledním krokem byla rekonstrukce povrchu z hustého mraku bodů. Hustý mrak bodů jsme nejprve ořízli
+	kvádrem tak, aby obsahoval pouze dveře a jejich okolí. Na oříznutý mrak jsme použili dodaný
+	algoritmus poissonovské rekonstrukce využívající implementaci popsanou v~článku \cite{Kazhdan:2006:PSR}.
+	Takto získaný povrch jsme ručně ořízli. Body povrchu jsme promítli do obrazu z jedné kamer
+	a obarvili jsme je podle tohoto obrázku.  Několik pohledů na výsledný povrch je na \figref{figResult}.
 
 
 			\begin{figure}[htbp]
@@ -584,12 +580,6 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 %%                                        ZÁVĚR                                                      %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{TODO}
-		Využití nástroje corresp \cite{code_repo}
-			hotové -- ne-předběžné korespondence?
-		RANSAC - tabulka
-
-	
 \section{Zhodnocení}
 	
 	Na základě fotografií v~\figref{figFotografie} a znalosti kalibrační matice kamery $\matrix K$ jsme
@@ -597,13 +587,15 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	stereopárování a reprojekcí takto získaných dvojic bodů jsme vytvořili hustý mrak bodů, na který jsme
 	následně použili algoritmus poissonovské rekonstrukce a vytvořili tak povrchu zaznamenané scény.
 	
-	V RANSACu jsme použili jednoduché prahování. Bylo by dobré porovnat kvalitu vý\-sled\-ků dosažených
-	s lepší robustní funkcí. Také by bylo vhodné dále optimalizovat esenciální matici nalezenou
-	RANSACem.
+	% V RANSACu jsme použili jednoduché prahování. Bylo by dobré porovnat kvalitu vý\-sled\-ků dosažených
+	% s lepší robustní funkcí. Také by bylo vhodné dále optimalizovat esenciální matici nalezenou
+	% RANSACem.
 
 \section*{Slovníček -- navrhovaná rozšíření}
 
-	Velmi jsem uvítal připravený slovníček pojmů.
+	Velmi jsem uvítal připravený slovníček pojmů. Několik jsem jich ale postrádal.
+
+	\bigskip
 
 	\begin{tabular*}{1\paperwidth}{p{0.5\textwidth}p{0.5\textwidth}}
 		interest point				& význačný bod				\\

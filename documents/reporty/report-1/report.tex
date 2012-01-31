@@ -7,8 +7,9 @@
 
 \input{init_setup.tex}
 
-\usepackage[sorting=none]{biblatex}
-\bibliography{bibliography}
+% BibLaTeX
+% \usepackage[sorting=none]{biblatex}
+% \bibliography{bibliography}
 
 %FIXME: odlišit font, aby části kódu byly odlišitelné od okolního textu
 \lstset{ %
@@ -616,11 +617,13 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 % Parametry:
 % - orezani okraju kvuli stereu - 50 pixelu/25 pixelu u podvzorkovaneho obrazku
 
+% BibTeX
+% \bibliographystyle{plain_cz}
+\bibliographystyle{czechiso}
+\bibliography{bibliography}
 
-%\bibliographystyle{plain_cz}
-%\bibliographystyle{czechiso}
-\printbibliography
-%\bibliography{bibliography}
+% BibLaTeX
+% \printbibliography
 
 \end{document}
 

@@ -36,7 +36,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title{Digitální model scény z dvanácti fotografií \\ \ \\ \large Zpráva pro předmět 3D Počítačové vidění -- A4M33TDV}
-\date{29. 11. 2011}
+\date{31. 1. 2012}
 \author{Filip Jareš, jaresfil@fel.cvut.cz}
 
 \begin{document}
@@ -68,13 +68,13 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	geometrie tohoto páru, tedy k odhadu relativní rotace a translace této dvojice kamer.  Následovalo
 	\uv{přilepování} dalších dvojic kamer, tedy jejich umísťování do společného souřadného systému. Řídký
 	mrak bodů vznikl zpětným promítáním korespondujících bodů do prostoru. V rámci kroku (4) byla pro
-	stereo párování využita znalost epipolární geometrie použitých párů kamer získaná v předchozím
-	kroku.  Z každé použité dvojice obrazů byla stereo párováním získána část výsledného hustého mraku
+	stereopárování využita znalost epipolární geometrie použitých párů kamer získaná v předchozím
+	kroku.  Z každé použité dvojice obrazů byla stereopárováním získána část výsledného hustého mraku
 	bodů.  Nakonec byl na hustý mrak bodů použit algoritmus poissonovské rekonstrukce (5), který vytvořil
 	model povrchu.
 	
 	V dalších odstavcích jsou jednotlivé fáze vytváření digitálního modelu popsány po\-drob\-ně\-ji. Číslování
-	oddílů odpovídá číslování zavedenému v ůvodu.
+	oddílů odpovídá číslování zavedenému v úvodu.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                      SCÉNA                                                        %%
@@ -85,7 +85,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	Jako objekt pro rekonstrukci byly vybrány domovní dveře domu v pražské Jeseniově ulici. Byly
 	vyfotografovány z dvanácti míst tak, jak je to přibližně znázorněno na \figref{figUsporadaniKamer}.
 	Kolmá vzdálenost od dveří byla u všech kamer přibližně stejná (zhruba 4\,m) a dveře byly ze čtyř
-	míst vyfotografovány vždy ze tří rúzných výškových úrovní (zhruba z výšky 30\,cm, 130\,cm a
+	míst vyfotografovány vždy ze tří různých výškových úrovní (zhruba z výšky 30\,cm, 130\,cm a
 	200\,cm).
 		\begin{figure}[htb]
 			\centering
@@ -356,7 +356,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				\qquad \matrix P_1 = \matrix K \begin{bmatrix} \matrix I & \vector 0 \end{bmatrix},
 				\qquad \matrix P_2 = \matrix K \begin{bmatrix} \matrix R & \vector t \end{bmatrix} $$
 		Jako sou\-řad\-ný systém systému $\mathcal C$,
-		do kterého byly dále přidávány další kamery byl zvolen souřadný systém první kamery.  Měřitko
+		do kterého byly dále přidávány další kamery byl zvolen souřadný systém první kamery.  Měřítko
 		bylo zvoleno -- vzdálenost prvních dvou kamer byla položena rovna jedné.  Inlier korespondence
 		z~právě popsaného kroku byly označeny jako \emph{potvrzené} a byl z~nich zrekonstruován prvotní
 		mrak 3D bodů. Tento prvotní mrak bodů byl spolu s prvním párem kamer zpřesněn metodou vyrovnání
@@ -376,7 +376,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 					epipolární geometrii, černě chybné. Pro vybrané body (označené křížky) jsou
 					stejnými barvami znázorněny vzájemně si odpovídající epipoláry. Obrazy
 					odpovídají snímkům \ref{figI0} a \ref{figI1}. V obou obrazech je možné
-					si všimnout podduškovitého obrysu okrajů, který vznikl po odstranění
+					si všimnout poduškovitého obrysu okrajů, který vznikl po odstranění
 					radiálního zkreslení.}
 				\label{figKorespondenceAEpipolary}
 			\end{figure}
@@ -528,8 +528,8 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				\label{figSourcePictureAndDisparityMapForTheBFPair}
 			\end{figure}
 	
-	Pro rektifikaci a stereopárovnání jsme použili opět kód dodaný vyučujícími \cite{code_repo}. Použitý
-	algoritmus stereopárování jeho autoři poipsují v článku \cite{Cech-BenCOS-CVPR-2007}.
+	Pro rektifikaci a stereopárování jsme použili opět kód dodaný vyučujícími \cite{code_repo}. Použitý
+	algoritmus stereopárování jeho autoři popisují v článku \cite{Cech-BenCOS-CVPR-2007}.
 
 			\begin{figure}[htbp]
 					\centering

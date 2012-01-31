@@ -475,26 +475,6 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 			\begin{figure}[htbp]
 					\centering
 					\subfigure[] {
-						\fbox{\includegraphics[height=5cm]{pictures/stereo_pair_02_06_result.png}}
-					}
-					\subfigure[] {
-						\fbox{\includegraphics[height=5cm]{pictures/stereo_pair_02_06_result-detail.png}}
-					}
-				\caption{Dva pohledy na body získané stereopárováním dvojice obrazů (b,f)}
-				\label{figStereoPair26}
-			\end{figure}
-	
-	Nejprve byly obrazy podvzorkovány na poloviční rozlišení. Pro jednotlivé páry bylo provedeno
-	epipolární vyrovnání těchto obrazů, tj. byly vypočteny homografie, kterými byly jednak upraveny
-	vstupní, podvzorkované, obrazy a byly jimi upraveny kamery. Upravené kamery byly použity po výpočtu
-	disparit k triangulaci výsledných korespondencí a tedy k získání jednotlivých bodů trojrozměrné
-	scény. Pohled na takto získaný mrak bodů pocházející z~je\-dno\-ho páru kamer je na
-	\figref{figStereoPair26}. Mraky dvojic bodů získané z jednotlivých dvojic obrazů stereopárováním
-	byly nakonec sloučeny do jediného hustého mraku bodů.
-
-			\begin{figure}[htbp]
-					\centering
-					\subfigure[] {
 						\label{figRectifiedImagesForStereoA}
 						\fbox{\includegraphics[height=5.37cm]{pictures/disparity_pair_02-06-im1r.png}}
 					}
@@ -508,6 +488,27 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				\label{figRectifiedImagesForStereo}
 			\end{figure}
 
+	Nejprve byly obrazy podvzorkovány na poloviční rozlišení. Pro jednotlivé páry bylo provedeno
+	epipolární vyrovnání těchto obrazů (\figref{figRectifiedImagesForStereo}), tj. byly vypočteny
+	homografie, kterými byly jednak upraveny vstupní, podvzorkované, obrazy a byly jimi upraveny kamery.
+	Upravené kamery byly použity po výpočtu disparit
+	(\figref{figSourcePictureAndDisparityMapForTheBFPair}) k~triangulaci výsledných korespondencí a~tedy
+	k~získání jednotlivých bodů trojrozměrné scény. Pohled na takto získaný mrak bodů pocházející
+	z~je\-dno\-ho páru kamer je na \figref{figStereoPair26}. Mraky dvojic bodů získané z jednotlivých
+	dvojic obrazů stereopárováním byly nakonec sloučeny do jediného hustého mraku bodů.
+
+			\begin{figure}[htbp]
+					\centering
+					\subfigure[] {
+						\fbox{\includegraphics[height=5cm]{pictures/stereo_pair_02_06_result.png}}
+					}
+					\subfigure[] {
+						\fbox{\includegraphics[height=5cm]{pictures/stereo_pair_02_06_result-detail.png}}
+					}
+				\caption{Dva pohledy na body získané stereopárováním dvojice obrazů (b,f)}
+				\label{figStereoPair26}
+			\end{figure}
+	
 			\begin{figure}[htbp]
 					\centering
 					\subfigure[] {
@@ -518,7 +519,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 						\label{figSourceAndDisparityDisparity}
 						\fbox{\includegraphics[width=9.3cm,angle=-90]{pictures/disparity.png}}
 					}
-				\caption{\subref{figSourceAndDisparitySource} -- obraz \ref{figInputPictureB}; 
+				\caption{\subref{figSourceAndDisparitySource} -- vstupní obraz \ref{figInputPictureB}; 
 					\subref{figSourceAndDisparityDisparity} -- jemu odpovídající disparitní mapa v rámci páru
 					(b,f);
 					Okraje disparitní mapy jsou oříznuty, aby se zamezilo vzniku nežádoucích artefaktů,
@@ -527,9 +528,8 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 				\label{figSourcePictureAndDisparityMapForTheBFPair}
 			\end{figure}
 	
-	Pro rektifikaci párů obrazu -- výpočet rektifikačních homografií -- a pro určení disparit jsme
-	použili opět kód dodaný vyučujícím. Konkrétně
-	Použili jsme \cite{Cech-BenCOS-CVPR-2007}
+	Pro rektifikaci a stereopárovnání jsme použili opět kód dodaný vyučujícími \cite{code_repo}. Použitý
+	algoritmus stereopárování jeho autoři poipsují v článku \cite{Cech-BenCOS-CVPR-2007}.
 
 			\begin{figure}[htbp]
 					\centering

@@ -58,7 +58,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 		\item[(1)] výběr a zachycení scény;
 		\item[(2)] příprava snímků pro pozdější zpracování a kalibrace;
 		\item[(3)] rekonstrukce řídkého mraku prostorových bodů z~těchto snímků;
-		\item[(4)] rekonstrukce hustého mraku bodů s použitím stereo-párování a
+		\item[(4)] rekonstrukce hustého mraku bodů s použitím stereopárování a
 		\item[(5)] poissonovská rekonstrukce povrchu scény.
 	\end{enumerate}
 	
@@ -444,7 +444,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 						%}
 				\caption{Uspořádání kamer a řídký mrak bodů. Kamery jsou indexovány v souladu s~obrázky
 					\ref{figUsporadaniKamer} a \ref{figFotografie}. Modré spojnice (žlutá také)
-					reprezentují páry obrázků použité při stereo-párování. Žlutá spojnice představuje
+					reprezentují páry obrázků použité při stereopárování. Žlutá spojnice představuje
 					počáteční pár použitý při prvotním odhadu epipolární geometrie.
 					}
 				\label{figCamerasAndSparseCloud}
@@ -480,7 +480,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 					\subfigure[] {
 						\fbox{\includegraphics[height=5cm]{pictures/stereo_pair_02_06_result-detail.png}}
 					}
-				\caption{Dva pohledy na body získané stereo-párováním dvojice obrazů (b,f)}
+				\caption{Dva pohledy na body získané stereopárováním dvojice obrazů (b,f)}
 				\label{figStereoPair26}
 			\end{figure}
 	
@@ -489,7 +489,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	vstupní, podvzorkované, obrazy a byly jimi upraveny kamery. Upravené kamery byly použity po výpočtu
 	disparit k triangulaci výsledných korespondencí a tedy k získání jednotlivých bodů trojrozměrné
 	scény. Pohled na takto získaný mrak bodů pocházející z~je\-dno\-ho páru kamer je na
-	\figref{figStereoPair26}. Mraky dvojic bodů získané z jednotlivých dvojic obrazů stereo-párováním
+	\figref{figStereoPair26}. Mraky dvojic bodů získané z jednotlivých dvojic obrazů stereopárováním
 	byly nakonec sloučeny do jediného hustého mraku bodů.
 
 			\begin{figure}[htbp]

@@ -544,6 +544,12 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 %%                               POISSONOVSKÁ REKONSTRUKCE                                           %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
+\section{Poissonovská rekonstrukce povrchu}
+
+	Posledním krokem byla samotná rekonstrukce povrchu z hustého mraku bodů. Opět byl použit dodaný kód,
+	tentokrát využívající implementaci popsanou v~článku \cite{Kazhdan:2006:PSR}.
+
+
 			\begin{figure}[htbp]
 					\centering
 					\subfigure[] {
@@ -561,7 +567,7 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 					\subfigure[] {
 						\fbox{\includegraphics[width=13.17cm]{pictures/psr-all_hor_and_vert_pairs-depth_12-color-cropped-snapshot06.png}}
 					}
-				\caption{Výsledný povrch}
+				\caption{Výsledný obarvený povrch}
 				\label{figResult}
 			\end{figure}
 	
@@ -586,23 +592,28 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 	s lepší robustní funkcí. Také by bylo vhodné dále optimalizovat esenciální matici nalezenou
 	RANSACem.
 
-% FIXME: jak zahrnout bibliography.bib do repozitare? .. zkopirovat?
+\section*{Slovníček -- navrhovaná rozšíření}
 
-% Reference
+	Velmi jsem uvítal připravený slovníček pojmů.
+
+	\begin{tabular*}{1\paperwidth}{p{0.5\textwidth}p{0.5\textwidth}}
+		interest point				& význačný bod				\\
+		tentative correspondences	& předběžné korespondence	\\
+		camera cluster				& systém kamer				\\
+	\end{tabular*}
+	
+
+	% TODO:
 
 	% FIXME:
+	%   - dát pryč ty otazníky, co se objevily v některých bodech referencí
+	%   - zajistit, aby se nadpis sekce s bibliografií zobrazoval česky (je tam "References")
 	%	- zkontrolovat format oproti webu, zvolit vhodny .bst soubor
 	%	- doplnit (?), aktualizovat odkazy a data
 
 % Parametry:
 % - orezani okraju kvuli stereu - 50 pixelu/25 pixelu u podvzorkovaneho obrazku
 
-% Slovníček
-%
-% interest point -- význačný bod
-% tentative correspondences -- předběžné korespondence
-% camera cluster -- systém kamer
-% 
 
 %\bibliographystyle{plain_cz}
 %\bibliographystyle{czechiso}

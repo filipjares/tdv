@@ -15,6 +15,7 @@ function [R, t, best_inliers, ransac_info] = p3p_ransac(K, X, u)
     best_support = 0;
     best_inliers = [];
     ransac_info.best_inlier_probability = 0;
+    ransac_info.corresp_count = corresp_count;
     R_best = [];
     t_best = [];
 

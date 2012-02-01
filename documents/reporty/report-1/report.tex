@@ -416,26 +416,37 @@ breakatwhitespace=true,   % sets if automatic breaks should only happen at \s
 		\end{enumerate}
 
 		\noindent
-		Parametry a~výsledky RANSACu pro jednotlivé přidávané kamery jsou shrnuty v~\tabref{tabP3PRansac}.
-		Získané uspořádaní kamer spolu s řídkým mrakem je na \figref{figCamerasAndSparseCloud}
+		Výsledky RANSACu pro jednotlivé přidávané kamery jsou shrnuty v~\tabref{tabP3PRansacVysledky}.
+		Použitý práh (přípustná reprojekční chyba) byl opět 2 pixely v každém obrazu.
+		Získané uspořádaní kamer spolu s výsledným řídkým mrakem čítajícím 24\,954 bodů je na \figref{figCamerasAndSparseCloud}
 
 		% TODO: popis resekce, P3P algoritmu s RANSACem
 
 			\begin{table}[h]
 				\centering
-				\begin{tabular}{|lrr|}
+				\begin{tabular}{|ccrrrr|}
 					\hline
-					Práh RANSACu [px]				& 2		&	\\
-					Počet iterací RANSACu			& TODO	&	\\
-					Počet předběžných korespondencí (bodů)		& TODO	& TODO\,\%	\\
-					Počet bodů před oběma kamerami	& TODO	& TODO\,\%	\\
-					Počet inlierů					& TODO	& TODO\,\%	\\
-					Počet outlierů					& TODO	& TODO\,\%	\\
-					Velikost řídkého mraku bodů		& 25\,322 &			\\
+					Pořadí & Kamera & Počet iterací & korespondence & inliery & velikost mraku \\
+					\hline
+						1	& j	& 26	& 1642	& 71.8\,\% & 7\,960	\\
+						2	& c	& 348	& 1119	& 28.2\,\% & 8\,709	\\
+						3	& g	& 156	& 1474	& 45.2\,\% & 13\,702	\\
+						4	& k	& 86	& 2546	& 41.0\,\% & 15\,885	\\
+						5	& e	& 362	& 1327	& 23.6\,\% & 16\,327	\\
+						6	& a	& 93	& 1433	& 36.9\,\% & 19\,897	\\
+						7	& i	& 536	& 2478	& 20.2\,\% & 20\,749	\\
+						8	& d	& 4493	& 1203	& 11.8\,\% & 20\,922	\\
+						9	& h	& 457	& 1159	& 20.3\,\% & 24\,143	\\
+						10	& l	& 352	& 1831	& 28.3\,\% & 24\,954	\\
 					\hline
 				\end{tabular}
-				\caption{Parametry a výsledky RANSACu použitého pro určení polohy nově přidávané kamery}
-				\label{tabP3PRansac}
+				\caption{Výsledky běhů RANSACu použitého pro určení polohy nově přidávané kamery.
+					Sloupec \emph{korespondence} obsahuje počet předběžných korespondencí, použitých
+					jako vstup daného běhu RANSACu. Ve sloupci \emph{inliery} je v vyjádřena část
+					těchto korespondencí, tvořící inliery. Poslední sloupec obsahuje velikost mraku
+					po přidání kamery.
+				}
+				\label{tabP3PRansacVysledky}
 			\end{table}
 
 			\begin{figure}[htbp]
